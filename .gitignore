@@ -1,0 +1,5 @@
+.refcache
+*.txt
+*.html
+*.xml
+.upconv*
