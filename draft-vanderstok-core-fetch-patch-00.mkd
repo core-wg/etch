@@ -601,27 +601,38 @@ PATCH (iPATCH) can also be secured by those new techniques.
 
 # IANA Considerations
 
-The entry with name PATCH in the sub-registry, "CoAP Method
-Codes", is 0.05. The entry with name iPATCH in the sub-registry, "CoAP Method
-Codes", is 0.06. The entry with name FETCH in the sub-registry "CoAP Method
-codes", is 0.07.
-The additions will follow the "IETF Review or
-IESG Approval" procedure as described in {{RFC5226}}.
 
-A new response code must be entered to
-the sub-registry "CoAP response codes" which apply to the methods FETCH,
-PATCH and iPATCH.
+IANA is requested to add the following entries to the sub-registry "CoAP Method
+Codes":
 
-Code 4.09 with Description "Conflict" and described in this specification.
-Code 4.15 "Unsupported Content_format" with the same semantics as with POST.
+                       | Code | Name   | Reference |
+                       |------|--------|-----------|
+                       | 0.05 | FETCH  | [RFCthis] |
+                       | 0.06 | PATCH  | [RFCthis] |
+                       | 0.07 | iPATCH | [RFCthis] |
 
-The additions to this sub-registry will follow the "IETF
-Review or IESG Approval" as described in {{RFC5226}}.
+The FETCH method is idempotent and safe, and it returns the same
+response codes that GET can return, plus 4.15 "Unsupported
+Content-Format" with the same semantics as with POST.
 
-Additions to the sub-registry "CoAP
-Content-Formats", within the "CoRE Parameters" registry are needed for the
-following media type formats: "application/json-patch+json" {{RFC6902}}, and "application/merge-patch+json" {{RFC7396}}.
+The PATCH method is neither idempotent nor safe.  It returns the same
+response codes that POST can return, plus 4.09 "Conflict" with the
+semantics specified in {{errors}}.
 
+IANA is requested to add the following code to the sub-registry "CoAP
+response codes":
+
+                       | Code | Name     | Reference |
+                       |------|----------|-----------|
+                       | 4.09 | Conflict | [RFCthis] |
+
+IANA is requested to add entries to the sub-registry "CoAP
+Content-Formats", within the "CoRE Parameters" registry:
+
+| Media Type                   | Encoding | ID | Reference   |
+|------------------------------|----------|----|-------------|
+| application/json-patch+json  |          | 51 | {{RFC6902}} |
+| application/merge-patch+json |          | 52 | {{RFC7396}} |
 
 # Acknowledgements
 
