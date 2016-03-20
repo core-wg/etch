@@ -1,12 +1,20 @@
 ---
 stand_alone: true
 ipr: trust200902
-docname: draft-vanderstok-core-fetch-patch-00
+docname: draft-vanderstok-core-fetch-patch-00pre
 cat: info
 pi:
-  toc: yes" tocompact="yes" tocdepth="3" tocindent="yes" symrefs="yes" sortrefs="no"
-    comments="yes" inline="yes" compact="yes" subcompact="no
-  symrefs: 'yes'
+  toc: yes
+  tocompact: yes
+  tocdepth: 3
+  tocindent: yes
+  symrefs: yes
+  sortrefs: no
+  comments: yes
+  inline: yes
+  compact: yes
+  subcompact: no
+  symrefs: yes
 title: Patch and Fetch Methods for Constrained Application Protocol (CoAP)
 abbrev: CoAP Fetch Patch
 area: Applications
@@ -31,20 +39,20 @@ author:
   org: Consultant
   email: anuj@iurs.org
 normative:
-  RFC2119: 
-  RFC2616: 
-  RFC5226: 
-  RFC5789: 
-  RFC6902: 
-  RFC7252: 
-  RFC7396: 
-  RFC7641: 
-  I-D.ietf-core-block: 
+  RFC2119:
+  RFC2616:
+  RFC5226:
+  RFC5789: http-patch
+  RFC6902:
+  RFC7252: coap
+  RFC7396:
+  RFC7641: observe
+  I-D.ietf-core-block: block
 informative:
-  RFC5323: 
-  I-D.vanderstok-core-comi: 
-  I-D.hartke-core-apps: 
-  I-D.snell-search-method: 
+  RFC5323:
+  I-D.vanderstok-core-comi:
+  I-D.hartke-core-apps:
+  I-D.snell-search-method:
 
 --- abstract
 
@@ -68,7 +76,7 @@ where actually a cacheable, idempotent, safe request is desired.
 The existing Constrained Application Protocol (CoAP)
 PUT method only allows to replace a complete resource. This also leads to
 applications to use POST where actually a cacheable, possibly idempotent
-request is desired .
+request is desired.
 
 
 This proposal adds new CoAP methods, FETCH, to perform the
@@ -81,12 +89,12 @@ modify parts of an existing CoAP resource.
 # Introduction {#intro}
 
 This specification defines the new Constrained Application
-Protocol (CoAP) {{RFC7252}} methods, FETCH, PATCH and iPATCH, which
+Protocol (CoAP) {{-coap}} methods, FETCH, PATCH and iPATCH, which
 are used to access parts of a resource.
 
-## FETCH introduction {#intro-fetch}
+## FETCH {#intro-fetch}
 
-The CoAP GET method {{RFC7252}} is used to obtain the representation of
+The CoAP GET method {{-coap}} is used to obtain the representation of
 a resource, where the resource is specified by a URI and additional
 request parameters can additionally shape the representation.  This
 has been modelled after the HTTP GET operation and the REST model in
@@ -125,9 +133,6 @@ advantages:
 > transfer is not available for transferring large URI options in
 > multiple rounds.
 
-
-
-
 As an alternative to using GET, many implementations make use of the
 POST method to perform extended requests, even if they are
 semantically idempotent, safe, and even cacheable, to be able to pass
@@ -141,10 +146,10 @@ of the request URI.  Unlike POST, however the semantics of the FETCH
 method are more specifically defined.
 
 
-## PATCH (iPATCH) introduction {#intro-patch}
+## PATCH and iPATCH {#intro-patch}
 
-PATCH is also specified for HTTP in {{RFC5789}}. Most of the motivation for PATCH described
-in {{RFC5789}} also applies here. iPATCH is the idem-potent version of PATCH.
+PATCH is also specified for HTTP in {{-http-patch}}. Most of the motivation for PATCH described
+in {{-http-patch}} also applies here. iPATCH is the idem-potent version of PATCH.
 
 The PUT method exists to overwrite a resource with completely
 new contents, and cannot be used to perform partial changes.
@@ -160,22 +165,23 @@ case of modifications, thereby not burdening the constrained
 communication medium.
 
 This document relies on knowledge of the PATCH specification
-for HTTP {{RFC5789}}. This document provides
-extracts from {{RFC5789}} to make independent
+for HTTP {{-http-patch}}. This document provides
+extracts from {{-http-patch}} to make independent
 reading possible.
 
 
 ## Requirements Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
-"SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+"SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+"MAY",
 and "OPTIONAL" in this document are to be interpreted as
 described in {{RFC2119}}.
 
 
 ## Terminology and Acronyms
 
-This document uses terminology defined in {{RFC5789}} and {{RFC7252}}.
+This document uses terminology defined in {{-http-patch}} and {{-coap}}.
 
 
 
@@ -184,7 +190,7 @@ This document uses terminology defined in {{RFC5789}} and {{RFC7252}}.
 The CoAP FETCH method is used to obtain a representation of a
 resource, giving a number of request parameters.  Unlike the CoAP GET
 method, which requests that a server return a representation of the
-resource identified by the effective request URI (as defined by {{RFC7252}}), the FETCH method is used by a client to ask the server to
+resource identified by the effective request URI (as defined by {{-coap}}), the FETCH method is used by a client to ask the server to
 produce a representation based on the request parameters (described
 by the request options and payload) based on the resource specified
 by the effective request URI.  The payload returned in response to a
@@ -211,18 +217,19 @@ indication as to the final disposition of the requested operation.
 If the response includes a body payload, the payload is expected to
 describe the results of the FETCH operation.
 
-Depending on the response code as defined by {{RFC7252}} the response
+Depending on the response code as defined by {{-coap}} the response
 to a FETCH request is cacheable; the request payload is part of the
 cache key.  Specifically, 2.05 "Content" response codes, the
 responses for which are cacheable, are a usual way to respond to a
-FETCH request.  (Note that this aspect differs markedly from {{I-D.snell-search-method}}.)  (Note also that caches that cannot use
+FETCH request.  (Note that this aspect differs markedly from
+{{I-D.snell-search-method}}.)  (Note also that caches that cannot use
 the request payload as part of the request key will not be able to
 cache responses to FETCH requests at all.)  The Max-Age option in the
 response has equivalent semantics to its use in a GET.
 
 The semantics of the FETCH method change to a "conditional FETCH" if
 the request message includes an If-Match, or If-None-Match option
-({{RFC7252}}).  A conditional FETCH requests that the query be
+({{-coap}}).  A conditional FETCH requests that the query be
 performed only under the circumstances described by the conditional
 option(s).  It is important to note, however, that such conditions
 are evaluated against the state of the target resource itself as
@@ -239,13 +246,13 @@ media type and content encoding of the request body.
 
 ## Working with Observe {#fetch-observe}
 
-The Observe option {{RFC7641}} can be used with a FETCH request as it
+The Observe option {{-observe}} can be used with a FETCH request as it
 can be used with a GET request.
 
 
 ## Working with Block {#fetch-block}
 
-The Block1 option {{I-D.ietf-core-block}} can be used with a FETCH
+The Block1 option {{-block}} can be used with a FETCH
 request as it would be used with a POST request; the Block2 option
 can then be used as with GET or POST.
 
@@ -273,24 +280,24 @@ Response Code dependent of the patch document type.
 
 Restrictions to a PATCH (iPATCH) can be made by including the If-Match
 or If-None-Match options in the request (see Section 5.10.8.1
-and 5.10.8.2 of {{RFC7252}}).  If the resource
+and 5.10.8.2 of {{-coap}}).  If the resource
 could not be created or modified, then an appropriate Error
 Response Code SHOULD be sent.
 
 The difference between the PUT and PATCH requests is
-extensively documented in {{RFC5789}}.
+extensively documented in {{-http-patch}}.
 
 PATCH is not safe and not idempotent conformant to HTTP  PATCH
-specified in {{RFC5789}}.
+specified in {{-http-patch}}.
 
 iPATCH is not safe but idempotent conformant to CoAP PUT
-specified in {{RFC7252}}, Section 5.8.3.
+specified in {{-coap}}, Section 5.8.3.
 
 An iPATCH request is idempotent to prevent bad outcomes from
 collisions between two iPATCH requests on the same resource in
 a similar time frame. These collisions can be detected with
 the MessageId and the source end-point provided by the CoAP
-protocol (see section 4.5 of {{RFC7252}}.
+protocol (see section 4.5 of {{-coap}}.
 
 PATCH and iPATCH are both atomic.
 The server MUST apply the entire set of changes atomically and
@@ -331,7 +338,8 @@ response codes for PATCH (iPATCH) are:
 
 There is no guarantee that a resource can be modified with
 PATCH (iPATCH). Servers are required to support a subset of the content
-formats as specified in sections 12.3 and 5.10.3 of {{RFC7252}}.  Servers MUST ensure that a received PATCH
+formats as specified in sections 12.3 and 5.10.3 of {{-coap}}.
+Servers MUST ensure that a received PATCH
 payload is appropriate for the type of resource identified by
 the target resource of the request.
 
@@ -358,7 +366,7 @@ JSON document original state
               "foo": ["bar","baz"]
             }
 
- REQ:
+REQ:
      iPATCH CoAP://www.example.com/object
 Content-Format: application/json-patch+json
          [
@@ -372,7 +380,7 @@ JSON document final state
                "x-coord": 45,
                "y-coord": 45,
                "foo": ["bar","baz"]
-             }
+            }
 ~~~~
 {: artwork-align="left"}
 
@@ -400,7 +408,7 @@ RET:
      CoAP 2.04 Changed
 
 JSON document final state
-            {
+             {
                "x-coord": 45,
                "y-coord": 45,
                "foo": ["bar","baz"]
@@ -444,7 +452,7 @@ RET:
 
 JSON document final state
 
-            {
+             {
                "x-coord": 45,
                "y-coord": 45,
                "foo": ["bar","bar","baz"]
@@ -456,13 +464,13 @@ JSON document final state
 ## Response Codes {#response}
 
 PATCH (iPATCH) for CoAP adopt the response codes as specified in
-sections 5.9 and 12.1.2 of {{RFC7252}}.
+sections 5.9 and 12.1.2 of {{-coap}}.
 
 
 ## Option Numbers {#option}
 
 PATCH for CoAP adopts the option numbers as specified in
-sections 5.10 and 12.2 of {{RFC7252}}.
+sections 5.10 and 12.2 of {{-coap}}.
 
 
 ## Error Handling {#errors}
@@ -576,17 +584,17 @@ as
 described in this document.
 
 The FETCH method is subject to the same general security
-considerations as all CoAP methods as described in {{RFC7252}}.
+considerations as all CoAP methods as described in {{-coap}}.
 
 The security consideration of
-section 15 of {{RFC2616}}, section 11 of {{RFC7252}}, and section 5 of {{RFC5789}} also apply.
+section 15 of {{RFC2616}}, section 11 of {{-coap}}, and section 5 of {{-http-patch}} also apply.
 
 The security considerations for PATCH (iPATCH) are nearly identical to
-the security considerations for PUT ({{RFC7252}}).  The mechanisms used for PUT can be used
+the security considerations for PUT ({{-coap}}).  The mechanisms used for PUT can be used
 for PATCH (iPATCH) as well.
 
 PATCH (iPATCH) is secured following the CoAP recommendations as
-specified in section 9 of {{RFC7252}}. When more
+specified in section 9 of {{-coap}}. When more
 appropriate security techniques are standardized for CoAP,
 PATCH (iPATCH) can also be secured by those new techniques.
 
