@@ -1,4 +1,4 @@
-FILE=draft-vanderstok-core-fetch-patch-00
+FILE=draft-vanderstok-core-etch-00
 OPEN=$(word 1, $(wildcard /usr/bin/xdg-open /usr/bin/open /bin/echo))
 
 all: txt html viewhtml
