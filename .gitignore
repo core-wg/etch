@@ -9,3 +9,5 @@
 venv/
 issues.json
 draft-vanderstok-core-etch-latest.xml
+.upconv.patch
+a.xml

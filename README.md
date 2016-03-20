@@ -2,7 +2,7 @@
 
 This is the working area for the Individual internet-draft, "Patch and Fetch Methods for Constrained Application Protocol (CoAP)".
 
-* [Editor's copy](https://core-wg.github.io/etch/)
+* [Editor's copy](https://core-wg.github.io/etch/)  [![Build Status](https://travis-ci.org/core-wg/etch.svg?branch=master)](https://travis-ci.org/core-wg/etch)
 * [Individual Draft] (https://tools.ietf.org/html/draft-vanderstok-core-etch-latest)
 
 
