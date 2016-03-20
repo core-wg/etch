@@ -12,7 +12,7 @@ viewhtml: $(FILE).html
 
 pdf: $(FILE).pdf
 
-%.xml: %.mkd
+%.xml: %.md
 	kramdown-rfc2629 $< > $@
 
 %.txt: %.xml
