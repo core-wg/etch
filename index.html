@@ -1,0 +1,795 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Patch and Fetch Methods for Constrained Application Protocol (CoAP)</title>
+
+<style type="text/css">/*<![CDATA[*/
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+
+@media screen and (min-width: 1024px) {
+  ul.toc, #rfc\.toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 500px);
+    width: 300px;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #rfc\.toc {
+    top: 16px;
+  }
+  ul.toc {
+    top: 80px;
+    overflow: auto;
+  }
+
+  body {
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+}
+
+body {
+  font: 15px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #333;
+  font-size-adjust: 0.5;
+  line-height: 130%;
+  margin: 2.5em auto;
+  max-width: 724px;
+}
+
+.title, .filename, h1, h2, h3, h4 {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size-adjust: 0.5;
+  font-weight: 500;
+  color: #333;
+  line-height: 100%;
+  margin: 0.8em 0 0.3em;
+}
+.title { font-size: 36px; }
+h1 { font-size: 30px; }
+h2 { font-size: 24px; }
+h3, h4 { font-size: 18px; }
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
+  color: #333;
+}
+
+ul.toc li {
+  list-style: none;
+  text-indent: -2.5em;
+  padding-left: 2.5em;
+  padding-bottom: 5px;
+  margin: 0;
+}
+ul.toc, ul.toc ul {
+  margin: 0 0 0 1.5em;
+}
+
+table {
+  margin-left: 0em;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+tr:nth-child(2n+1) > td,
+tr:nth-child(2n+1) > th {
+  background-color: #f9f9f9;
+}
+td.reference {
+  max-width: 200px;
+  border-top: none;
+  padding-right: 1em;
+}
+.right {
+  text-align: right;
+}
+
+
+table.header {
+  width: 100%;
+}
+table.header td {
+  border: none;
+  background-color: transparent;
+  color: black;
+}
+.filename {
+  color: rgb(119, 119, 119);
+  font-size: 23px;
+  font-weight: normal;
+  height: auto;
+  line-height: 100%;
+}
+#rfc\.abstract+p {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 130%;
+}
+
+samp, tt, code, pre {
+  font: 11pt consolas, monospace;
+  font-size-adjust: none;
+}
+pre {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+.figure {
+  font-style: italic;
+  margin: 0 1.5em;
+}
+
+address {
+  margin: 10px 0 0;
+}
+.vcard {
+  font-style: normal;
+}
+.vcardline {
+  display: block;
+}
+.vcardline .fn {
+  font-weight: bold;
+}
+.vcardline .hidden {
+  display: none;
+}
+
+dl {
+  margin-left: 1em;
+}
+dl.dl-horizontal: {
+  margin-left: 0;
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.nohang > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .5em;
+}
+dl.compact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #2a6496;
+}
+a[href]:hover {
+  background-color: #eee;
+}
+
+ol, ul, li, p {
+  padding: 0;
+  margin: 0.5em 0 0.5em 2em;
+}
+li, p {
+  margin-left: 0;
+}
+
+.github-fork-ribbon-wrapper {
+  display: none;
+}
+@media screen and (min-width: 800px) {
+  /* "Fork me on GitHub" CSS ribbon based on
+   * https://github.com/simonwhitaker/github-fork-ribbon-css
+   */
+  .github-fork-ribbon {
+    position: absolute;
+    padding: 2px 0;
+    background-color: #a00;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    pointer-events: auto;
+
+    top: 38px;
+    right: -45px;
+
+    transform: rotate(45deg);
+  }
+
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    width: 190px;
+    line-height: 18px;
+
+    display: inline-block;
+    padding: 2px 0;
+
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .github-fork-ribbon-wrapper {
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    overflow: hidden;
+    top: 0; right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .github-fork-ribbon-wrapper {
+    position: fixed;
+  }
+/*]]>*/</style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.1.1" rel="Chapter" title="1.1 FETCH"/>
+<link href="#rfc.section.1.2" rel="Chapter" title="1.2 PATCH and iPATCH"/>
+<link href="#rfc.section.1.3" rel="Chapter" title="1.3 Requirements Language"/>
+<link href="#rfc.section.1.4" rel="Chapter" title="1.4 Terminology and Acronyms"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 FETCH Method"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 The Content-Format Option"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Working with Observe"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Working with Block"/>
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 FETCH discussion"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 PATCH (iPATCH) Method"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 A Simple PATCH (iPATCH) Example"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Response Codes"/>
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Option Numbers"/>
+<link href="#rfc.section.3.4" rel="Chapter" title="3.4 Error Handling"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Security Considerations"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 IANA Considerations"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Acknowledgements"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Change log"/>
+<link href="#rfc.references" rel="Chapter" title="8 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="8.2 Informative References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="van der Stok, P., Bormann, C., and A. Sehgal" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-vanderstok-core-etch-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-3-20" />
+  <meta name="dct.abstract" content="The existing Constrained Application Protocol (CoAP) methods only allow access to a complete resource. This does not permit applications to access parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is not an option. Several applications using CoAP will need to perform partial resource accesses." />
+  <meta name="description" content="The existing Constrained Application Protocol (CoAP) methods only allow access to a complete resource. This does not permit applications to access parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is not an option. Several applications using CoAP will need to perform partial resource accesses." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">core</td>
+  <td class="right">P. van der Stok</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">Consultant</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Informational</td>
+  <td class="right">C. Bormann</td>
+</tr>
+<tr>
+  <td class="left">Expires: September 21, 2016</td>
+  <td class="right">Universitaet Bremen TZI</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">A. Sehgal</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">Consultant</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">March 20, 2016</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Patch and Fetch Methods for Constrained Application Protocol (CoAP)<br />
+  <span class="filename">draft-vanderstok-core-etch-latest</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>The existing Constrained Application Protocol (CoAP) methods only allow access to a complete resource. This does not permit applications to access parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is not an option. Several applications using CoAP will need to perform partial resource accesses.</p>
+<p>Similar to HTTP, the existing Constrained Application Protocol (CoAP) GET method only allows the specification of a URI and request parameters in CoAP options, not the transfer of a request payload detailing the request.  This leads to some applications to using POST where actually a cacheable, idempotent, safe request is desired.</p>
+<p>Again similar to HTTP, the existing Constrained Application Protocol (CoAP) PUT method only allows to replace a complete resource. This also leads applications to use POST where actually a cacheable, possibly idempotent request is desired.</p>
+<p>This specification adds new CoAP methods, FETCH, to perform the equivalent of a GET with a request body; and PATCH and iPATCH, to modify parts of an existing CoAP resource.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on September 21, 2016.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2016 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">FETCH</a></li>
+<li>1.2.   <a href="#rfc.section.1.2">PATCH and iPATCH</a></li>
+<li>1.3.   <a href="#rfc.section.1.3">Requirements Language</a></li>
+<li>1.4.   <a href="#rfc.section.1.4">Terminology and Acronyms</a></li>
+</ul><li>2.   <a href="#rfc.section.2">FETCH Method</a></li>
+<ul><li>2.1.   <a href="#rfc.section.2.1">The Content-Format Option</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Working with Observe</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">Working with Block</a></li>
+<li>2.4.   <a href="#rfc.section.2.4">FETCH discussion</a></li>
+</ul><li>3.   <a href="#rfc.section.3">PATCH (iPATCH) Method</a></li>
+<ul><li>3.1.   <a href="#rfc.section.3.1">A Simple PATCH (iPATCH) Example</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Response Codes</a></li>
+<li>3.3.   <a href="#rfc.section.3.3">Option Numbers</a></li>
+<li>3.4.   <a href="#rfc.section.3.4">Error Handling</a></li>
+</ul><li>4.   <a href="#rfc.section.4">Security Considerations</a></li>
+<li>5.   <a href="#rfc.section.5">IANA Considerations</a></li>
+<li>6.   <a href="#rfc.section.6">Acknowledgements</a></li>
+<li>7.   <a href="#rfc.section.7">Change log</a></li>
+<li>8.   <a href="#rfc.references">References</a></li>
+<ul><li>8.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>8.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
+<p id="rfc.section.1.p.1">This specification defines the new Constrained Application Protocol (CoAP) <a href="#RFC7252">[RFC7252]</a> methods, FETCH, PATCH and iPATCH, which are used to access parts of a resource.</p>
+<h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#intro-fetch" id="intro-fetch">FETCH</a></h1>
+<p id="rfc.section.1.1.p.1">The CoAP GET method <a href="#RFC7252">[RFC7252]</a> is used to obtain the representation of a resource, where the resource is specified by a URI and additional request parameters can additionally shape the representation.  This has been modelled after the HTTP GET operation and the REST model in general.</p>
+<p id="rfc.section.1.1.p.2">In HTTP, a resource is often used to search for information, and existing systems varyingly use the HTTP GET and POST methods to perform a search.  Often a POST method is used for the sole reason that a larger set of parameters to the search can be supplied in the request body than can comfortably transferred in the URI with a GET request.  The draft <a href="#I-D.snell-search-method">[I-D.snell-search-method]</a> proposes a SEARCH method that is similar to GET in most properties but enables sending a request body as with POST.  The FETCH method defined in the present specification is inspired by <a href="#I-D.snell-search-method">[I-D.snell-search-method]</a>, which updates the definition and semantics of the HTTP SEARCH request method previously defined by <a href="#RFC5323">[RFC5323]</a>.  However, there is no intention to limit FETCH to search-type operations, and the resulting properties may not be the same as those of HTTP SEARCH.</p>
+<p id="rfc.section.1.1.p.3">A major problem with GET is that the information that controls the request needs to be bundled up in some unspecified way into the URI.  Using the request body for this information has a number of advantages:</p>
+<p/>
+
+<ul>
+  <li>The client can specify a media type (and a content encoding), enabling the server to unambiguously interpret the request parameters in the context of that media type.  Also, the request body is not limited by the character set limitations of URIs, enabling a more natural (and more efficient) representation of certain domain-specific parameters.</li>
+  <li>The request parameters are not limited by the maximum size of the URI.  In HTTP, that is a problem as the practical limit for this size varies.  In CoAP, another problem is that the block-wise transfer is not available for transferring large URI options in multiple rounds.</li>
+</ul>
+<p id="rfc.section.1.1.p.5">As an alternative to using GET, many implementations make use of the POST method to perform extended requests, even if they are semantically idempotent, safe, and even cacheable, to be able to pass along the input parameters within the request payload as opposed to using the request URI.</p>
+<p id="rfc.section.1.1.p.6">The FETCH method provides a solution that spans the gap between the use of GET and POST.  As with POST, the input to the FETCH operation is passed along within the payload of the request rather than as part of the request URI.  Unlike POST, however the semantics of the FETCH method are more specifically defined.</p>
+<h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#intro-patch" id="intro-patch">PATCH and iPATCH</a></h1>
+<p id="rfc.section.1.2.p.1">PATCH is also specified for HTTP in <a href="#RFC5789">[RFC5789]</a>. Most of the motivation for PATCH described in <a href="#RFC5789">[RFC5789]</a> also applies here. iPATCH is the idem-potent version of PATCH.</p>
+<p id="rfc.section.1.2.p.2">The PUT method exists to overwrite a resource with completely new contents, and cannot be used to perform partial changes.  When using PUT for partial changes, proxies and caches, and even clients and servers, may get confused as to the result of the operation.  PATCH was not adopted in an early design stage of CoAP, however, it has become necessary with the arrival of applications that require partial updates to resources (e.g. <a href="#I-D.vanderstok-core-comi">[I-D.vanderstok-core-comi]</a>). Using PATCH avoids transferring all data associated with a resource in case of modifications, thereby not burdening the constrained communication medium.</p>
+<p id="rfc.section.1.2.p.3">This document relies on knowledge of the PATCH specification for HTTP <a href="#RFC5789">[RFC5789]</a>. This document provides extracts from <a href="#RFC5789">[RFC5789]</a> to make independent reading possible.</p>
+<h1 id="rfc.section.1.3"><a href="#rfc.section.1.3">1.3.</a> <a href="#requirements-language" id="requirements-language">Requirements Language</a></h1>
+<p id="rfc.section.1.3.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;NOT RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
+<h1 id="rfc.section.1.4"><a href="#rfc.section.1.4">1.4.</a> <a href="#terminology-and-acronyms" id="terminology-and-acronyms">Terminology and Acronyms</a></h1>
+<p id="rfc.section.1.4.p.1">This document uses terminology defined in <a href="#RFC5789">[RFC5789]</a> and <a href="#RFC7252">[RFC7252]</a>.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#fetch" id="fetch">FETCH Method</a></h1>
+<p id="rfc.section.2.p.1">The CoAP FETCH method is used to obtain a representation of a resource, giving a number of request parameters.  Unlike the CoAP GET method, which requests that a server return a representation of the resource identified by the effective request URI (as defined by <a href="#RFC7252">[RFC7252]</a>), the FETCH method is used by a client to ask the server to produce a representation based on the request parameters (described by the request options and payload) based on the resource specified by the effective request URI.  The payload returned in response to a FETCH cannot be assumed to be a complete representation of the resource identified by the effective request URI.</p>
+<p id="rfc.section.2.p.2">The body of the request defines the request parameters.  Implementations MAY use a request body of any content type with the FETCH method; it is outside the scope of this document how information about admissible content types is obtained by the client (although we can hint that form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) might be the preferred way).</p>
+<p id="rfc.section.2.p.3">FETCH requests are both safe and idempotent with regards to the resource identified by the request URI.  That is, the performance of a fetch is not expected to alter the state of the targeted resource.  (However, while processing a search request, a server can be expected to allocate computing and memory resources or even create additional server resources through which the response to the search can be retrieved.)</p>
+<p id="rfc.section.2.p.4">A successful response to a FETCH request is expected to provide some indication as to the final disposition of the requested operation.  If the response includes a body payload, the payload is expected to describe the results of the FETCH operation.</p>
+<p id="rfc.section.2.p.5">Depending on the response code as defined by <a href="#RFC7252">[RFC7252]</a> the response to a FETCH request is cacheable; the request payload is part of the cache key.  Specifically, 2.05 &#8220;Content&#8221; response codes, the responses for which are cacheable, are a usual way to respond to a FETCH request.  (Note that this aspect differs markedly from <a href="#I-D.snell-search-method">[I-D.snell-search-method]</a>.)  (Note also that caches that cannot use the request payload as part of the request key will not be able to cache responses to FETCH requests at all.)  The Max-Age option in the response has equivalent semantics to its use in a GET.</p>
+<p id="rfc.section.2.p.6">The semantics of the FETCH method change to a &#8220;conditional FETCH&#8221; if the request message includes an If-Match, or If-None-Match option (<a href="#RFC7252">[RFC7252]</a>).  A conditional FETCH requests that the query be performed only under the circumstances described by the conditional option(s).  It is important to note, however, that such conditions are evaluated against the state of the target resource itself as opposed to the results of the FETCH operation.</p>
+<p id="rfc.section.2.p.7">TODO This needs some additional text on what an ETag on a FETCH result means.</p>
+<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#fetch-format" id="fetch-format">The Content-Format Option</a></h1>
+<p id="rfc.section.2.1.p.1">A FETCH request MUST include a Content-Format option to specify the media type and content encoding of the request body.</p>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#fetch-observe" id="fetch-observe">Working with Observe</a></h1>
+<p id="rfc.section.2.2.p.1">The Observe option <a href="#RFC7641">[RFC7641]</a> can be used with a FETCH request as it can be used with a GET request.</p>
+<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#fetch-block" id="fetch-block">Working with Block</a></h1>
+<p id="rfc.section.2.3.p.1">The Block1 option <a href="#I-D.ietf-core-block">[I-D.ietf-core-block]</a> can be used with a FETCH request as it would be used with a POST request; the Block2 option can then be used as with GET or POST.</p>
+<h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#fetch-discuss" id="fetch-discuss">FETCH discussion</a></h1>
+<p id="rfc.section.2.4.p.1">One property of FETCH that may be non-obvious is that a FETCH request cannot be generated from a link alone, but also needs a way to generate the request payload.  Again, form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) may be able to fill parts of this gap.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#patch" id="patch">PATCH (iPATCH) Method</a></h1>
+<p id="rfc.section.3.p.1">The PATCH (iPATCH) method requests that a set of changes described in the request payload is applied to the target resource of the request.  The set of changes is represented in a format identified by a media type.  If the Request-URI does not point to an existing resource, the server MAY create a new resource with that URI, depending on the patch document type (whether it can logically modify a null resource) and permissions, etc.  Creation of a new resource would result in a 2.01 (Created) Response Code dependent of the patch document type.</p>
+<p id="rfc.section.3.p.2">Restrictions to a PATCH (iPATCH) can be made by including the If-Match or If-None-Match options in the request (see Section 5.10.8.1 and 5.10.8.2 of <a href="#RFC7252">[RFC7252]</a>).  If the resource could not be created or modified, then an appropriate Error Response Code SHOULD be sent.</p>
+<p id="rfc.section.3.p.3">The difference between the PUT and PATCH requests is extensively documented in <a href="#RFC5789">[RFC5789]</a>.</p>
+<p id="rfc.section.3.p.4">PATCH is not safe and not idempotent conformant to HTTP  PATCH specified in <a href="#RFC5789">[RFC5789]</a>.</p>
+<p id="rfc.section.3.p.5">iPATCH is not safe but idempotent conformant to CoAP PUT specified in <a href="#RFC7252">[RFC7252]</a>, Section 5.8.3.</p>
+<p id="rfc.section.3.p.6">An iPATCH request is idempotent to prevent bad outcomes from collisions between two iPATCH requests on the same resource in a similar time frame. These collisions can be detected with the MessageId and the source end-point provided by the CoAP protocol (see section 4.5 of <a href="#RFC7252">[RFC7252]</a>.</p>
+<p id="rfc.section.3.p.7">PATCH and iPATCH are both atomic.  The server MUST apply the entire set of changes atomically and never provide a partially modified representation to a concurrently executed GET request. Given the constrained nature of the servers, most servers will only execute CoAP requests consecutively, thus preventing a concurrent partial overlapping of request modifications. Resuming, modifications MUST NOT be applied to the server state when an error occurs or only a partial execution is possible on the resources present in the server.  When the PATCH request is over-specified (i.e. Request specifies modifications to attributes which do not exist in the server), The server MAY execute all modifications to existing attributes and return a response code 2.02 Accepted.</p>
+<p id="rfc.section.3.p.8">The atomicity applies to a single server. When a PATCH (iPATCH) request is multicast to a set of servers, each server can either execute all required modifications or not. It is not required that all servers execute all modifications or none. An Atomic Commit protocol that provides multiple server atomicity, is out of scope.</p>
+<p id="rfc.section.3.p.9">A PATCH (iPATCH) response can invalidate a cache conformant with the PUT response. Caching behaviour as function of the valid 2.xx response codes for PATCH (iPATCH) are:</p>
+<p/>
+
+<ul class="empty">
+  <li>A 2.01 (Created) response invalidates any cache entry for the resource indicated by the Location-* Options; the payload is a representation of the action result.</li>
+</ul>
+<p/>
+
+<ul class="empty">
+  <li>A 2.04 (Changed) response invalidates any cache entry for the target resource; the payload is a representation of the action result.</li>
+</ul>
+<p id="rfc.section.3.p.12">There is no guarantee that a resource can be modified with PATCH (iPATCH). Servers are required to support a subset of the content formats as specified in sections 12.3 and 5.10.3 of <a href="#RFC7252">[RFC7252]</a>.  Servers MUST ensure that a received PATCH payload is appropriate for the type of resource identified by the target resource of the request.</p>
+<p id="rfc.section.3.p.13">Clients MUST choose to use PATCH (iPATCH) rather than PUT when the request affects partial updates of a given resource.</p>
+<p id="rfc.section.3.p.14">PATCH (iPATCH) MUST not be used to restore default values to resource attributes which are not specified in the payload. PATCH (iPATCH) specifically guarantees that unspecified resource attributes are not changed.</p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#example" id="example">A Simple PATCH (iPATCH) Example</a></h1>
+<p id="rfc.section.3.1.p.1">The example is taken over from <a href="#RFC6902">[RFC6902]</a>, which specifies a JSON notation for PATCH operations. A resource located at www.example.com/object contains a target JSON document.</p>
+<pre>
+JSON document original state
+            {
+              "x-coord": 256,
+              "y-coord": 45",
+              "foo": ["bar","baz"]
+            }
+
+REQ:
+     iPATCH CoAP://www.example.com/object
+Content-Format: application/json-patch+json
+         [
+             { "op":"replace","path":"x-coord","value":45}
+         ]
+RET:
+     CoAP 2.04 Changed
+
+JSON document final state
+            {
+               "x-coord": 45,
+               "y-coord": 45,
+               "foo": ["bar","baz"]
+            }
+</pre>
+<p id="rfc.section.3.1.p.2">This example illustrates use of an idempotent modification to the x-coord attribute of the existing resource &#8220;object&#8221;.  The 2.04 (Changed) response code is conform with the CoAP PUT method.</p>
+<p id="rfc.section.3.1.p.3">The same example using the Content-Format application/merge-patch+json from <a href="#RFC7396">[RFC7396]</a> looks like:</p>
+<pre>
+JSON document original state
+            {
+              "x-coord": 256,
+              "y-coord": 45,
+              "foo": ["bar","baz"]
+            }
+
+ REQ:
+     iPATCH CoAP://www.example.com/object
+Content-Format: application/merge-patch+json
+     { "x-coord":45}
+RET:
+     CoAP 2.04 Changed
+
+JSON document final state
+             {
+               "x-coord": 45,
+               "y-coord": 45,
+               "foo": ["bar","baz"]
+             }
+</pre>
+<p id="rfc.section.3.1.p.4">The examples show the use of the iPATCH method, but the use of the PATCH method must have led to the same result. Below a non-idempotent modification is shown. Because the action is non-idempotent, iPATCH returns an error, while PATCH executes the action.</p>
+<pre>
+JSON document original state
+            {
+              "x-coord": 256,
+              "y-coord": 45",
+              "foo": ["bar","baz"]
+            }
+
+ REQ:
+     iPATCH CoAP://www.example.com/object
+Content-Format: application/json-patch+json
+         [
+             { "op":"add","path":"foo/1","value":"bar"}
+         ]
+RET:
+     CoAP 4.12 Precondition Failed
+
+JSON document final state is unchanged
+
+REQ:
+     PATCH CoAP://www.example.com/object
+Content-Format: application/json-patch+json
+         [
+             { "op":"add","path":"foo/1","value":"bar"}
+         ]
+RET:
+     CoAP 2.04 Changed
+
+JSON document final state
+
+             {
+               "x-coord": 45,
+               "y-coord": 45,
+               "foo": ["bar","bar","baz"]
+             }
+</pre>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#response" id="response">Response Codes</a></h1>
+<p id="rfc.section.3.2.p.1">PATCH and iPATCH for CoAP adopt the response codes as specified in sections 5.9 and 12.1.2 of <a href="#RFC7252">[RFC7252]</a>.</p>
+<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> <a href="#option" id="option">Option Numbers</a></h1>
+<p id="rfc.section.3.3.p.1">PATCH and iPATCH for CoAP adopt the option numbers as specified in sections 5.10 and 12.2 of <a href="#RFC7252">[RFC7252]</a>.</p>
+<h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> <a href="#errors" id="errors">Error Handling</a></h1>
+<p id="rfc.section.3.4.p.1">A PATCH or iPATCH request may fail under certain known conditions. These situations should be dealt with as expressed below.</p>
+<p/>
+
+<dl>
+  <dt>Malformed PATCH or iPATCH payload:</dt>
+  <dd style="margin-left: 8">If a server determines that the payload provided with a PATCH or iPATCH request is not properly formatted, it can return a 4.00 (Bad Request) CoAP error. The definition of a malformed payload depends upon the CoAP Content-Format specified with the request.</dd>
+  <dt>Unsupported PATCH or iPATCH payload:</dt>
+  <dd style="margin-left: 8">In case a client sends payload that is inappropriate for the resource identified by the Request-URI, the server can return a 4.15 (Unsupported Content-Format) CoAP error. The server can determine if the payload is supported by checking the CoAP Content-Format specified with the request.</dd>
+  <dt>Unprocessable request:</dt>
+  <dd style="margin-left: 8">This situation occurs when the payload of a PATCH request is determined as valid, i.e. well-formed and supported, however, the server is unable to or incapable of processing the request. The server can return a 4.22 (Unprocessable Entity) CoAP error. More specific scenarios might include situations when: <ul><li>the server has insufficient computing resources to complete the request successfully &#8212; 4.13 (Request Entity Too Large) CoAP Response Code,</li><li>the resource specified in the request becomes invalid by applying the payload &#8212; 4.06 (Not Acceptable) CoAP Response Code,</li></ul><p> In case there are more specific errors that provide more insight into the problem, then those should be used.</p></dd>
+  <dt>Resource not found:</dt>
+  <dd style="margin-left: 8">The 4.04 (Not Found) error should be returned in case the payload of a PATCH request cannot be applied to a non-existent resource.</dd>
+  <dt>Failed precondition:</dt>
+  <dd style="margin-left: 8">In case the client uses the conditional If-Match or If-None-Match option to define a precondition for the PATCH request, and that precondition fails, then the server can return the 4.12 (Precondition Failed) CoAP error.</dd>
+  <dt>Request too large:</dt>
+  <dd style="margin-left: 8">If the payload of the PATCH request is larger than a CoAP server can process, then it can return the 4.13 (Request Entity Too Large) CoAP error.</dd>
+  <dt>Conflicting state:</dt>
+  <dd style="margin-left: 8">If the modification specified by a PATCH or iPATCH request causes the resource to enter an inconsistent state that the server cannot resolve, the server can return the 4.09 (Conflict) CoAP response.   The server SHOULD generate a payload that includes enough information for a user to recognize the source of the conflict.  The server MAY return the actual resource state to provide the client with the means to create a new consistent resource state. Such a situation might be encountered when a structural modification is applied to a configuration data-store, but the structures being modified do not exist.</dd>
+  <dt>Concurrent modification:</dt>
+  <dd style="margin-left: 8">Resource constrained devices might need to process requests in the order they are received. In case requests are received concurrently to modify the same resource but they cannot be queued, the server can return a  5.03 (Service unavailable) CoAP response code.</dd>
+  <dt>Conflict handling failure:</dt>
+  <dd style="margin-left: 8">If the modification implies the reservation of resources or the waiting on conditions to become true, leading to a too long request execution time, the server can return 5.03 (service unavailable) response code.</dd>
+</dl>
+<p id="rfc.section.3.4.p.3">It is possible that other error situations, not mentioned here, are encountered by a CoAP server while processing the PATCH request. In these situations other appropriate CoAP status codes can also be returned.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
+<p id="rfc.section.4.p.1">This section analyses the possible threats to the CoAP FETCH and PATCH or iPATCH methods.  It is meant to inform protocol and application developers about the security limitations of CoAP FETCH and PATCH or iPATCH as described in this document.</p>
+<p id="rfc.section.4.p.2">The FETCH method is subject to the same general security considerations as all CoAP methods as described in <a href="#RFC7252">[RFC7252]</a>.</p>
+<p id="rfc.section.4.p.3">The security consideration of section 15 of <a href="#RFC2616">[RFC2616]</a>, section 11 of <a href="#RFC7252">[RFC7252]</a>, and section 5 of <a href="#RFC5789">[RFC5789]</a> also apply.</p>
+<p id="rfc.section.4.p.4">The security considerations for PATCH or iPATCH are nearly identical to the security considerations for PUT (<a href="#RFC7252">[RFC7252]</a>).  The mechanisms used for PUT can be used for PATCH or iPATCH as well.</p>
+<p id="rfc.section.4.p.5">PATCH or iPATCH is secured following the CoAP recommendations as specified in section 9 of <a href="#RFC7252">[RFC7252]</a>. When more appropriate security techniques are standardized for CoAP, PATCH or iPATCH can also be secured by those new techniques.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
+<p id="rfc.section.5.p.1">IANA is requested to add the following entries to the sub-registry &#8220;CoAP Method Codes&#8221;:</p>
+<pre>
+                   | Code | Name   | Reference |
+                   |------|--------|-----------|
+                   | 0.05 | FETCH  | [RFCthis] |
+                   | 0.06 | PATCH  | [RFCthis] |
+                   | 0.07 | iPATCH | [RFCthis] |
+</pre>
+<p id="rfc.section.5.p.2">The FETCH method is idempotent and safe, and it returns the same response codes that GET can return, plus 4.15 &#8220;Unsupported Content-Format&#8221; with the same semantics as with POST.</p>
+<p id="rfc.section.5.p.3">The PATCH method is neither idempotent nor safe.  It returns the same response codes that POST can return, plus 4.09 &#8220;Conflict&#8221; with the semantics specified in <a href="#errors">Section 3.4</a>.</p>
+<p id="rfc.section.5.p.4">IANA is requested to add the following code to the sub-registry &#8220;CoAP response codes&#8221;:</p>
+<pre>
+                   | Code | Name     | Reference |
+                   |------|----------|-----------|
+                   | 4.09 | Conflict | [RFCthis] |
+</pre>
+<p id="rfc.section.5.p.5">IANA is requested to add entries to the sub-registry &#8220;CoAP Content-Formats&#8221;, within the &#8220;CoRE Parameters&#8221; registry:</p>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <thead>
+    <tr>
+      <th class="left">Media Type</th>
+      <th class="left">Encoding</th>
+      <th class="left">ID</th>
+      <th class="left">Reference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">application/json-patch+json</td>
+      <td class="left"/>
+      <td class="left">51</td>
+      <td class="left">
+        <a href="#RFC6902">[RFC6902]</a>
+      </td>
+    </tr>
+    <tr>
+      <td class="left">application/merge-patch+json</td>
+      <td class="left"/>
+      <td class="left">52</td>
+      <td class="left">
+        <a href="#RFC7396">[RFC7396]</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.6.p.1">Klaus Hartke has pointed out some essential differences between CoAP and HTTP concerning PATCH, and found a number of problems in an earlier version of <a href="#fetch">Section 2</a>. We are grateful for discussions with Christian Amsuss, Timothy Carey, Paul Duffy, Kovatsch Matthias, Michel Veillette, Michael Verschoor, Thomas Watteyne, and Gengyu Wei.</p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#change-log" id="change-log">Change log</a></h1>
+<p id="rfc.section.7.p.1">When published as a RFC, this section needs to be removed.</p>
+<p id="rfc.section.7.p.2">Version 0 is a composition from drafts vanderstok-core-patch-03 and bormann-core-coap-fetch-00.</p>
+<h1 id="rfc.references"><a href="#rfc.references">8.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">8.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2616">[RFC2616]</b>
+      </td>
+      <td class="top"><a>Fielding, R.</a>, <a>Gettys, J.</a>, <a>Mogul, J.</a>, <a>Frystyk, H.</a>, <a>Masinter, L.</a>, <a>Leach, P.</a> and <a>T. Berners-Lee</a>, "<a href="http://tools.ietf.org/html/rfc2616">Hypertext Transfer Protocol -- HTTP/1.1</a>", RFC 2616, DOI 10.17487/RFC2616, June 1999.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5226">[RFC5226]</b>
+      </td>
+      <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, DOI 10.17487/RFC5226, May 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5789">[RFC5789]</b>
+      </td>
+      <td class="top"><a>Dusseault, L.</a> and <a>J. Snell</a>, "<a href="http://tools.ietf.org/html/rfc5789">PATCH Method for HTTP</a>", RFC 5789, DOI 10.17487/RFC5789, March 2010.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6902">[RFC6902]</b>
+      </td>
+      <td class="top"><a>Bryan, P.</a> and <a>M. Nottingham</a>, "<a href="http://tools.ietf.org/html/rfc6902">JavaScript Object Notation (JSON) Patch</a>", RFC 6902, DOI 10.17487/RFC6902, April 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7252">[RFC7252]</b>
+      </td>
+      <td class="top"><a>Shelby, Z.</a>, <a>Hartke, K.</a> and <a>C. Bormann</a>, "<a href="http://tools.ietf.org/html/rfc7252">The Constrained Application Protocol (CoAP)</a>", RFC 7252, DOI 10.17487/RFC7252, June 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7396">[RFC7396]</b>
+      </td>
+      <td class="top"><a>Hoffman, P.</a> and <a>J. Snell</a>, "<a href="http://tools.ietf.org/html/rfc7396">JSON Merge Patch</a>", RFC 7396, DOI 10.17487/RFC7396, October 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7641">[RFC7641]</b>
+      </td>
+      <td class="top"><a>Hartke, K.</a>, "<a href="http://tools.ietf.org/html/rfc7641">Observing Resources in the Constrained Application Protocol (CoAP)</a>", RFC 7641, DOI 10.17487/RFC7641, September 2015.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-core-block">[I-D.ietf-core-block]</b>
+      </td>
+      <td class="top"><a>Bormann, C.</a> and <a>Z. Shelby</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-block-18">Block-wise transfers in CoAP</a>", Internet-Draft draft-ietf-core-block-18, September 2015.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">8.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC5323">[RFC5323]</b>
+      </td>
+      <td class="top"><a>Reschke, J.</a>, <a>Reddy, S.</a>, <a>Davis, J.</a> and <a>A. Babich</a>, "<a href="http://tools.ietf.org/html/rfc5323">Web Distributed Authoring and Versioning (WebDAV) SEARCH</a>", RFC 5323, DOI 10.17487/RFC5323, November 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.vanderstok-core-comi">[I-D.vanderstok-core-comi]</b>
+      </td>
+      <td class="top"><a>Stok, P.</a> and <a>A. Bierman</a>, "<a href="http://tools.ietf.org/html/draft-vanderstok-core-comi-09">CoAP Management Interface</a>", Internet-Draft draft-vanderstok-core-comi-09, March 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.hartke-core-apps">[I-D.hartke-core-apps]</b>
+      </td>
+      <td class="top"><a>Hartke, K.</a>, "<a href="http://tools.ietf.org/html/draft-hartke-core-apps-03">CoRE Application Descriptions</a>", Internet-Draft draft-hartke-core-apps-03, February 2016.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.snell-search-method">[I-D.snell-search-method]</b>
+      </td>
+      <td class="top"><a>Reschke, J.</a>, <a>Malhotra, A.</a> and <a>J. Snell</a>, "<a href="http://tools.ietf.org/html/draft-snell-search-method-00">HTTP SEARCH Method</a>", Internet-Draft draft-snell-search-method-00, April 2015.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Peter van der Stok</span> 
+	  <span class="n hidden">
+		<span class="family-name">van der Stok</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Consultant</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:consultancy@vanderstok.org">consultancy@vanderstok.org</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Carsten Bormann</span> 
+	  <span class="n hidden">
+		<span class="family-name">Bormann</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Universitaet Bremen TZI</span>
+	<span class="adr">
+	  <span class="vcardline">Postfach 330440</span>
+
+	  <span class="vcardline">
+		<span class="locality">Bremen</span>,  
+		<span class="region"></span>
+		<span class="code">D-28359</span>
+	  </span>
+	  <span class="country-name vcardline">Germany</span>
+	</span>
+	<span class="vcardline">Phone: +49-421-218-63921</span>
+
+<span class="vcardline">EMail: <a href="mailto:cabo@tzi.org">cabo@tzi.org</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Anuj Sehgal</span> 
+	  <span class="n hidden">
+		<span class="family-name">Sehgal</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Consultant</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:anuj@iurs.org">anuj@iurs.org</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
