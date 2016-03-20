@@ -1,5 +1,11 @@
-.refcache
+*.redxml
 *.txt
 *.html
-*.xml
-.upconv*
+*.pdf
+*~
+*.swp
+/*-[0-9][0-9].xml
+.refcache
+venv/
+issues.json
+draft-vanderstok-core-etch-latest.xml
