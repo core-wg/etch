@@ -90,7 +90,7 @@ modify parts of an existing CoAP resource.
 
 This specification defines the new Constrained Application
 Protocol (CoAP) {{-coap}} methods, FETCH, PATCH and iPATCH, which
-are used to access parts of a resource.
+are used to access and update parts of a resource.
 
 ## FETCH {#intro-fetch}
 
@@ -574,7 +574,25 @@ here, are encountered by a CoAP server while processing the
 PATCH request. In these situations other appropriate CoAP
 status codes can also be returned.
 
+# Discussion
 
+Adding three new methods to CoAP's existing four may seem like a major
+change.  However, both FETCH and the two PATCH variants fit well into
+the REST paradigm and have been anticipated on the HTTP side.
+Adding both a non-idempotent and an idempotent PATCH variant allows to
+keep interoperability with HTTP's PATCH method as well as the use/indication of
+an idempotent PATCH if that is possible, saving significant effort on
+the server side.
+
+Interestingly, the three new methods fit into the old table of methods
+with a surprising similarity in the idempotence and safety attributes:
+
+| Code | Name   | Code | Name   | safe | idempotent |
+|------|--------|------|--------|------|------------|
+| 0.01 | GET    | 0.05 | FETCH  | yes  | yes        |
+| 0.02 | POST   | 0.06 | PATCH  | no   | no         |
+| 0.03 | PUT    | 0.07 | iPATCH | no   | yes        |
+| 0.04 | DELETE |      |        | no   | yes        |
 
 # Security Considerations
 
@@ -606,11 +624,11 @@ PATCH or iPATCH can also be secured by those new techniques.
 IANA is requested to add the following entries to the sub-registry "CoAP Method
 Codes":
 
-                       | Code | Name   | Reference |
-                       |------|--------|-----------|
-                       | 0.05 | FETCH  | [RFCthis] |
-                       | 0.06 | PATCH  | [RFCthis] |
-                       | 0.07 | iPATCH | [RFCthis] |
+| Code | Name   | Reference |
+|------|--------|-----------|
+| 0.05 | FETCH  | [RFCthis] |
+| 0.06 | PATCH  | [RFCthis] |
+| 0.07 | iPATCH | [RFCthis] |
 
 The FETCH method is idempotent and safe, and it returns the same
 response codes that GET can return, plus 4.15 "Unsupported
@@ -623,9 +641,9 @@ semantics specified in {{errors}}.
 IANA is requested to add the following code to the sub-registry "CoAP
 response codes":
 
-                       | Code | Name     | Reference |
-                       |------|----------|-----------|
-                       | 4.09 | Conflict | [RFCthis] |
+| Code | Name     | Reference |
+|------|----------|-----------|
+| 4.09 | Conflict | [RFCthis] |
 
 IANA is requested to add entries to the sub-registry "CoAP
 Content-Formats", within the "CoRE Parameters" registry:
