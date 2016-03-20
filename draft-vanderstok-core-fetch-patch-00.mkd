@@ -1,7 +1,7 @@
 ---
 stand_alone: true
 ipr: trust200902
-docname: draft-vanderstok-core-fetch-patch-00pre
+docname: draft-vanderstok-core-etch-latest
 cat: info
 pi:
   toc: yes
@@ -72,14 +72,14 @@ parameters in CoAP options, not the transfer of a request payload
 detailing the request.  This leads to some applications to using POST
 where actually a cacheable, idempotent, safe request is desired.
 
-
-The existing Constrained Application Protocol (CoAP)
-PUT method only allows to replace a complete resource. This also leads to
+Again similar to HTTP,
+the existing Constrained Application Protocol (CoAP)
+PUT method only allows to replace a complete resource. This also leads
 applications to use POST where actually a cacheable, possibly idempotent
 request is desired.
 
 
-This proposal adds new CoAP methods, FETCH, to perform the
+This specification adds new CoAP methods, FETCH, to perform the
 equivalent of a GET with a request body; and PATCH and iPATCH, to
 modify parts of an existing CoAP resource.
 
@@ -100,38 +100,39 @@ request parameters can additionally shape the representation.  This
 has been modelled after the HTTP GET operation and the REST model in
 general.
 
-The FETCH specification is inspired by {{I-D.snell-search-method}}, which
-updates the definition and semantics of the HTTP SEARCH request
-method previously defined by {{RFC5323}}.  However, there is no intention
-to limit FETCH to search-type operations, and the resulting
-properties may not be the same as those of HTTP SEARCH
-
 In HTTP, a resource is often used to search for information, and
 existing systems varyingly use the HTTP GET and POST methods to
-perform a search.  Often a POST method is used solely to enable
-supplying a larger set of parameters to the search than can be
+perform a search.  Often a POST method is used for the sole reason
+that a larger set of parameters to the search can be supplied in the
+request body than can
 comfortably transferred in the URI with a GET request.
 The draft {{I-D.snell-search-method}} proposes a SEARCH method that is similar to
 GET in most properties but enables sending a request body as with
 POST.
+The FETCH method defined in the present specification is inspired by
+{{I-D.snell-search-method}}, which
+updates the definition and semantics of the HTTP SEARCH request
+method previously defined by {{RFC5323}}.  However, there is no intention
+to limit FETCH to search-type operations, and the resulting
+properties may not be the same as those of HTTP SEARCH.
 
 A major problem with GET is that the information that controls the
 request needs to be bundled up in some unspecified way into the URI.
 Using the request body for this information has a number of
 advantages:
 
-> The client can specify a media type (and a content encoding),
-> enabling the server to unambiguously interpret the request
-> parameters in the context of that media type.  Also, the request
-> body is not limited by the character set limitations of URIs,
-> enabling a more natural (and more efficient) representation of
-> certain domain-specific parameters.
+* The client can specify a media type (and a content encoding),
+  enabling the server to unambiguously interpret the request
+  parameters in the context of that media type.  Also, the request
+  body is not limited by the character set limitations of URIs,
+  enabling a more natural (and more efficient) representation of
+  certain domain-specific parameters.
 
-> The request parameters are not limited by the maximum size of the
-> URI.  In HTTP, that is a problem as the practical limit for this
-> size varies.  In CoAP, another problem is that the block-wise
-> transfer is not available for transferring large URI options in
-> multiple rounds.
+* The request parameters are not limited by the maximum size of the
+  URI.  In HTTP, that is a problem as the practical limit for this
+  size varies.  In CoAP, another problem is that the block-wise
+  transfer is not available for transferring large URI options in
+  multiple rounds.
 
 As an alternative to using GET, many implementations make use of the
 POST method to perform extended requests, even if they are
@@ -463,32 +464,32 @@ JSON document final state
 
 ## Response Codes {#response}
 
-PATCH (iPATCH) for CoAP adopt the response codes as specified in
+PATCH and iPATCH for CoAP adopt the response codes as specified in
 sections 5.9 and 12.1.2 of {{-coap}}.
 
 
 ## Option Numbers {#option}
 
-PATCH for CoAP adopts the option numbers as specified in
+PATCH and iPATCH for CoAP adopt the option numbers as specified in
 sections 5.10 and 12.2 of {{-coap}}.
 
 
 ## Error Handling {#errors}
 
-A PATCH (iPATCH) request may fail under certain known conditions. These
+A PATCH or iPATCH request may fail under certain known conditions. These
 situations should be dealt with as expressed below.
 
 
 
-Malformed PATCH (iPATCH) payload:
+Malformed PATCH or iPATCH payload:
 : If a server
-  determines that the payload provided with a PATCH (iPATCH) request is
+  determines that the payload provided with a PATCH or iPATCH request is
   not properly formatted, it can return a 4.00 (Bad Request)
   CoAP error. The definition of a malformed payload depends
   upon the CoAP Content-Format specified with the request.
 
 
-Unsupported PATCH (iPATCH) payload:
+Unsupported PATCH or iPATCH payload:
 : In case a client
   sends payload that is inappropriate for the resource
   identified by the Request-URI, the server can return a 4.15
@@ -539,7 +540,7 @@ Request too large:
 
 
 Conflicting state:
-: If the modification specified by a PATCH (iPATCH) request causes
+: If the modification specified by a PATCH or iPATCH request causes
   the resource to enter an inconsistent state that the server cannot resolve,
   the server can return
   the 4.09 (Conflict) CoAP response.   The server
@@ -577,9 +578,9 @@ status codes can also be returned.
 
 # Security Considerations
 
-This section analyses the possible threats to the CoAP FETCH and PATCH (iPATCH)
-protocols.  It is meant to inform protocol and application
-developers about the security limitations of CoAP FETCH and PATCH (iPATCH)
+This section analyses the possible threats to the CoAP FETCH and PATCH or iPATCH
+methods.  It is meant to inform protocol and application
+developers about the security limitations of CoAP FETCH and PATCH or iPATCH
 as
 described in this document.
 
@@ -589,14 +590,14 @@ considerations as all CoAP methods as described in {{-coap}}.
 The security consideration of
 section 15 of {{RFC2616}}, section 11 of {{-coap}}, and section 5 of {{-http-patch}} also apply.
 
-The security considerations for PATCH (iPATCH) are nearly identical to
+The security considerations for PATCH or iPATCH are nearly identical to
 the security considerations for PUT ({{-coap}}).  The mechanisms used for PUT can be used
-for PATCH (iPATCH) as well.
+for PATCH or iPATCH as well.
 
-PATCH (iPATCH) is secured following the CoAP recommendations as
+PATCH or iPATCH is secured following the CoAP recommendations as
 specified in section 9 of {{-coap}}. When more
 appropriate security techniques are standardized for CoAP,
-PATCH (iPATCH) can also be secured by those new techniques.
+PATCH or iPATCH can also be secured by those new techniques.
 
 
 # IANA Considerations
