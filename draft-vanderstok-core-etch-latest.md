@@ -330,8 +330,8 @@ modifications or not. It is not required that all servers execute all modificati
 or none. An Atomic Commit protocol that provides multiple server atomicity
 is out of scope.
 
-A PATCH or iPATCH response can invalidate a cache conformant with the
-PUT response. Caching behaviour as function of the valid 2.xx
+A PATCH or iPATCH response can invalidate a cache as with the
+PUT response. Caching behaviour as function of the successful (2.xx)
 response codes for PATCH or iPATCH are:
 
 * A 2.01 (Created) response invalidates any cache entry for
@@ -350,13 +350,13 @@ Servers MUST ensure that a received PATCH
 body is appropriate for the type of resource identified by
 the target resource of the request.
 
-<!--  -->
-When a request effects partial updates of a given resource, clients
-cannot use PUT, but are free to use PATCH or iPATCH.
+<!-- a bit redundant -->
+When a request is intended to effect a partial update of a given resource, clients
+cannot use PUT while supplying just the update, but are free to use PATCH or iPATCH.
 
-PATCH or iPATCH MUST not be used to restore default values to resource attributes
-which are not specified in the payload. PATCH or iPATCH specifically guarantees
-that unspecified resource attributes are not changed.
+<!-- PATCH or iPATCH MUST not be used to restore default values to resource attributes -->
+<!-- which are not specified in the payload. PATCH or iPATCH specifically guarantees -->
+<!-- that unspecified resource attributes are not changed. -->
 
 ## Simple Examples for PATCH and iPATCH {#example}
 
@@ -392,7 +392,7 @@ JSON document final state:
 {: artwork-align="left"}
 
 This example illustrates use of an idempotent modification to the
-x-coord attribute of the existing resource "object".
+x-coord member of the existing resource "object".
 The 2.04 (Changed) response code is conform with the CoAP
 PUT method.
 
@@ -508,11 +508,11 @@ Unprocessable request:
 
   * the server has insufficient computing resources to
     complete the request successfully --- 4.13 (Request Entity
-    Too Large) CoAP Response Code,
+    Too Large) CoAP Response Code (see below),
 
   * the resource specified in the request becomes invalid
-    by applying the payload --- 4.06 (Not Acceptable) CoAP
-    Response Code, <!-- shouldn't this be 4.09? -->
+    by applying the payload --- 4.09 (Conflict) CoAP
+    Response Code (see below)),
 
   In case there are more specific errors that provide more
   insight into the problem, then those should be used.
@@ -665,7 +665,11 @@ and Gengyu Wei.
 
 When published as a RFC, this section needs to be removed.
 
-Version 0 is a composition from drafts vanderstok-core-patch-03 and bormann-core-coap-fetch-00.
+Version 00 is a composition from draft-vanderstok-core-patch-03 and
+draft-bormann-core-coap-fetch-00 and replaces these two drafts.
 
 
 --- back
+
+<!--  LocalWords:  atomicity iPATCH idempotence
+ -->
