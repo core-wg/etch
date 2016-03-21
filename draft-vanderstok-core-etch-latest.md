@@ -62,7 +62,7 @@ methods only allow access to a complete resource. This
 does not permit applications to access parts of a resource. In case of resources
 with larger or complex
 data, or in situations where a resource continuity is
-required, replacing or requesting the whole resource is not an option. Several
+required, replacing or requesting the whole resource is undesirable. Several
 applications using CoAP will need to perform partial resource accesses.
 
 
@@ -80,7 +80,7 @@ request is desired.
 
 
 This specification adds new CoAP methods, FETCH, to perform the
-equivalent of a GET with a request body; and PATCH and iPATCH, to
+equivalent of a GET with a request body; and the twin methods PATCH and iPATCH, to
 modify parts of an existing CoAP resource.
 
 
@@ -150,7 +150,7 @@ method are more specifically defined.
 ## PATCH and iPATCH {#intro-patch}
 
 PATCH is also specified for HTTP in {{-http-patch}}. Most of the motivation for PATCH described
-in {{-http-patch}} also applies here. iPATCH is the idem-potent version of PATCH.
+in {{-http-patch}} also applies here. iPATCH is the idempotent version of PATCH.
 
 The PUT method exists to overwrite a resource with completely
 new contents, and cannot be used to perform partial changes.
@@ -192,22 +192,24 @@ The CoAP FETCH method is used to obtain a representation of a
 resource, giving a number of request parameters.  Unlike the CoAP GET
 method, which requests that a server return a representation of the
 resource identified by the effective request URI (as defined by {{-coap}}), the FETCH method is used by a client to ask the server to
-produce a representation based on the request parameters (described
-by the request options and payload) based on the resource specified
+produce a representation as described by the request parameters (including
+the request options and the payload) based on the resource specified
 by the effective request URI.  The payload returned in response to a
 FETCH cannot be assumed to be a complete representation of the
 resource identified by the effective request URI.
 
-The body of the request defines the request parameters.
+Together with the request options, the body of the request (which may
+be constructed from multiple payloads using the block protocol
+{{-block}}) defines the request parameters.
 Implementations MAY use a request body of any content type with the
 FETCH method; it is outside the scope of this document how
 information about admissible content types is obtained by the client
 (although we can hint that form relations ({{I-D.hartke-core-apps}})
-might be the preferred way).
+might be a preferred way).
 
 FETCH requests are both safe and idempotent with regards to the
 resource identified by the request URI.  That is, the performance of
-a fetch is not expected to alter the state of the targeted resource.
+a fetch is not intended to alter the state of the targeted resource.
 (However, while processing a search request, a server can be expected
 to allocate computing and memory resources or even create additional
 server resources through which the response to the search can be
@@ -215,16 +217,16 @@ retrieved.)
 
 A successful response to a FETCH request is expected to provide some
 indication as to the final disposition of the requested operation.
-If the response includes a body payload, the payload is expected to
+If a successful response includes a body payload, the payload is expected to
 describe the results of the FETCH operation.
 
-Depending on the response code as defined by {{-coap}} the response
-to a FETCH request is cacheable; the request payload is part of the
+Depending on the response code as defined by {{-coap}}, the response
+to a FETCH request is cacheable; the request body is part of the
 cache key.  Specifically, 2.05 "Content" response codes, the
 responses for which are cacheable, are a usual way to respond to a
 FETCH request.  (Note that this aspect differs markedly from
 {{I-D.snell-search-method}}.)  (Note also that caches that cannot use
-the request payload as part of the request key will not be able to
+the request payload as part of the cache key will not be able to
 cache responses to FETCH requests at all.)  The Max-Age option in the
 response has equivalent semantics to its use in a GET.
 
@@ -267,9 +269,9 @@ generate the request payload.  Again, form relations
 
 
 
-# PATCH (iPATCH) Method {#patch}
+# PATCH and iPATCH Methods {#patch}
 
-The PATCH (iPATCH) method requests that a set of changes described in
+The PATCH and iPATCH methods request that a set of changes described in
 the request payload is applied to the target resource of the
 request.  The set of changes is represented in a format
 identified by a media type.  If the Request-URI does not point
@@ -279,7 +281,7 @@ it can logically modify a null resource) and permissions, etc.
 Creation of a new resource would result in a 2.01 (Created)
 Response Code dependent of the patch document type.
 
-Restrictions to a PATCH (iPATCH) can be made by including the If-Match
+Restrictions to a PATCH or iPATCH request can be made by including the If-Match
 or If-None-Match options in the request (see Section 5.10.8.1
 and 5.10.8.2 of {{-coap}}).  If the resource
 could not be created or modified, then an appropriate Error
@@ -288,17 +290,24 @@ Response Code SHOULD be sent.
 The difference between the PUT and PATCH requests is
 extensively documented in {{-http-patch}}.
 
-PATCH is not safe and not idempotent conformant to HTTP  PATCH
+The PATCH method is not safe and not idempotent, as with the HTTP
+PATCH method
 specified in {{-http-patch}}.
 
-iPATCH is not safe but idempotent conformant to CoAP PUT
+The iPATCH method is not safe but idempotent, as with the CoAP PUT method
 specified in {{-coap}}, Section 5.8.3.
 
-An iPATCH request is idempotent to prevent bad outcomes from
-collisions between two iPATCH requests on the same resource in
-a similar time frame. These collisions can be detected with
-the MessageId and the source end-point provided by the CoAP
-protocol (see section 4.5 of {{-coap}}.
+A client can mark a request as idempotent by using the iPATCH method
+instead of the PATCH method.  This is the only difference between the
+two.  The indication of idempotence may enable the server to keep less
+state about the interaction; some constrained servers may only
+implement the iPATCH variant for this reason.
+
+<!-- An iPATCH request is idempotent to prevent bad outcomes from -->
+<!-- collisions between two iPATCH requests on the same resource in -->
+<!-- a similar time frame. These collisions can be detected with -->
+<!-- the MessageId and the source end-point provided by the CoAP -->
+<!-- protocol (see section 4.5 of {{-coap}}. -->
 
 PATCH and iPATCH are both atomic.
 The server MUST apply the entire set of changes atomically and
@@ -309,79 +318,76 @@ requests consecutively, thus preventing a concurrent partial
 overlapping of request modifications. Resuming,
 modifications MUST NOT be applied to the server state when an
 error occurs or only a partial execution is possible on the resources present
-in the server.  When the PATCH request is over-specified (i.e. Request specifies
-modifications to attributes which do not exist in the server), The server
-MAY execute all modifications to existing attributes and return a response
-code 2.02 Accepted.
+in the server.
+<!-- When the PATCH request is over-specified (i.e. Request specifies -->
+<!-- modifications to attributes which do not exist in the server), the server -->
+<!-- MAY execute all modifications to existing attributes and return a response -->
+<!-- code 2.02 Accepted. -->
 
-The atomicity applies to a single server. When a PATCH (iPATCH) request is
+The atomicity applies to a single server. When a PATCH or iPATCH request is
 multicast to a set of servers, each server can either execute all required
 modifications or not. It is not required that all servers execute all modifications
-or none. An Atomic Commit protocol that provides multiple server atomicity,
+or none. An Atomic Commit protocol that provides multiple server atomicity
 is out of scope.
 
-A PATCH (iPATCH) response can invalidate a cache conformant with the
+A PATCH or iPATCH response can invalidate a cache conformant with the
 PUT response. Caching behaviour as function of the valid 2.xx
-response codes for PATCH (iPATCH) are:
+response codes for PATCH or iPATCH are:
 
+* A 2.01 (Created) response invalidates any cache entry for
+  the resource indicated by the Location-\* Options; the
+  payload is a representation of the action result.
 
-
-> A 2.01 (Created) response invalidates any cache entry for
-> the resource indicated by the Location-\* Options; the
-> payload is a representation of the action result.
-
-> A 2.04 (Changed) response invalidates any cache entry
-> for the target resource; the payload is a representation of
-> the action result.
-
-
-
+* A 2.04 (Changed) response invalidates any cache entry
+  for the target resource; the payload is a representation of
+  the action result.
 
 There is no guarantee that a resource can be modified with
-PATCH (iPATCH). Servers are required to support a subset of the content
-formats as specified in sections 12.3 and 5.10.3 of {{-coap}}.
+PATCH or iPATCH.
+<!-- Servers are required to support a subset of the content -->
+<!-- formats as specified in sections 12.3 and 5.10.3 of {{-coap}}. -->
 Servers MUST ensure that a received PATCH
-payload is appropriate for the type of resource identified by
+body is appropriate for the type of resource identified by
 the target resource of the request.
 
-Clients MUST choose to use PATCH (iPATCH) rather than PUT when the
-request affects partial updates of a given resource.
+<!--  -->
+When a request effects partial updates of a given resource, clients
+cannot use PUT, but are free to use PATCH or iPATCH.
 
-PATCH (iPATCH) MUST not be used to restore default values to resource attributes
-which are not specified in the payload. PATCH (iPATCH) specifically guarantees
+PATCH or iPATCH MUST not be used to restore default values to resource attributes
+which are not specified in the payload. PATCH or iPATCH specifically guarantees
 that unspecified resource attributes are not changed.
 
-## A Simple PATCH (iPATCH) Example {#example}
+## Simple Examples for PATCH and iPATCH {#example}
 
 The example is taken over from {{RFC6902}},
 which specifies a JSON notation for PATCH operations. A
-resource located at www.example.com/object contains a target
+resource located at coap://www.example.com/object contains a target
 JSON document.
 
 
 ~~~~
-JSON document original state
-            {
-              "x-coord": 256,
-              "y-coord": 45",
-              "foo": ["bar","baz"]
-            }
+JSON document original state:
+    {
+      "x-coord": 256,
+      "y-coord": 45",
+      "foo": ["bar","baz"]
+    }
 
-REQ:
-     iPATCH CoAP://www.example.com/object
+REQ: iPATCH CoAP://www.example.com/object
 Content-Format: application/json-patch+json
-         [
-             { "op":"replace","path":"x-coord","value":45}
-         ]
-RET:
-     CoAP 2.04 Changed
+    [
+      { "op":"replace", "path":"x-coord", "value":45}
+    ]
 
-JSON document final state
-            {
-               "x-coord": 45,
-               "y-coord": 45,
-               "foo": ["bar","baz"]
-            }
+RET: CoAP 2.04 Changed
+
+JSON document final state:
+    {
+      "x-coord": 45,
+      "y-coord": 45,
+      "foo": ["bar","baz"]
+    }
 ~~~~
 {: artwork-align="left"}
 
@@ -394,70 +400,64 @@ The same example using the Content-Format application/merge-patch+json from {{RF
 
 
 ~~~~
-JSON document original state
-            {
-              "x-coord": 256,
-              "y-coord": 45,
-              "foo": ["bar","baz"]
-            }
+JSON document original state:
+    {
+      "x-coord": 256,
+      "y-coord": 45",
+      "foo": ["bar","baz"]
+    }
 
- REQ:
-     iPATCH CoAP://www.example.com/object
-Content-Format: application/merge-patch+json
+REQ: iPATCH CoAP://www.example.com/object
+Content-Format: 52 (application/merge-patch+json)
      { "x-coord":45}
-RET:
-     CoAP 2.04 Changed
 
-JSON document final state
-             {
-               "x-coord": 45,
-               "y-coord": 45,
-               "foo": ["bar","baz"]
-             }
+RET: CoAP 2.04 Changed
+
+JSON document final state:
+    {
+      "x-coord": 45,
+      "y-coord": 45,
+      "foo": ["bar","baz"]
+    }
 ~~~~
 {: artwork-align="left"}
 
 The examples show the use of the iPATCH method, but the use of the PATCH
-method must have led to the same result. Below a non-idempotent modification
+method would have led to the same result. Below a non-idempotent modification
 is shown. Because the action is non-idempotent, iPATCH returns an error,
 while PATCH executes the action.
 
 
 ~~~~
-JSON document original state
-            {
-              "x-coord": 256,
-              "y-coord": 45",
-              "foo": ["bar","baz"]
-            }
+JSON document original state:
+    {
+      "x-coord": 256,
+      "y-coord": 45",
+      "foo": ["bar","baz"]
+    }
 
- REQ:
-     iPATCH CoAP://www.example.com/object
-Content-Format: application/json-patch+json
-         [
-             { "op":"add","path":"foo/1","value":"bar"}
-         ]
-RET:
-     CoAP 4.12 Precondition Failed
+REQ: iPATCH CoAP://www.example.com/object
+Content-Format: 51 (application/json-patch+json)
+    [
+      { "op":"add","path":"foo/1","value":"bar"}
+    ]
+RET: CoAP 4.12 Precondition Failed
 
 JSON document final state is unchanged
 
-REQ:
-     PATCH CoAP://www.example.com/object
-Content-Format: application/json-patch+json
-         [
-             { "op":"add","path":"foo/1","value":"bar"}
-         ]
-RET:
-     CoAP 2.04 Changed
+REQ: PATCH CoAP://www.example.com/object
+Content-Format: 51 (application/json-patch+json)
+    [
+      { "op":"add","path":"foo/1","value":"bar"}
+    ]
+RET: CoAP 2.04 Changed
 
-JSON document final state
-
-             {
-               "x-coord": 45,
-               "y-coord": 45,
-               "foo": ["bar","bar","baz"]
-             }
+JSON document final state:
+    {
+      "x-coord": 45,
+      "y-coord": 45,
+      "foo": ["bar","bar","baz"]
+    }
 ~~~~
 {: artwork-align="left"}
 
@@ -512,7 +512,7 @@ Unprocessable request:
 
   * the resource specified in the request becomes invalid
     by applying the payload --- 4.06 (Not Acceptable) CoAP
-    Response Code,
+    Response Code, <!-- shouldn't this be 4.09? -->
 
   In case there are more specific errors that provide more
   insight into the problem, then those should be used.
@@ -559,7 +559,7 @@ Concurrent modification:
   devices might need to process requests in the order they are
   received. In case requests are received concurrently to
   modify the same resource but they cannot be queued, the
-  server can return a  5.03 (Service unavailable) CoAP response code.
+  server can return a 5.03 (Service unavailable) CoAP response code.
 
 
 Conflict handling failure:
@@ -567,7 +567,6 @@ Conflict handling failure:
   conditions to become true,
   leading to a too long request execution time, the server can return 5.03
   (service unavailable) response code.
-
 
 It is possible that other error situations, not mentioned
 here, are encountered by a CoAP server while processing the
@@ -612,10 +611,10 @@ The security considerations for PATCH or iPATCH are nearly identical to
 the security considerations for PUT ({{-coap}}).  The mechanisms used for PUT can be used
 for PATCH or iPATCH as well.
 
-PATCH or iPATCH is secured following the CoAP recommendations as
-specified in section 9 of {{-coap}}. When more
-appropriate security techniques are standardized for CoAP,
-PATCH or iPATCH can also be secured by those new techniques.
+PATCH or iPATCH are secured following the CoAP recommendations as
+specified in section 9 of {{-coap}}. When additional security
+techniques are standardized for CoAP,
+PATCH or iPATCH can also be (and need to be) secured by those new techniques.
 
 
 # IANA Considerations
