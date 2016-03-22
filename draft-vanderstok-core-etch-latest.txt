@@ -5,10 +5,10 @@
 core                                                     P. van der Stok
 Internet-Draft                                                Consultant
 Intended status: Informational                                C. Bormann
-Expires: September 22, 2016                      Universitaet Bremen TZI
+Expires: September 23, 2016                      Universitaet Bremen TZI
                                                                A. Sehgal
                                                               Consultant
-                                                          March 21, 2016
+                                                          March 22, 2016
 
 
   Patch and Fetch Methods for Constrained Application Protocol (CoAP)
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 1]
+van der Stok, et al.   Expires September 23, 2016               [Page 1]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -63,7 +63,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 22, 2016.
+   This Internet-Draft will expire on September 23, 2016.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 2]
+van der Stok, et al.   Expires September 23, 2016               [Page 2]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -165,7 +165,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 3]
+van der Stok, et al.   Expires September 23, 2016               [Page 3]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -221,7 +221,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 4]
+van der Stok, et al.   Expires September 23, 2016               [Page 4]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -277,7 +277,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 5]
+van der Stok, et al.   Expires September 23, 2016               [Page 5]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -333,7 +333,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 6]
+van der Stok, et al.   Expires September 23, 2016               [Page 6]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -365,8 +365,8 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
    all servers execute all modifications or none.  An Atomic Commit
    protocol that provides multiple server atomicity is out of scope.
 
-   A PATCH or iPATCH response can invalidate a cache conformant with the
-   PUT response.  Caching behaviour as function of the valid 2.xx
+   A PATCH or iPATCH response can invalidate a cache as with the PUT
+   response.  Caching behaviour as function of the successful (2.xx)
    response codes for PATCH or iPATCH are:
 
    o  A 2.01 (Created) response invalidates any cache entry for the
@@ -382,22 +382,17 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
    appropriate for the type of resource identified by the target
    resource of the request.
 
-   When a request effects partial updates of a given resource, clients
-   cannot use PUT, but are free to use PATCH or iPATCH.
+   When a request is intended to effect a partial update of a given
+   resource, clients cannot use PUT while supplying just the update, but
+   are free to use PATCH or iPATCH.
 
 
 
 
-
-van der Stok, et al.   Expires September 22, 2016               [Page 7]
+van der Stok, et al.   Expires September 23, 2016               [Page 7]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
-
-   PATCH or iPATCH MUST not be used to restore default values to
-   resource attributes which are not specified in the payload.  PATCH or
-   iPATCH specifically guarantees that unspecified resource attributes
-   are not changed.
 
 3.1.  Simple Examples for PATCH and iPATCH
 
@@ -428,8 +423,8 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
        }
 
    This example illustrates use of an idempotent modification to the
-   x-coord attribute of the existing resource "object".  The 2.04
-   (Changed) response code is conform with the CoAP PUT method.
+   x-coord member of the existing resource "object".  The 2.04 (Changed)
+   response code is conform with the CoAP PUT method.
 
    The same example using the Content-Format application/merge-
    patch+json from [RFC7396] looks like:
@@ -445,7 +440,12 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 8]
+
+
+
+
+
+van der Stok, et al.   Expires September 23, 2016               [Page 8]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -501,7 +501,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016               [Page 9]
+van der Stok, et al.   Expires September 23, 2016               [Page 9]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -557,7 +557,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016              [Page 10]
+van der Stok, et al.   Expires September 23, 2016              [Page 10]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -580,11 +580,11 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
       *  the server has insufficient computing resources to complete the
          request successfully -- 4.13 (Request Entity Too Large) CoAP
-         Response Code,
+         Response Code (see below),
 
       *  the resource specified in the request becomes invalid by
-         applying the payload -- 4.06 (Not Acceptable) CoAP Response
-         Code,
+         applying the payload -- 4.09 (Conflict) CoAP Response Code (see
+         below)),
 
       In case there are more specific errors that provide more insight
       into the problem, then those should be used.
@@ -613,7 +613,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016              [Page 11]
+van der Stok, et al.   Expires September 23, 2016              [Page 11]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -669,7 +669,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016              [Page 12]
+van der Stok, et al.   Expires September 23, 2016              [Page 12]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -725,7 +725,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016              [Page 13]
+van der Stok, et al.   Expires September 23, 2016              [Page 13]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -749,8 +749,8 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
    When published as a RFC, this section needs to be removed.
 
-   Version 0 is a composition from drafts vanderstok-core-patch-03 and
-   bormann-core-coap-fetch-00.
+   Version 00 is a composition from draft-vanderstok-core-patch-03 and
+   draft-bormann-core-coap-fetch-00 and replaces these two drafts.
 
 9.  References
 
@@ -781,7 +781,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016              [Page 14]
+van der Stok, et al.   Expires September 23, 2016              [Page 14]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -837,7 +837,7 @@ Internet-Draft              CoAP Fetch Patch                  March 2016
 
 
 
-van der Stok, et al.   Expires September 22, 2016              [Page 15]
+van der Stok, et al.   Expires September 23, 2016              [Page 15]
 
 Internet-Draft              CoAP Fetch Patch                  March 2016
 
@@ -893,4 +893,4 @@ Authors' Addresses
 
 
 
-van der Stok, et al.   Expires September 22, 2016              [Page 16]
+van der Stok, et al.   Expires September 23, 2016              [Page 16]

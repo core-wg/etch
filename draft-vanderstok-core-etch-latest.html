@@ -299,7 +299,7 @@ li, p {
 
   <meta name="dct.creator" content="van der Stok, P., Bormann, C., and A. Sehgal" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-vanderstok-core-etch-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-3-21" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-3-22" />
   <meta name="dct.abstract" content="The existing Constrained Application Protocol (CoAP) methods only allow access to a complete resource. This does not permit applications to access parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is undesirable. Several applications using CoAP will need to perform partial resource accesses." />
   <meta name="description" content="The existing Constrained Application Protocol (CoAP) methods only allow access to a complete resource. This does not permit applications to access parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is undesirable. Several applications using CoAP will need to perform partial resource accesses." />
 
@@ -323,7 +323,7 @@ li, p {
   <td class="right">C. Bormann</td>
 </tr>
 <tr>
-  <td class="left">Expires: September 22, 2016</td>
+  <td class="left">Expires: September 23, 2016</td>
   <td class="right">Universitaet Bremen TZI</td>
 </tr>
 <tr>
@@ -336,7 +336,7 @@ li, p {
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">March 21, 2016</td>
+  <td class="right">March 22, 2016</td>
 </tr>
 
     	
@@ -359,7 +359,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 22, 2016.</p>
+<p>This Internet-Draft will expire on September 23, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -446,7 +446,7 @@ li, p {
 <p id="rfc.section.3.p.6">A client can mark a request as idempotent by using the iPATCH method instead of the PATCH method.  This is the only difference between the two.  The indication of idempotence may enable the server to keep less state about the interaction; some constrained servers may only implement the iPATCH variant for this reason.</p>
 <p id="rfc.section.3.p.7">PATCH and iPATCH are both atomic.  The server MUST apply the entire set of changes atomically and never provide a partially modified representation to a concurrently executed GET request. Given the constrained nature of the servers, most servers will only execute CoAP requests consecutively, thus preventing a concurrent partial overlapping of request modifications. Resuming, modifications MUST NOT be applied to the server state when an error occurs or only a partial execution is possible on the resources present in the server.  </p>
 <p id="rfc.section.3.p.8">The atomicity applies to a single server. When a PATCH or iPATCH request is multicast to a set of servers, each server can either execute all required modifications or not. It is not required that all servers execute all modifications or none. An Atomic Commit protocol that provides multiple server atomicity is out of scope.</p>
-<p id="rfc.section.3.p.9">A PATCH or iPATCH response can invalidate a cache conformant with the PUT response. Caching behaviour as function of the valid 2.xx response codes for PATCH or iPATCH are:</p>
+<p id="rfc.section.3.p.9">A PATCH or iPATCH response can invalidate a cache as with the PUT response. Caching behaviour as function of the successful (2.xx) response codes for PATCH or iPATCH are:</p>
 <p/>
 
 <ul>
@@ -454,8 +454,7 @@ li, p {
   <li>A 2.04 (Changed) response invalidates any cache entry for the target resource; the payload is a representation of the action result.</li>
 </ul>
 <p id="rfc.section.3.p.11">There is no guarantee that a resource can be modified with PATCH or iPATCH.  Servers MUST ensure that a received PATCH body is appropriate for the type of resource identified by the target resource of the request.</p>
-<p id="rfc.section.3.p.12">When a request effects partial updates of a given resource, clients cannot use PUT, but are free to use PATCH or iPATCH.</p>
-<p id="rfc.section.3.p.13">PATCH or iPATCH MUST not be used to restore default values to resource attributes which are not specified in the payload. PATCH or iPATCH specifically guarantees that unspecified resource attributes are not changed.</p>
+<p id="rfc.section.3.p.12">When a request is intended to effect a partial update of a given resource, clients cannot use PUT while supplying just the update, but are free to use PATCH or iPATCH.</p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#example" id="example">Simple Examples for PATCH and iPATCH</a></h1>
 <p id="rfc.section.3.1.p.1">The example is taken over from <a href="#RFC6902">[RFC6902]</a>, which specifies a JSON notation for PATCH operations. A resource located at coap://www.example.com/object contains a target JSON document.</p>
 <pre>
@@ -481,7 +480,7 @@ JSON document final state:
       "foo": ["bar","baz"]
     }
 </pre>
-<p id="rfc.section.3.1.p.2">This example illustrates use of an idempotent modification to the x-coord attribute of the existing resource &#8220;object&#8221;.  The 2.04 (Changed) response code is conform with the CoAP PUT method.</p>
+<p id="rfc.section.3.1.p.2">This example illustrates use of an idempotent modification to the x-coord member of the existing resource &#8220;object&#8221;.  The 2.04 (Changed) response code is conform with the CoAP PUT method.</p>
 <p id="rfc.section.3.1.p.3">The same example using the Content-Format application/merge-patch+json from <a href="#RFC7396">[RFC7396]</a> looks like:</p>
 <pre>
 JSON document original state:
@@ -550,7 +549,7 @@ JSON document final state:
   <dt>Unsupported PATCH or iPATCH payload:</dt>
   <dd style="margin-left: 8">In case a client sends payload that is inappropriate for the resource identified by the Request-URI, the server can return a 4.15 (Unsupported Content-Format) CoAP error. The server can determine if the payload is supported by checking the CoAP Content-Format specified with the request.</dd>
   <dt>Unprocessable request:</dt>
-  <dd style="margin-left: 8">This situation occurs when the payload of a PATCH request is determined as valid, i.e. well-formed and supported, however, the server is unable to or incapable of processing the request. The server can return a 4.22 (Unprocessable Entity) CoAP error. More specific scenarios might include situations when: <ul><li>the server has insufficient computing resources to complete the request successfully &#8212; 4.13 (Request Entity Too Large) CoAP Response Code,</li><li>the resource specified in the request becomes invalid by applying the payload &#8212; 4.06 (Not Acceptable) CoAP Response Code, </li></ul><p> In case there are more specific errors that provide more insight into the problem, then those should be used.</p></dd>
+  <dd style="margin-left: 8">This situation occurs when the payload of a PATCH request is determined as valid, i.e. well-formed and supported, however, the server is unable to or incapable of processing the request. The server can return a 4.22 (Unprocessable Entity) CoAP error. More specific scenarios might include situations when: <ul><li>the server has insufficient computing resources to complete the request successfully &#8212; 4.13 (Request Entity Too Large) CoAP Response Code (see below),</li><li>the resource specified in the request becomes invalid by applying the payload &#8212; 4.09 (Conflict) CoAP Response Code (see below)),</li></ul><p> In case there are more specific errors that provide more insight into the problem, then those should be used.</p></dd>
   <dt>Resource not found:</dt>
   <dd style="margin-left: 8">The 4.04 (Not Found) error should be returned in case the payload of a PATCH request cannot be applied to a non-existent resource.</dd>
   <dt>Failed precondition:</dt>
@@ -700,7 +699,7 @@ JSON document final state:
 <p id="rfc.section.7.p.1">Klaus Hartke has pointed out some essential differences between CoAP and HTTP concerning PATCH, and found a number of problems in an earlier version of <a href="#fetch">Section 2</a>. We are grateful for discussions with Christian Amsuss, Timothy Carey, Paul Duffy, Kovatsch Matthias, Michel Veillette, Michael Verschoor, Thomas Watteyne, and Gengyu Wei.</p>
 <h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#change-log" id="change-log">Change log</a></h1>
 <p id="rfc.section.8.p.1">When published as a RFC, this section needs to be removed.</p>
-<p id="rfc.section.8.p.2">Version 0 is a composition from drafts vanderstok-core-patch-03 and bormann-core-coap-fetch-00.</p>
+<p id="rfc.section.8.p.2">Version 00 is a composition from draft-vanderstok-core-patch-03 and draft-bormann-core-coap-fetch-00 and replaces these two drafts.</p>
 <h1 id="rfc.references"><a href="#rfc.references">9.</a> References</h1>
 <h1 id="rfc.references.1"><a href="#rfc.references.1">9.1.</a> Normative References</h1>
 <table>
