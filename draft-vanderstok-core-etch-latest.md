@@ -1,8 +1,9 @@
 ---
 stand_alone: true
 ipr: trust200902
-docname: draft-vanderstok-core-etch-latest
-cat: info
+docname: draft-ietf-core-etch-latest
+date: 2016-05-08
+cat: std
 pi:
   toc: yes
   tocompact: yes
