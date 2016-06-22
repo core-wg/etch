@@ -87,25 +87,25 @@ Table of Contents
      1.2.  PATCH and iPATCH  . . . . . . . . . . . . . . . . . . . .   4
      1.3.  Requirements Language . . . . . . . . . . . . . . . . . .   4
      1.4.  Terminology and Acronyms  . . . . . . . . . . . . . . . .   4
-   2.  FETCH Method  . . . . . . . . . . . . . . . . . . . . . . . .   4
+   2.  FETCH Method  . . . . . . . . . . . . . . . . . . . . . . . .   5
      2.1.  The Content-Format Option . . . . . . . . . . . . . . . .   6
      2.2.  Working with Observe  . . . . . . . . . . . . . . . . . .   6
      2.3.  Working with Block  . . . . . . . . . . . . . . . . . . .   6
      2.4.  FETCH discussion  . . . . . . . . . . . . . . . . . . . .   6
-   3.  PATCH and iPATCH Methods  . . . . . . . . . . . . . . . . . .   6
-     3.1.  Simple Examples for PATCH and iPATCH  . . . . . . . . . .   8
-     3.2.  Response Codes  . . . . . . . . . . . . . . . . . . . . .  10
-     3.3.  Option Numbers  . . . . . . . . . . . . . . . . . . . . .  10
-     3.4.  Error Handling  . . . . . . . . . . . . . . . . . . . . .  10
-   4.  Discussion  . . . . . . . . . . . . . . . . . . . . . . . . .  12
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
-   8.  Change log  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  15
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  15
+     2.5.  A Simple Example for FETCH  . . . . . . . . . . . . . . .   6
+   3.  PATCH and iPATCH Methods  . . . . . . . . . . . . . . . . . .   7
+     3.1.  Simple Examples for PATCH and iPATCH  . . . . . . . . . .   9
+     3.2.  Response Codes  . . . . . . . . . . . . . . . . . . . . .  11
+     3.3.  Option Numbers  . . . . . . . . . . . . . . . . . . . . .  11
+     3.4.  Error Handling  . . . . . . . . . . . . . . . . . . . . .  11
+   4.  Discussion  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  15
+   8.  Change log  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  16
 
 
 
@@ -113,6 +113,8 @@ van der Stok, et al.    Expires November 9, 2016                [Page 2]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
+
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
 
 1.  Introduction
 
@@ -160,8 +162,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
       transfer is not available for transferring large URI options in
       multiple rounds.
 
-   As an alternative to using GET, many implementations make use of the
-   POST method to perform extended requests, even if they are
 
 
 
@@ -170,6 +170,8 @@ van der Stok, et al.    Expires November 9, 2016                [Page 3]
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
+   As an alternative to using GET, many implementations make use of the
+   POST method to perform extended requests, even if they are
    semantically idempotent, safe, and even cacheable, to be able to pass
    along the input parameters within the request payload as opposed to
    using the request URI.
@@ -212,12 +214,10 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
    This document uses terminology defined in [RFC5789] and [RFC7252].
 
-2.  FETCH Method
 
-   The CoAP FETCH method is used to obtain a representation of a
-   resource, giving a number of request parameters.  Unlike the CoAP GET
-   method, which requests that a server return a representation of the
-   resource identified by the effective request URI (as defined by
+
+
+
 
 
 
@@ -226,6 +226,12 @@ van der Stok, et al.    Expires November 9, 2016                [Page 4]
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
+2.  FETCH Method
+
+   The CoAP FETCH method is used to obtain a representation of a
+   resource, giving a number of request parameters.  Unlike the CoAP GET
+   method, which requests that a server return a representation of the
+   resource identified by the effective request URI (as defined by
    [RFC7252]), the FETCH method is used by a client to ask the server to
    produce a representation as described by the request parameters
    (including the request options and the payload) based on the resource
@@ -268,12 +274,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    The semantics of the FETCH method change to a "conditional FETCH" if
    the request message includes an If-Match, or If-None-Match option
    ([RFC7252]).  A conditional FETCH requests that the query be
-   performed only under the circumstances described by the conditional
-   option(s).  It is important to note, however, that such conditions
-   are evaluated against the state of the target resource itself as
-   opposed to the results of the FETCH operation.
-
-
 
 
 
@@ -281,6 +281,11 @@ van der Stok, et al.    Expires November 9, 2016                [Page 5]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
+
+   performed only under the circumstances described by the conditional
+   option(s).  It is important to note, however, that such conditions
+   are evaluated against the state of the target resource itself as
+   opposed to the results of the FETCH operation.
 
    TODO This needs some additional text on what an ETag on a FETCH
    result means.
@@ -308,6 +313,67 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    generate the request payload.  Again, form relations
    ([I-D.hartke-core-apps]) may be able to fill parts of this gap.
 
+2.5.  A Simple Example for FETCH
+
+   The FETCH method needs a media type for its payload (as expressed by
+   the Content-Format request option) that specifies the search query in
+   a similar detail as is shown for the patch payload in the PATCH
+   example in Section 3.1.  ([I-D.snell-search-method] invents a "text/
+   query" format based on some hypothetical SQL dialect for its
+   examples.)
+
+   The example below illustrates retrieval of a subset of a JSON object
+   (the same object as used in Section 3.1).  Using a hypothetical media
+   type "application/example-map-keys+json", the client specifies the
+   items in the object that it wants: it supplies a JSON array giving
+   the map keys for these items.  A resource located at
+   "coap://www.example.com/object" can be represented by a JSON document
+   that we will consider as the target of the FETCH.  The client wants
+   to learn the contents of the single map key "foo" within this target:
+
+
+
+van der Stok, et al.    Expires November 9, 2016                [Page 6]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
+   {
+     "x-coord": 256,
+     "y-coord": 45",
+     "foo": ["bar","baz"]
+   }
+
+        FETCH example: JSON document that might be returned by GET
+
+   The example FETCH request specifies a single top-level member desired
+   by giving its map key as the sole element of the "example-map-keys"
+   payload:
+
+   FETCH CoAP://www.example.com/object
+   Content-Format: application/example-map-keys+json
+   Accept: application/json
+   [
+     "foo"
+   ]
+
+                          FETCH example: Request
+
+   The server returns a subset document with just the selected member:
+
+   2.05 Content
+   Content-Format: application/json
+   {
+     "foo": ["bar","baz"]
+   }
+
+             FETCH example: Response with subset JSON document
+
+   By the logic of this example, the requester could have entered more
+   than one map key into the request payload array and would have
+   received a more complete subset of the top-level JSON object that is
+   representing the resource.
+
 3.  PATCH and iPATCH Methods
 
    The PATCH and iPATCH methods request that a set of changes described
@@ -320,6 +386,14 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    would result in a 2.01 (Created) Response Code dependent of the patch
    document type.
 
+
+
+
+van der Stok, et al.    Expires November 9, 2016                [Page 7]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
    Restrictions to a PATCH or iPATCH request can be made by including
    the If-Match or If-None-Match options in the request (see
    Section 5.10.8.1 and 5.10.8.2 of [RFC7252]).  If the resource could
@@ -328,15 +402,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
    The difference between the PUT and PATCH requests is extensively
    documented in [RFC5789].
-
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 6]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
    The PATCH method is not safe and not idempotent, as with the HTTP
    PATCH method specified in [RFC5789].
@@ -377,6 +442,14 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
       target resource; the payload is a representation of the action
       result.
 
+
+
+
+van der Stok, et al.    Expires November 9, 2016                [Page 8]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
    There is no guarantee that a resource can be modified with PATCH or
    iPATCH.  Servers MUST ensure that a received PATCH body is
    appropriate for the type of resource identified by the target
@@ -385,14 +458,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    When a request is intended to effect a partial update of a given
    resource, clients cannot use PUT while supplying just the update, but
    are free to use PATCH or iPATCH.
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 7]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
 3.1.  Simple Examples for PATCH and iPATCH
 
@@ -436,16 +501,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-
-
-
-
-
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 8]
+van der Stok, et al.    Expires November 9, 2016                [Page 9]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -501,7 +557,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-van der Stok, et al.    Expires November 9, 2016                [Page 9]
+van der Stok, et al.    Expires November 9, 2016               [Page 10]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -557,7 +613,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-van der Stok, et al.    Expires November 9, 2016               [Page 10]
+van der Stok, et al.    Expires November 9, 2016               [Page 11]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -613,7 +669,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-van der Stok, et al.    Expires November 9, 2016               [Page 11]
+van der Stok, et al.    Expires November 9, 2016               [Page 12]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -669,7 +725,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-van der Stok, et al.    Expires November 9, 2016               [Page 12]
+van der Stok, et al.    Expires November 9, 2016               [Page 13]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -725,7 +781,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-van der Stok, et al.    Expires November 9, 2016               [Page 13]
+van der Stok, et al.    Expires November 9, 2016               [Page 14]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -781,7 +837,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-van der Stok, et al.    Expires November 9, 2016               [Page 14]
+van der Stok, et al.    Expires November 9, 2016               [Page 15]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -837,7 +893,7 @@ Authors' Addresses
 
 
 
-van der Stok, et al.    Expires November 9, 2016               [Page 15]
+van der Stok, et al.    Expires November 9, 2016               [Page 16]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
@@ -893,4 +949,4 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-van der Stok, et al.    Expires November 9, 2016               [Page 16]
+van der Stok, et al.    Expires November 9, 2016               [Page 17]

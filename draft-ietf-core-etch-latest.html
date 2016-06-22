@@ -278,6 +278,7 @@ li, p {
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 Working with Observe"/>
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 Working with Block"/>
 <link href="#rfc.section.2.4" rel="Chapter" title="2.4 FETCH discussion"/>
+<link href="#rfc.section.2.5" rel="Chapter" title="2.5 A Simple Example for FETCH"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 PATCH and iPATCH Methods"/>
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Simple Examples for PATCH and iPATCH"/>
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Response Codes"/>
@@ -381,6 +382,7 @@ li, p {
 <li>2.2.   <a href="#rfc.section.2.2">Working with Observe</a></li>
 <li>2.3.   <a href="#rfc.section.2.3">Working with Block</a></li>
 <li>2.4.   <a href="#rfc.section.2.4">FETCH discussion</a></li>
+<li>2.5.   <a href="#rfc.section.2.5">A Simple Example for FETCH</a></li>
 </ul><li>3.   <a href="#rfc.section.3">PATCH and iPATCH Methods</a></li>
 <ul><li>3.1.   <a href="#rfc.section.3.1">Simple Examples for PATCH and iPATCH</a></li>
 <li>3.2.   <a href="#rfc.section.3.2">Response Codes</a></li>
@@ -437,6 +439,37 @@ li, p {
 <p id="rfc.section.2.3.p.1">The Block1 option <a href="#I-D.ietf-core-block">[I-D.ietf-core-block]</a> can be used with a FETCH request as it would be used with a POST request; the Block2 option can then be used as with GET or POST.</p>
 <h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#fetch-discuss" id="fetch-discuss">FETCH discussion</a></h1>
 <p id="rfc.section.2.4.p.1">One property of FETCH that may be non-obvious is that a FETCH request cannot be generated from a link alone, but also needs a way to generate the request payload.  Again, form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) may be able to fill parts of this gap.</p>
+<h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> <a href="#fetch-example" id="fetch-example">A Simple Example for FETCH</a></h1>
+<p id="rfc.section.2.5.p.1">The FETCH method needs a media type for its payload (as expressed by the Content-Format request option) that specifies the search query in a similar detail as is shown for the patch payload in the PATCH example in <a href="#example">Section 3.1</a>. (<a href="#I-D.snell-search-method">[I-D.snell-search-method]</a> invents a <samp>text/query</samp> format based on some hypothetical SQL dialect for its examples.)</p>
+<p id="rfc.section.2.5.p.2">The example below illustrates retrieval of a subset of a JSON object (the same object as used in <a href="#example">Section 3.1</a>).  Using a hypothetical media type <samp>application/example-map-keys+json</samp>, the client specifies the items in the object that it wants: it supplies a JSON array giving the map keys for these items.  A resource located at <samp>coap://www.example.com/object</samp> can be represented by a JSON document that we will consider as the target of the FETCH. The client wants to learn the contents of the single map key <samp>foo</samp> within this target:</p>
+<pre>
+{
+  "x-coord": 256,
+  "y-coord": 45",
+  "foo": ["bar","baz"]
+}
+</pre>
+<p class="figure">FETCH example: JSON document that might be returned by GET</p>
+<p id="rfc.section.2.5.p.3">The example FETCH request specifies a single top-level member desired by giving its map key as the sole element of the <samp>example-map-keys</samp> payload:</p>
+<pre>
+FETCH CoAP://www.example.com/object
+Content-Format: application/example-map-keys+json
+Accept: application/json
+[
+  "foo"
+]
+</pre>
+<p class="figure">FETCH example: Request</p>
+<p id="rfc.section.2.5.p.4">The server returns a subset document with just the selected member:</p>
+<pre>
+2.05 Content
+Content-Format: application/json
+{
+  "foo": ["bar","baz"]
+}
+</pre>
+<p class="figure">FETCH example: Response with subset JSON document</p>
+<p id="rfc.section.2.5.p.5">By the logic of this example, the requester could have entered more than one map key into the request payload array and would have received a more complete subset of the top-level JSON object that is representing the resource.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#patch" id="patch">PATCH and iPATCH Methods</a></h1>
 <p id="rfc.section.3.p.1">The PATCH and iPATCH methods request that a set of changes described in the request payload is applied to the target resource of the request.  The set of changes is represented in a format identified by a media type.  If the Request-URI does not point to an existing resource, the server MAY create a new resource with that URI, depending on the patch document type (whether it can logically modify a null resource) and permissions, etc.  Creation of a new resource would result in a 2.01 (Created) Response Code dependent of the patch document type.</p>
 <p id="rfc.section.3.p.2">Restrictions to a PATCH or iPATCH request can be made by including the If-Match or If-None-Match options in the request (see Section 5.10.8.1 and 5.10.8.2 of <a href="#RFC7252">[RFC7252]</a>).  If the resource could not be created or modified, then an appropriate Error Response Code SHOULD be sent.</p>
