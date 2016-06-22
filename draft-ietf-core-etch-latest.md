@@ -53,7 +53,7 @@ informative:
   RFC5323:
   I-D.vanderstok-core-comi:
   I-D.hartke-core-apps:
-  I-D.snell-search-method:
+  I-D.snell-search-method: search
 
 --- abstract
 
@@ -268,6 +268,63 @@ cannot be generated from a link alone, but also needs a way to
 generate the request payload.  Again, form relations
 ({{I-D.hartke-core-apps}}) may be able to fill parts of this gap.
 
+
+## A Simple Example for FETCH {#fetch-example}
+
+The FETCH method needs a media type for its payload (as expressed by
+the Content-Format request option) that specifies the search query in
+a similar detail as is shown for the patch payload in the PATCH
+example in {{example}}. ({{I-D.snell-search-method}} invents a
+`text/query` format based on some hypothetical SQL dialect for its
+examples.)
+
+The example below illustrates retrieval of a subset of a JSON object
+(the same object as used in {{example}}).  Using a hypothetical media type
+`application/example-map-keys+json`, the client specifies the items in
+the object that it wants: it supplies a JSON array giving the map keys
+for these items.  A resource located at `coap://www.example.com/object`
+can be represented by a JSON document that we will consider as the
+target of the FETCH. The client wants to learn the contents of the
+single map key `foo` within this target:
+
+~~~
+{
+  "x-coord": 256,
+  "y-coord": 45",
+  "foo": ["bar","baz"]
+}
+~~~
+{: title="FETCH example: JSON document that might be returned by GET"}
+
+The example FETCH request specifies a single top-level member desired
+by giving its map key as the sole element of the `example-map-keys`
+payload:
+
+~~~
+FETCH CoAP://www.example.com/object
+Content-Format: application/example-map-keys+json
+Accept: application/json
+[
+  "foo"
+]
+~~~
+{: title="FETCH example: Request"}
+
+The server returns a subset document with just the selected member:
+
+~~~
+2.05 Content
+Content-Format: application/json
+{
+  "foo": ["bar","baz"]
+}
+~~~
+{: title="FETCH example: Response with subset JSON document"}
+
+By the logic of this example, the requester could have entered more
+than one map key into the request payload array and would have
+received a more complete subset of the top-level JSON object that is
+representing the resource.
 
 
 # PATCH and iPATCH Methods {#patch}
