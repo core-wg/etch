@@ -88,24 +88,24 @@ Table of Contents
      1.3.  Requirements Language . . . . . . . . . . . . . . . . . .   4
      1.4.  Terminology and Acronyms  . . . . . . . . . . . . . . . .   4
    2.  FETCH Method  . . . . . . . . . . . . . . . . . . . . . . . .   5
-     2.1.  The Content-Format Option . . . . . . . . . . . . . . . .   6
-     2.2.  Working with Observe  . . . . . . . . . . . . . . . . . .   6
-     2.3.  Working with Block  . . . . . . . . . . . . . . . . . . .   6
-     2.4.  FETCH discussion  . . . . . . . . . . . . . . . . . . . .   6
-     2.5.  A Simple Example for FETCH  . . . . . . . . . . . . . . .   6
-   3.  PATCH and iPATCH Methods  . . . . . . . . . . . . . . . . . .   7
+     2.1.  Response Codes  . . . . . . . . . . . . . . . . . . . . .   6
+     2.2.  Option Numbers  . . . . . . . . . . . . . . . . . . . . .   6
+       2.2.1.  The Content-Format Option . . . . . . . . . . . . . .   6
+       2.2.2.  The ETag Option . . . . . . . . . . . . . . . . . . .   6
+     2.3.  Working with Observe  . . . . . . . . . . . . . . . . . .   6
+     2.4.  Working with Block  . . . . . . . . . . . . . . . . . . .   6
+     2.5.  FETCH discussion  . . . . . . . . . . . . . . . . . . . .   7
+     2.6.  A Simple Example for FETCH  . . . . . . . . . . . . . . .   7
+   3.  PATCH and iPATCH Methods  . . . . . . . . . . . . . . . . . .   8
      3.1.  Simple Examples for PATCH and iPATCH  . . . . . . . . . .   9
      3.2.  Response Codes  . . . . . . . . . . . . . . . . . . . . .  11
      3.3.  Option Numbers  . . . . . . . . . . . . . . . . . . . . .  11
-     3.4.  Error Handling  . . . . . . . . . . . . . . . . . . . . .  11
+     3.4.  Error Handling  . . . . . . . . . . . . . . . . . . . . .  12
    4.  Discussion  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  15
    8.  Change log  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  16
 
 
 
@@ -114,7 +114,10 @@ van der Stok, et al.    Expires November 9, 2016                [Page 2]
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  16
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
 
 1.  Introduction
 
@@ -159,9 +162,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    o  The request parameters are not limited by the maximum size of the
       URI.  In HTTP, that is a problem as the practical limit for this
       size varies.  In CoAP, another problem is that the block-wise
-      transfer is not available for transferring large URI options in
-      multiple rounds.
-
 
 
 
@@ -169,6 +169,9 @@ van der Stok, et al.    Expires November 9, 2016                [Page 3]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
+
+      transfer is not available for transferring large URI options in
+      multiple rounds.
 
    As an alternative to using GET, many implementations make use of the
    POST method to perform extended requests, even if they are
@@ -213,9 +216,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 1.4.  Terminology and Acronyms
 
    This document uses terminology defined in [RFC5789] and [RFC7252].
-
-
-
 
 
 
@@ -287,33 +287,65 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    are evaluated against the state of the target resource itself as
    opposed to the results of the FETCH operation.
 
-   TODO This needs some additional text on what an ETag on a FETCH
-   result means.
+2.1.  Response Codes
 
-2.1.  The Content-Format Option
+   FETCH for CoAP adopts the response codes as specified in sections 5.9
+   and 12.1.2 of [RFC7252].
+
+2.2.  Option Numbers
+
+   FETCH for CoAP adopts the option numbers as specified in sections
+   5.10 and 12.2 of [RFC7252].
+
+   Generally, options defined for GET act in an analogous way for FETCH.
+   Two specific cases are called out in the rest of this section.
+
+2.2.1.  The Content-Format Option
 
    A FETCH request MUST include a Content-Format option to specify the
    media type and content encoding of the request body.
 
-2.2.  Working with Observe
+2.2.2.  The ETag Option
+
+   The ETag Option on a FETCH result has the same semantics as defined
+   in Section 5.10.6. of [RFC7252].  In particular, its use as a
+   response option describes the "tagged representation", which for
+   FETCH is the same as the "selected representation".  The FETCH
+   payload is input to that selection process and therefore needs to be
+   part of the cache key.  Similarly, its use as a request option can
+   elicit a 2.03 Valid response if the representation associated with
+   the ETag would still be selected by the FETCH request (including its
+   payload).
+
+2.3.  Working with Observe
 
    The Observe option [RFC7641] can be used with a FETCH request as it
    can be used with a GET request.
 
-2.3.  Working with Block
+2.4.  Working with Block
 
    The Block1 option [I-D.ietf-core-block] can be used with a FETCH
    request as it would be used with a POST request; the Block2 option
    can then be used as with GET or POST.
 
-2.4.  FETCH discussion
+
+
+
+
+
+van der Stok, et al.    Expires November 9, 2016                [Page 6]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
+2.5.  FETCH discussion
 
    One property of FETCH that may be non-obvious is that a FETCH request
    cannot be generated from a link alone, but also needs a way to
    generate the request payload.  Again, form relations
    ([I-D.hartke-core-apps]) may be able to fill parts of this gap.
 
-2.5.  A Simple Example for FETCH
+2.6.  A Simple Example for FETCH
 
    The FETCH method needs a media type for its payload (as expressed by
    the Content-Format request option) that specifies the search query in
@@ -330,13 +362,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    "coap://www.example.com/object" can be represented by a JSON document
    that we will consider as the target of the FETCH.  The client wants
    to learn the contents of the single map key "foo" within this target:
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 6]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
    {
      "x-coord": 256,
@@ -360,6 +385,14 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
                           FETCH example: Request
 
    The server returns a subset document with just the selected member:
+
+
+
+
+van der Stok, et al.    Expires November 9, 2016                [Page 7]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
 
    2.05 Content
    Content-Format: application/json
@@ -386,14 +419,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    would result in a 2.01 (Created) Response Code dependent of the patch
    document type.
 
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 7]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
-
    Restrictions to a PATCH or iPATCH request can be made by including
    the If-Match or If-None-Match options in the request (see
    Section 5.10.8.1 and 5.10.8.2 of [RFC7252]).  If the resource could
@@ -417,6 +442,14 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
    PATCH and iPATCH are both atomic.  The server MUST apply the entire
    set of changes atomically and never provide a partially modified
+
+
+
+van der Stok, et al.    Expires November 9, 2016                [Page 8]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
    representation to a concurrently executed GET request.  Given the
    constrained nature of the servers, most servers will only execute
    CoAP requests consecutively, thus preventing a concurrent partial
@@ -442,14 +475,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
       target resource; the payload is a representation of the action
       result.
 
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 8]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
-
    There is no guarantee that a resource can be modified with PATCH or
    iPATCH.  Servers MUST ensure that a received PATCH body is
    appropriate for the type of resource identified by the target
@@ -464,6 +489,22 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    The example is taken over from [RFC6902], which specifies a JSON
    notation for PATCH operations.  A resource located at
    coap://www.example.com/object contains a target JSON document.
+
+
+
+
+
+
+
+
+
+
+
+
+van der Stok, et al.    Expires November 9, 2016                [Page 9]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
 
    JSON document original state:
        {
@@ -494,18 +535,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    The same example using the Content-Format application/merge-
    patch+json from [RFC7396] looks like:
 
-
-
-
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 9]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
-
    JSON document original state:
        {
          "x-coord": 256,
@@ -526,41 +555,17 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
          "foo": ["bar","baz"]
        }
 
-   The examples show the use of the iPATCH method, but the use of the
-   PATCH method would have led to the same result.  Below a non-
-   idempotent modification is shown.  Because the action is non-
-   idempotent, iPATCH returns an error, while PATCH executes the action.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 van der Stok, et al.    Expires November 9, 2016               [Page 10]
 
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
+
+   The examples show the use of the iPATCH method, but the use of the
+   PATCH method would have led to the same result.  Below a non-
+   idempotent modification is shown.  Because the action is non-
+   idempotent, iPATCH returns an error, while PATCH executes the action.
 
    JSON document original state:
        {
@@ -602,14 +607,9 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    PATCH and iPATCH for CoAP adopt the option numbers as specified in
    sections 5.10 and 12.2 of [RFC7252].
 
-3.4.  Error Handling
 
-   A PATCH or iPATCH request may fail under certain known conditions.
-   These situations should be dealt with as expressed below.
 
-   Malformed PATCH or iPATCH payload:  If a server determines that the
-      payload provided with a PATCH or iPATCH request is not properly
-      formatted, it can return a 4.00 (Bad Request) CoAP error.  The
+
 
 
 
@@ -618,6 +618,14 @@ van der Stok, et al.    Expires November 9, 2016               [Page 11]
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
+3.4.  Error Handling
+
+   A PATCH or iPATCH request may fail under certain known conditions.
+   These situations should be dealt with as expressed below.
+
+   Malformed PATCH or iPATCH payload:  If a server determines that the
+      payload provided with a PATCH or iPATCH request is not properly
+      formatted, it can return a 4.00 (Bad Request) CoAP error.  The
       definition of a malformed payload depends upon the CoAP Content-
       Format specified with the request.
 
@@ -658,14 +666,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
       than a CoAP server can process, then it can return the 4.13
       (Request Entity Too Large) CoAP error.
 
-   Conflicting state:  If the modification specified by a PATCH or
-      iPATCH request causes the resource to enter an inconsistent state
-      that the server cannot resolve, the server can return the 4.09
-      (Conflict) CoAP response.  The server SHOULD generate a payload
-      that includes enough information for a user to recognize the
-      source of the conflict.  The server MAY return the actual resource
-      state to provide the client with the means to create a new
-      consistent resource state.  Such a situation might be encountered
 
 
 
@@ -674,6 +674,14 @@ van der Stok, et al.    Expires November 9, 2016               [Page 12]
 Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
+   Conflicting state:  If the modification specified by a PATCH or
+      iPATCH request causes the resource to enter an inconsistent state
+      that the server cannot resolve, the server can return the 4.09
+      (Conflict) CoAP response.  The server SHOULD generate a payload
+      that includes enough information for a user to recognize the
+      source of the conflict.  The server MAY return the actual resource
+      state to provide the client with the means to create a new
+      consistent resource state.  Such a situation might be encountered
       when a structural modification is applied to a configuration data-
       store, but the structures being modified do not exist.
 
@@ -707,6 +715,21 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    methods with a surprising similarity in the idempotence and safety
    attributes:
 
+
+
+
+
+
+
+
+
+
+
+van der Stok, et al.    Expires November 9, 2016               [Page 13]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
            +------+--------+------+--------+------+------------+
            | Code | Name   | Code | Name   | safe | idempotent |
            +------+--------+------+--------+------+------------+
@@ -722,13 +745,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    PATCH or iPATCH methods.  It is meant to inform protocol and
    application developers about the security limitations of CoAP FETCH
    and PATCH or iPATCH as described in this document.
-
-
-
-van der Stok, et al.    Expires November 9, 2016               [Page 13]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
    The FETCH method is subject to the same general security
    considerations as all CoAP methods as described in [RFC7252].
@@ -762,6 +778,14 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    response codes that GET can return, plus 4.15 "Unsupported Content-
    Format" with the same semantics as with POST.
 
+
+
+
+van der Stok, et al.    Expires November 9, 2016               [Page 14]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
    The PATCH method is neither idempotent nor safe.  It returns the same
    response codes that POST can return, plus 4.09 "Conflict" with the
    semantics specified in Section 3.4.
@@ -777,14 +801,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
    IANA is requested to add entries to the sub-registry "CoAP Content-
    Formats", within the "CoRE Parameters" registry:
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016               [Page 14]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
        +------------------------------+----------+----+-----------+
        | Media Type                   | Encoding | ID | Reference |
@@ -817,6 +833,15 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+
+van der Stok, et al.    Expires November 9, 2016               [Page 15]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
@@ -831,16 +856,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    [RFC5789]  Dusseault, L. and J. Snell, "PATCH Method for HTTP",
               RFC 5789, DOI 10.17487/RFC5789, March 2010,
               <http://www.rfc-editor.org/info/rfc5789>.
-
-
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016               [Page 15]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
    [RFC6902]  Bryan, P., Ed. and M. Nottingham, Ed., "JavaScript Object
               Notation (JSON) Patch", RFC 6902, DOI 10.17487/RFC6902,
@@ -876,6 +891,13 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
               draft-vanderstok-core-comi-09 (work in progress), March
               2016.
 
+
+
+van der Stok, et al.    Expires November 9, 2016               [Page 16]
+
+Internet-Draft              CoAP Fetch Patch                    May 2016
+
+
    [I-D.hartke-core-apps]
               Hartke, K., "CoRE Application Descriptions", draft-hartke-
               core-apps-03 (work in progress), February 2016.
@@ -886,17 +908,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
               April 2015.
 
 Authors' Addresses
-
-
-
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016               [Page 16]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
    Peter van der Stok
    Consultant
@@ -918,17 +929,6 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    Consultant
 
    Email: anuj@iurs.org
-
-
-
-
-
-
-
-
-
-
-
 
 
 
