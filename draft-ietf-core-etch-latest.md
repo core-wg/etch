@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-05-08
+date: 2016-06-24
 cat: std
 pi:
   toc: yes
@@ -42,7 +42,6 @@ author:
 normative:
   RFC2119:
   RFC2616:
-  RFC5226:
   RFC5789: http-patch
   RFC6902:
   RFC7252: coap
