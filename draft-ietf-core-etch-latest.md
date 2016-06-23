@@ -239,14 +239,35 @@ option(s).  It is important to note, however, that such conditions
 are evaluated against the state of the target resource itself as
 opposed to the results of the FETCH operation.
 
-TODO This needs some
-additional text on what an ETag on a FETCH result means.
 
-## The Content-Format Option {#fetch-format}
+## Response Codes {#response}
+
+FETCH for CoAP adopts the response codes as specified in
+sections 5.9 and 12.1.2 of {{-coap}}.
+
+## Option Numbers {#option}
+
+FETCH for CoAP adopts the option numbers as specified in
+sections 5.10 and 12.2 of {{-coap}}.
+
+Generally, options defined for GET act in an analogous way for FETCH.
+Two specific cases are called out in the rest of this section.
+
+### The Content-Format Option {#fetch-format}
 
 A FETCH request MUST include a Content-Format option to specify the
 media type and content encoding of the request body.
 
+### The ETag Option {#fetch-etag}
+
+The ETag Option on a FETCH result has the same semantics as defined in
+Section 5.10.6. of {{-coap}}.  In particular, its use as a response
+option describes the "tagged representation", which for FETCH is the
+same as the "selected representation".  The FETCH payload is input to
+that selection process and therefore needs to be part of the cache
+key.  Similarly, its use as a request option can elicit a 2.03 Valid
+response if the representation associated with the ETag would still be
+selected by the FETCH request (including its payload).
 
 ## Working with Observe {#fetch-observe}
 
