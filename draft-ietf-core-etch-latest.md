@@ -240,12 +240,12 @@ are evaluated against the state of the target resource itself as
 opposed to the results of the FETCH operation.
 
 
-## Response Codes {#response}
+## Response Codes {#fetch-response}
 
 FETCH for CoAP adopts the response codes as specified in
 sections 5.9 and 12.1.2 of {{-coap}}.
 
-## Option Numbers {#option}
+## Option Numbers {#fetch-option}
 
 FETCH for CoAP adopts the option numbers as specified in
 sections 5.10 and 12.2 of {{-coap}}.
