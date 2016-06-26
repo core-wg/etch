@@ -264,7 +264,7 @@ Section 5.10.6. of {{-coap}}.  In particular, its use as a response
 option describes the "tagged representation", which for FETCH is the
 same as the "selected representation".  The FETCH payload is input to
 that selection process and therefore needs to be part of the cache
-key.  Similarly, its use as a request option can elicit a 2.03 Valid
+key.  Similarly, the use of ETag as a request option can elicit a 2.03 Valid
 response if the representation associated with the ETag would still be
 selected by the FETCH request (including its payload).
 
