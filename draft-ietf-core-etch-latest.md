@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-06-24
+date: 2016-06-29
 cat: std
 pi:
   toc: yes
@@ -545,8 +545,8 @@ JSON document final state:
 ## Response Codes {#response}
 
 PATCH and iPATCH for CoAP adopt the response codes as specified in
-sections 5.9 and 12.1.2 of {{-coap}}.
-
+sections 5.9 and 12.1.2 of {{-coap}} and adds 4.09 "Conflict" and 4.22
+"Unprocessable Entity" with the semantics specified in {{errors}}.
 
 ## Option Numbers {#option}
 
@@ -714,15 +714,20 @@ response codes that GET can return, plus 4.15 "Unsupported
 Content-Format" with the same semantics as with POST.
 
 The PATCH method is neither idempotent nor safe.  It returns the same
-response codes that POST can return, plus 4.09 "Conflict" with the
-semantics specified in {{errors}}.
+response codes that POST can return, plus 4.09 "Conflict" and 4.22
+"Unprocessable Entity" with the semantics specified in {{errors}}.
+
+The iPATCH method is identical to the PATCH method, except that it is
+idempotent.
 
 IANA is requested to add the following code to the sub-registry "CoAP
 response codes":
 
-| Code | Name     | Reference |
-|------|----------|-----------|
-| 4.09 | Conflict | [RFCthis] |
+| Code | Name                 | Reference |
+|------|----------------------|-----------|
+| 4.09 | Conflict             | [RFCthis] |
+| 4.22 | Unprocessable Entity | [RFCthis] |
+
 
 IANA is requested to add entries to the sub-registry "CoAP
 Content-Formats", within the "CoRE Parameters" registry:
