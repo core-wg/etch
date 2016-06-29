@@ -737,14 +737,6 @@ Content-Formats", within the "CoRE Parameters" registry:
 | application/json-patch+json  |          | 51 | {{RFC6902}} |
 | application/merge-patch+json |          | 52 | {{RFC7396}} |
 
-# Acknowledgements
-
-Klaus Hartke has pointed out some essential differences between CoAP and
-HTTP concerning PATCH, and found a number of problems in an earlier version
-of {{fetch}}. We are grateful for discussions with Christian Amsuss, Timothy Carey, Paul
-Duffy, Kovatsch Matthias, Michel Veillette, Michael Verschoor, Thomas Watteyne,
-and Gengyu Wei.
-
 
 # Change log
 
@@ -753,8 +745,23 @@ When published as a RFC, this section needs to be removed.
 Version 00 is a composition from draft-vanderstok-core-patch-03 and
 draft-bormann-core-coap-fetch-00 and replaces these two drafts.
 
+Version 01 added an example for FETCH and is more explicit about
+some response codes and options.
+
+Upcoming version 02 addresses the WGLC comments.
 
 --- back
+
+# Acknowledgements
+{: numbered="no"}
+
+Klaus Hartke has pointed out some essential differences between CoAP and
+HTTP concerning PATCH, and found a number of problems in an earlier version
+of {{fetch}}. We are grateful for discussions with Christian Amsuss,
+Andy Bierman, Timothy Carey, Paul
+Duffy, Matthias Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne,
+and Gengyu Wei.  Christian Groves provided detailed
+comments during the Working-Group Last Call.
 
 <!--  LocalWords:  atomicity iPATCH idempotence
  -->
