@@ -104,8 +104,8 @@ Table of Contents
    4.  Discussion  . . . . . . . . . . . . . . . . . . . . . . . . .  13
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  15
-   8.  Change log  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+   7.  Change log  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
 
 
 
@@ -114,9 +114,9 @@ van der Stok, et al.    Expires December 31, 2016               [Page 2]
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  16
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  16
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  16
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  17
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
 
 1.  Introduction
@@ -813,26 +813,26 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
        | application/merge-patch+json |          | 52 | [RFC7396] |
        +------------------------------+----------+----+-----------+
 
-7.  Acknowledgements
-
-   Klaus Hartke has pointed out some essential differences between CoAP
-   and HTTP concerning PATCH, and found a number of problems in an
-   earlier version of Section 2.  We are grateful for discussions with
-   Christian Amsuss, Timothy Carey, Paul Duffy, Kovatsch Matthias,
-   Michel Veillette, Michael Verschoor, Thomas Watteyne, and Gengyu Wei.
-
-8.  Change log
+7.  Change log
 
    When published as a RFC, this section needs to be removed.
 
    Version 00 is a composition from draft-vanderstok-core-patch-03 and
    draft-bormann-core-coap-fetch-00 and replaces these two drafts.
 
-9.  References
+   Version 01 added an example for FETCH and is more explicit about some
+   response codes and options.
 
+   Upcoming version 02 addresses the WGLC comments.
 
+8.  References
 
+8.1.  Normative References
 
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
 
 
 
@@ -841,13 +841,6 @@ van der Stok, et al.    Expires December 31, 2016              [Page 15]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
-
-9.1.  Normative References
-
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <http://www.rfc-editor.org/info/rfc2119>.
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
@@ -881,22 +874,12 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
               Bormann, C. and Z. Shelby, "Block-wise transfers in CoAP",
               draft-ietf-core-block-20 (work in progress), April 2016.
 
-9.2.  Informative References
+8.2.  Informative References
 
    [RFC5323]  Reschke, J., Ed., Reddy, S., Davis, J., and A. Babich,
               "Web Distributed Authoring and Versioning (WebDAV)
               SEARCH", RFC 5323, DOI 10.17487/RFC5323, November 2008,
               <http://www.rfc-editor.org/info/rfc5323>.
-
-
-
-
-
-
-van der Stok, et al.    Expires December 31, 2016              [Page 16]
-
-Internet-Draft              CoAP Fetch Patch                   June 2016
-
 
    [I-D.vanderstok-core-comi]
               Stok, P. and A. Bierman, "CoAP Management Interface",
@@ -907,10 +890,28 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
               Hartke, K., "CoRE Application Descriptions", draft-hartke-
               core-apps-03 (work in progress), February 2016.
 
+
+
+
+van der Stok, et al.    Expires December 31, 2016              [Page 16]
+
+Internet-Draft              CoAP Fetch Patch                   June 2016
+
+
    [I-D.snell-search-method]
               Reschke, J., Malhotra, A., and J. Snell, "HTTP SEARCH
               Method", draft-snell-search-method-00 (work in progress),
               April 2015.
+
+Acknowledgements
+
+   Klaus Hartke has pointed out some essential differences between CoAP
+   and HTTP concerning PATCH, and found a number of problems in an
+   earlier version of Section 2.  We are grateful for discussions with
+   Christian Amsuss, Andy Bierman, Timothy Carey, Paul Duffy, Matthias
+   Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne, and
+   Gengyu Wei.  Christian Groves provided detailed comments during the
+   Working-Group Last Call.
 
 Authors' Addresses
 
@@ -934,7 +935,6 @@ Authors' Addresses
    Consultant
 
    Email: anuj@iurs.org
-
 
 
 
