@@ -137,8 +137,8 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    existing systems varyingly use the HTTP GET and POST methods to
    perform a search.  Often a POST method is used for the sole reason
    that a larger set of parameters to the search can be supplied in the
-   request body than can comfortably transferred in the URI with a GET
-   request.  The draft [I-D.snell-search-method] proposes a SEARCH
+   request body than can comfortably be transferred in the URI with a
+   GET request.  The draft [I-D.snell-search-method] proposes a SEARCH
    method that is similar to GET in most properties but enables sending
    a request body as with POST.  The FETCH method defined in the present
    specification is inspired by [I-D.snell-search-method], which updates
@@ -308,14 +308,13 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 2.2.2.  The ETag Option
 
    The ETag Option on a FETCH result has the same semantics as defined
-   in Section 5.10.6. of [RFC7252].  In particular, its use as a
-   response option describes the "tagged representation", which for
-   FETCH is the same as the "selected representation".  The FETCH
-   payload is input to that selection process and therefore needs to be
-   part of the cache key.  Similarly, its use as a request option can
-   elicit a 2.03 Valid response if the representation associated with
-   the ETag would still be selected by the FETCH request (including its
-   payload).
+   in Section 5.10.6 of [RFC7252].  In particular, its use as a response
+   option describes the "tagged representation", which for FETCH is the
+   same as the "selected representation".  The FETCH payload is input to
+   that selection process and therefore needs to be part of the cache
+   key.  Similarly, the use of ETag as a request option can elicit a
+   2.03 Valid response if the representation associated with the ETag
+   would still be selected by the FETCH request (including its payload).
 
 2.3.  Working with Observe
 
@@ -327,6 +326,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    The Block1 option [I-D.ietf-core-block] can be used with a FETCH
    request as it would be used with a POST request; the Block2 option
    can then be used as with GET or POST.
+
 
 
 
@@ -356,9 +356,10 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
    The example below illustrates retrieval of a subset of a JSON object
    (the same object as used in Section 3.1).  Using a hypothetical media
-   type "application/example-map-keys+json", the client specifies the
-   items in the object that it wants: it supplies a JSON array giving
-   the map keys for these items.  A resource located at
+   type "application/example-map-keys+json" (with a Content-Format ID of
+   NNN - not defined as this is just an example), the client specifies
+   the items in the object that it wants: it supplies a JSON array
+   giving the map keys for these items.  A resource located at
    "coap://www.example.com/object" can be represented by a JSON document
    that we will consider as the target of the FETCH.  The client wants
    to learn the contents of the single map key "foo" within this target:
@@ -376,7 +377,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    payload:
 
    FETCH CoAP://www.example.com/object
-   Content-Format: application/example-map-keys+json
+   Content-Format: NNN (application/example-map-keys+json)
    Accept: application/json
    [
      "foo"
@@ -388,14 +389,13 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-
 van der Stok, et al.    Expires December 26, 2016               [Page 7]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
    2.05 Content
-   Content-Format: application/json
+   Content-Format: 50 (application/json)
    {
      "foo": ["bar","baz"]
    }
@@ -514,7 +514,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
        }
 
    REQ: iPATCH CoAP://www.example.com/object
-   Content-Format: application/json-patch+json
+   Content-Format: 51 (application/json-patch+json)
        [
          { "op":"replace", "path":"x-coord", "value":45}
        ]
@@ -648,7 +648,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
       *  the resource specified in the request becomes invalid by
          applying the payload -- 4.09 (Conflict) CoAP Response Code (see
-         below)),
+         below)).
 
       In case there are more specific errors that provide more insight
       into the problem, then those should be used.
