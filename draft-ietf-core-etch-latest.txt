@@ -5,10 +5,10 @@
 core                                                     P. van der Stok
 Internet-Draft                                                Consultant
 Intended status: Standards Track                              C. Bormann
-Expires: December 26, 2016                       Universitaet Bremen TZI
+Expires: December 31, 2016                       Universitaet Bremen TZI
                                                                A. Sehgal
                                                               Consultant
-                                                           June 24, 2016
+                                                           June 29, 2016
 
 
   Patch and Fetch Methods for Constrained Application Protocol (CoAP)
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 1]
+van der Stok, et al.    Expires December 31, 2016               [Page 1]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -63,7 +63,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 26, 2016.
+   This Internet-Draft will expire on December 31, 2016.
 
 Copyright Notice
 
@@ -109,13 +109,13 @@ Table of Contents
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 2]
+van der Stok, et al.    Expires December 31, 2016               [Page 2]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  16
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  16
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
 
@@ -165,7 +165,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 3]
+van der Stok, et al.    Expires December 31, 2016               [Page 3]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -221,7 +221,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 4]
+van der Stok, et al.    Expires December 31, 2016               [Page 4]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -277,7 +277,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 5]
+van der Stok, et al.    Expires December 31, 2016               [Page 5]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -333,7 +333,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 6]
+van der Stok, et al.    Expires December 31, 2016               [Page 6]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -389,7 +389,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 7]
+van der Stok, et al.    Expires December 31, 2016               [Page 7]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -445,7 +445,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 8]
+van der Stok, et al.    Expires December 31, 2016               [Page 8]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -501,7 +501,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016               [Page 9]
+van der Stok, et al.    Expires December 31, 2016               [Page 9]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -557,7 +557,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016              [Page 10]
+van der Stok, et al.    Expires December 31, 2016              [Page 10]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -600,7 +600,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 3.2.  Response Codes
 
    PATCH and iPATCH for CoAP adopt the response codes as specified in
-   sections 5.9 and 12.1.2 of [RFC7252].
+   sections 5.9 and 12.1.2 of [RFC7252] and adds 4.09 "Conflict" and
+   4.22 "Unprocessable Entity" with the semantics specified in
+   Section 3.4.
 
 3.3.  Option Numbers
 
@@ -611,9 +613,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-
-
-van der Stok, et al.    Expires December 26, 2016              [Page 11]
+van der Stok, et al.    Expires December 31, 2016              [Page 11]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -669,7 +669,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016              [Page 12]
+van der Stok, et al.    Expires December 31, 2016              [Page 12]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -725,7 +725,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016              [Page 13]
+van der Stok, et al.    Expires December 31, 2016              [Page 13]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
@@ -781,23 +781,27 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 26, 2016              [Page 14]
+van der Stok, et al.    Expires December 31, 2016              [Page 14]
 
 Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
    The PATCH method is neither idempotent nor safe.  It returns the same
-   response codes that POST can return, plus 4.09 "Conflict" with the
-   semantics specified in Section 3.4.
+   response codes that POST can return, plus 4.09 "Conflict" and 4.22
+   "Unprocessable Entity" with the semantics specified in Section 3.4.
+
+   The iPATCH method is identical to the PATCH method, except that it is
+   idempotent.
 
    IANA is requested to add the following code to the sub-registry "CoAP
    response codes":
 
-                      +------+----------+-----------+
-                      | Code | Name     | Reference |
-                      +------+----------+-----------+
-                      | 4.09 | Conflict | [RFCthis] |
-                      +------+----------+-----------+
+                +------+----------------------+-----------+
+                | Code | Name                 | Reference |
+                +------+----------------------+-----------+
+                | 4.09 | Conflict             | [RFCthis] |
+                | 4.22 | Unprocessable Entity | [RFCthis] |
+                +------+----------------------+-----------+
 
    IANA is requested to add entries to the sub-registry "CoAP Content-
    Formats", within the "CoRE Parameters" registry:
@@ -826,21 +830,24 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 9.  References
 
+
+
+
+
+
+
+
+van der Stok, et al.    Expires December 31, 2016              [Page 15]
+
+Internet-Draft              CoAP Fetch Patch                   June 2016
+
+
 9.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
-
-
-
-
-
-van der Stok, et al.    Expires December 26, 2016              [Page 15]
-
-Internet-Draft              CoAP Fetch Patch                   June 2016
-
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
@@ -881,6 +888,16 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
               SEARCH", RFC 5323, DOI 10.17487/RFC5323, November 2008,
               <http://www.rfc-editor.org/info/rfc5323>.
 
+
+
+
+
+
+van der Stok, et al.    Expires December 31, 2016              [Page 16]
+
+Internet-Draft              CoAP Fetch Patch                   June 2016
+
+
    [I-D.vanderstok-core-comi]
               Stok, P. and A. Bierman, "CoAP Management Interface",
               draft-vanderstok-core-comi-09 (work in progress), March
@@ -889,14 +906,6 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    [I-D.hartke-core-apps]
               Hartke, K., "CoRE Application Descriptions", draft-hartke-
               core-apps-03 (work in progress), February 2016.
-
-
-
-
-van der Stok, et al.    Expires December 26, 2016              [Page 16]
-
-Internet-Draft              CoAP Fetch Patch                   June 2016
-
 
    [I-D.snell-search-method]
               Reschke, J., Malhotra, A., and J. Snell, "HTTP SEARCH
@@ -940,13 +949,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-van der Stok, et al.    Expires December 26, 2016              [Page 17]
+van der Stok, et al.    Expires December 31, 2016              [Page 17]
