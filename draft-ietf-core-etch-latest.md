@@ -105,7 +105,7 @@ existing systems varyingly use the HTTP GET and POST methods to
 perform a search.  Often a POST method is used for the sole reason
 that a larger set of parameters to the search can be supplied in the
 request body than can
-comfortably transferred in the URI with a GET request.
+comfortably be transferred in the URI with a GET request.
 The draft {{I-D.snell-search-method}} proposes a SEARCH method that is similar to
 GET in most properties but enables sending a request body as with
 POST.
@@ -260,7 +260,7 @@ media type and content encoding of the request body.
 ### The ETag Option {#fetch-etag}
 
 The ETag Option on a FETCH result has the same semantics as defined in
-Section 5.10.6. of {{-coap}}.  In particular, its use as a response
+Section 5.10.6 of {{-coap}}.  In particular, its use as a response
 option describes the "tagged representation", which for FETCH is the
 same as the "selected representation".  The FETCH payload is input to
 that selection process and therefore needs to be part of the cache
@@ -300,7 +300,9 @@ examples.)
 
 The example below illustrates retrieval of a subset of a JSON object
 (the same object as used in {{example}}).  Using a hypothetical media type
-`application/example-map-keys+json`, the client specifies the items in
+`application/example-map-keys+json` (with a Content-Format ID of
+NNN -- not defined as this is just an example), the client specifies
+the items in
 the object that it wants: it supplies a JSON array giving the map keys
 for these items.  A resource located at `coap://www.example.com/object`
 can be represented by a JSON document that we will consider as the
@@ -322,7 +324,7 @@ payload:
 
 ~~~
 FETCH CoAP://www.example.com/object
-Content-Format: application/example-map-keys+json
+Content-Format: NNN (application/example-map-keys+json)
 Accept: application/json
 [
   "foo"
@@ -334,7 +336,7 @@ The server returns a subset document with just the selected member:
 
 ~~~
 2.05 Content
-Content-Format: application/json
+Content-Format: 50 (application/json)
 {
   "foo": ["bar","baz"]
 }
@@ -453,7 +455,7 @@ JSON document original state:
     }
 
 REQ: iPATCH CoAP://www.example.com/object
-Content-Format: application/json-patch+json
+Content-Format: 51 (application/json-patch+json)
     [
       { "op":"replace", "path":"x-coord", "value":45}
     ]
@@ -590,7 +592,7 @@ Unprocessable request:
 
   * the resource specified in the request becomes invalid
     by applying the payload --- 4.09 (Conflict) CoAP
-    Response Code (see below)),
+    Response Code (see below)).
 
   In case there are more specific errors that provide more
   insight into the problem, then those should be used.
