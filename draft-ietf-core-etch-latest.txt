@@ -600,9 +600,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 3.2.  Response Codes
 
    PATCH and iPATCH for CoAP adopt the response codes as specified in
-   sections 5.9 and 12.1.2 of [RFC7252] and adds 4.09 "Conflict" and
-   4.22 "Unprocessable Entity" with the semantics specified in
-   Section 3.4.
+   sections 5.9 and 12.1.2 of [RFC7252] and add 4.09 "Conflict" and 4.22
+   "Unprocessable Entity" with the semantics specified in Section 3.4 of
+   the present specification.
 
 3.3.  Option Numbers
 
