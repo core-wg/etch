@@ -545,8 +545,9 @@ JSON document final state:
 ## Response Codes {#response}
 
 PATCH and iPATCH for CoAP adopt the response codes as specified in
-sections 5.9 and 12.1.2 of {{-coap}} and adds 4.09 "Conflict" and 4.22
-"Unprocessable Entity" with the semantics specified in {{errors}}.
+sections 5.9 and 12.1.2 of {{-coap}} and add 4.09 "Conflict" and 4.22
+"Unprocessable Entity" with the semantics specified in {{errors}} of
+the present specification.
 
 ## Option Numbers {#option}
 
