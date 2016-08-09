@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-06-29
+date: 2016-08-09
 cat: std
 pi:
   toc: yes
@@ -43,13 +43,13 @@ normative:
   RFC2119:
   RFC2616:
   RFC5789: http-patch
-  RFC6902:
   RFC7252: coap
-  RFC7396:
   RFC7641: observe
   I-D.ietf-core-block: block
 informative:
   RFC5323:
+  RFC6902:
+  RFC7396:
   I-D.vanderstok-core-comi:
   I-D.hartke-core-apps:
   I-D.snell-search-method: search
@@ -58,8 +58,7 @@ informative:
 
 
 The existing Constrained Application Protocol (CoAP)
-methods only allow access to a complete resource. This
-does not permit applications to access parts of a resource. In case of resources
+methods only allow access to a complete resource, not to parts of a resource. In case of resources
 with larger or complex
 data, or in situations where a resource continuity is
 required, replacing or requesting the whole resource is undesirable. Several
@@ -81,7 +80,7 @@ request is desired.
 
 This specification adds new CoAP methods, FETCH, to perform the
 equivalent of a GET with a request body; and the twin methods PATCH and iPATCH, to
-modify parts of an existing CoAP resource.
+modify parts of a CoAP resource.
 
 
 --- middle
@@ -196,7 +195,8 @@ produce a representation as described by the request parameters (including
 the request options and the payload) based on the resource specified
 by the effective request URI.  The payload returned in response to a
 FETCH cannot be assumed to be a complete representation of the
-resource identified by the effective request URI.
+resource identified by the effective request URI, i.e., it cannot be
+used by a cache as a payload to be returned by a GET request.
 
 Together with the request options, the body of the request (which may
 be constructed from multiple payloads using the block protocol
@@ -359,7 +359,7 @@ to an existing resource, the server MAY create a new resource
 with that URI, depending on the patch document type (whether
 it can logically modify a null resource) and permissions, etc.
 Creation of a new resource would result in a 2.01 (Created)
-Response Code dependent of the patch document type.
+Response Code dependent on the patch document type.
 
 Restrictions to a PATCH or iPATCH request can be made by including the If-Match
 or If-None-Match options in the request (see Section 5.10.8.1
@@ -367,8 +367,7 @@ and 5.10.8.2 of {{-coap}}).  If the resource
 could not be created or modified, then an appropriate Error
 Response Code SHOULD be sent.
 
-The difference between the PUT and PATCH requests is
-extensively documented in {{-http-patch}}.
+The difference between the PUT and PATCH requests is documented in {{-http-patch}}.
 
 The PATCH method is not safe and not idempotent, as with the HTTP
 PATCH method
@@ -521,7 +520,8 @@ Content-Format: 51 (application/json-patch+json)
     [
       { "op":"add","path":"foo/1","value":"bar"}
     ]
-RET: CoAP 4.12 Precondition Failed
+RET: CoAP 4.00 Bad Request
+Diagnostic payload: Patch format not idempotent
 
 JSON document final state is unchanged
 
@@ -685,8 +685,9 @@ described in this document.
 The FETCH method is subject to the same general security
 considerations as all CoAP methods as described in {{-coap}}.
 
-The security consideration of
-section 15 of {{RFC2616}}, section 11 of {{-coap}}, and section 5 of {{-http-patch}} also apply.
+The security consideration of section 11 of {{-coap}} (and thus those
+of section 15 of {{RFC2616}}), as well as section 5 of {{-http-patch}},
+also apply.
 
 The security considerations for PATCH or iPATCH are nearly identical to
 the security considerations for PUT ({{-coap}}).  The mechanisms used for PUT can be used
