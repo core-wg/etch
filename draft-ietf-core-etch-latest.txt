@@ -5,10 +5,10 @@
 core                                                     P. van der Stok
 Internet-Draft                                                Consultant
 Intended status: Standards Track                              C. Bormann
-Expires: December 31, 2016                       Universitaet Bremen TZI
+Expires: February 10, 2017                       Universitaet Bremen TZI
                                                                A. Sehgal
                                                               Consultant
-                                                           June 29, 2016
+                                                         August 09, 2016
 
 
   Patch and Fetch Methods for Constrained Application Protocol (CoAP)
@@ -17,12 +17,11 @@ Expires: December 31, 2016                       Universitaet Bremen TZI
 Abstract
 
    The existing Constrained Application Protocol (CoAP) methods only
-   allow access to a complete resource.  This does not permit
-   applications to access parts of a resource.  In case of resources
-   with larger or complex data, or in situations where a resource
-   continuity is required, replacing or requesting the whole resource is
-   undesirable.  Several applications using CoAP will need to perform
-   partial resource accesses.
+   allow access to a complete resource, not to parts of a resource.  In
+   case of resources with larger or complex data, or in situations where
+   a resource continuity is required, replacing or requesting the whole
+   resource is undesirable.  Several applications using CoAP will need
+   to perform partial resource accesses.
 
    Similar to HTTP, the existing Constrained Application Protocol (CoAP)
    GET method only allows the specification of a URI and request
@@ -37,7 +36,7 @@ Abstract
 
    This specification adds new CoAP methods, FETCH, to perform the
    equivalent of a GET with a request body; and the twin methods PATCH
-   and iPATCH, to modify parts of an existing CoAP resource.
+   and iPATCH, to modify parts of a CoAP resource.
 
 Status of This Memo
 
@@ -49,21 +48,20 @@ Status of This Memo
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at http://datatracker.ietf.org/drafts/current/.
 
-
-
-
-
-van der Stok, et al.    Expires December 31, 2016               [Page 1]
-
-Internet-Draft              CoAP Fetch Patch                   June 2016
-
-
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
+
+
+
+van der Stok, et al.    Expires February 10, 2017               [Page 1]
+
+Internet-Draft              CoAP Fetch Patch                 August 2016
+
+
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 31, 2016.
+   This Internet-Draft will expire on February 10, 2017.
 
 Copyright Notice
 
@@ -106,16 +104,16 @@ Table of Contents
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
    7.  Change log  . . . . . . . . . . . . . . . . . . . . . . . . .  15
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-
-
-
-van der Stok, et al.    Expires December 31, 2016               [Page 2]
-
-Internet-Draft              CoAP Fetch Patch                   June 2016
-
-
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  16
+
+
+
+van der Stok, et al.    Expires February 10, 2017               [Page 2]
+
+Internet-Draft              CoAP Fetch Patch                 August 2016
+
+
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  17
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
 
@@ -162,16 +160,15 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    o  The request parameters are not limited by the maximum size of the
       URI.  In HTTP, that is a problem as the practical limit for this
       size varies.  In CoAP, another problem is that the block-wise
-
-
-
-van der Stok, et al.    Expires December 31, 2016               [Page 3]
-
-Internet-Draft              CoAP Fetch Patch                   June 2016
-
-
       transfer is not available for transferring large URI options in
       multiple rounds.
+
+
+
+van der Stok, et al.    Expires February 10, 2017               [Page 3]
+
+Internet-Draft              CoAP Fetch Patch                 August 2016
+
 
    As an alternative to using GET, many implementations make use of the
    POST method to perform extended requests, even if they are
@@ -221,9 +218,12 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016               [Page 4]
+
+
+
+van der Stok, et al.    Expires February 10, 2017               [Page 4]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 2.  FETCH Method
@@ -237,7 +237,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    (including the request options and the payload) based on the resource
    specified by the effective request URI.  The payload returned in
    response to a FETCH cannot be assumed to be a complete representation
-   of the resource identified by the effective request URI.
+   of the resource identified by the effective request URI, i.e., it
+   cannot be used by a cache as a payload to be returned by a GET
+   request.
 
    Together with the request options, the body of the request (which may
    be constructed from multiple payloads using the block protocol
@@ -271,17 +273,18 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    cache responses to FETCH requests at all.)  The Max-Age option in the
    response has equivalent semantics to its use in a GET.
 
+
+
+
+
+van der Stok, et al.    Expires February 10, 2017               [Page 5]
+
+Internet-Draft              CoAP Fetch Patch                 August 2016
+
+
    The semantics of the FETCH method change to a "conditional FETCH" if
    the request message includes an If-Match, or If-None-Match option
    ([RFC7252]).  A conditional FETCH requests that the query be
-
-
-
-van der Stok, et al.    Expires December 31, 2016               [Page 5]
-
-Internet-Draft              CoAP Fetch Patch                   June 2016
-
-
    performed only under the circumstances described by the conditional
    option(s).  It is important to note, however, that such conditions
    are evaluated against the state of the target resource itself as
@@ -330,12 +333,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-
-
-
-van der Stok, et al.    Expires December 31, 2016               [Page 6]
+van der Stok, et al.    Expires February 10, 2017               [Page 6]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 2.5.  FETCH discussion
@@ -389,9 +389,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016               [Page 7]
+van der Stok, et al.    Expires February 10, 2017               [Page 7]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    2.05 Content
@@ -416,7 +416,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    resource, the server MAY create a new resource with that URI,
    depending on the patch document type (whether it can logically modify
    a null resource) and permissions, etc.  Creation of a new resource
-   would result in a 2.01 (Created) Response Code dependent of the patch
+   would result in a 2.01 (Created) Response Code dependent on the patch
    document type.
 
    Restrictions to a PATCH or iPATCH request can be made by including
@@ -425,8 +425,8 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    not be created or modified, then an appropriate Error Response Code
    SHOULD be sent.
 
-   The difference between the PUT and PATCH requests is extensively
-   documented in [RFC5789].
+   The difference between the PUT and PATCH requests is documented in
+   [RFC5789].
 
    The PATCH method is not safe and not idempotent, as with the HTTP
    PATCH method specified in [RFC5789].
@@ -445,9 +445,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016               [Page 8]
+van der Stok, et al.    Expires February 10, 2017               [Page 8]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    representation to a concurrently executed GET request.  Given the
@@ -501,9 +501,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016               [Page 9]
+van der Stok, et al.    Expires February 10, 2017               [Page 9]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    JSON document original state:
@@ -557,9 +557,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016              [Page 10]
+van der Stok, et al.    Expires February 10, 2017              [Page 10]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    The examples show the use of the iPATCH method, but the use of the
@@ -579,7 +579,8 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
        [
          { "op":"add","path":"foo/1","value":"bar"}
        ]
-   RET: CoAP 4.12 Precondition Failed
+   RET: CoAP 4.00 Bad Request
+   Diagnostic payload: Patch format not idempotent
 
    JSON document final state is unchanged
 
@@ -612,10 +613,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-
-van der Stok, et al.    Expires December 31, 2016              [Page 11]
+van der Stok, et al.    Expires February 10, 2017              [Page 11]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 3.4.  Error Handling
@@ -669,9 +669,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016              [Page 12]
+van der Stok, et al.    Expires February 10, 2017              [Page 12]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    Conflicting state:  If the modification specified by a PATCH or
@@ -725,9 +725,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016              [Page 13]
+van der Stok, et al.    Expires February 10, 2017              [Page 13]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
            +------+--------+------+--------+------+------------+
@@ -749,8 +749,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
    The FETCH method is subject to the same general security
    considerations as all CoAP methods as described in [RFC7252].
 
-   The security consideration of section 15 of [RFC2616], section 11 of
-   [RFC7252], and section 5 of [RFC5789] also apply.
+   The security consideration of section 11 of [RFC7252] (and thus those
+   of section 15 of [RFC2616]), as well as section 5 of [RFC5789], also
+   apply.
 
    The security considerations for PATCH or iPATCH are nearly identical
    to the security considerations for PUT ([RFC7252]).  The mechanisms
@@ -780,10 +781,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-
-van der Stok, et al.    Expires December 31, 2016              [Page 14]
+van der Stok, et al.    Expires February 10, 2017              [Page 14]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    The PATCH method is neither idempotent nor safe.  It returns the same
@@ -837,9 +837,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016              [Page 15]
+van der Stok, et al.    Expires February 10, 2017              [Page 15]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
@@ -852,18 +852,10 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
               RFC 5789, DOI 10.17487/RFC5789, March 2010,
               <http://www.rfc-editor.org/info/rfc5789>.
 
-   [RFC6902]  Bryan, P., Ed. and M. Nottingham, Ed., "JavaScript Object
-              Notation (JSON) Patch", RFC 6902, DOI 10.17487/RFC6902,
-              April 2013, <http://www.rfc-editor.org/info/rfc6902>.
-
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
               DOI 10.17487/RFC7252, June 2014,
               <http://www.rfc-editor.org/info/rfc7252>.
-
-   [RFC7396]  Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396,
-              DOI 10.17487/RFC7396, October 2014,
-              <http://www.rfc-editor.org/info/rfc7396>.
 
    [RFC7641]  Hartke, K., "Observing Resources in the Constrained
               Application Protocol (CoAP)", RFC 7641,
@@ -872,7 +864,7 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
    [I-D.ietf-core-block]
               Bormann, C. and Z. Shelby, "Block-wise transfers in CoAP",
-              draft-ietf-core-block-20 (work in progress), April 2016.
+              draft-ietf-core-block-21 (work in progress), July 2016.
 
 8.2.  Informative References
 
@@ -880,6 +872,14 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
               "Web Distributed Authoring and Versioning (WebDAV)
               SEARCH", RFC 5323, DOI 10.17487/RFC5323, November 2008,
               <http://www.rfc-editor.org/info/rfc5323>.
+
+   [RFC6902]  Bryan, P., Ed. and M. Nottingham, Ed., "JavaScript Object
+              Notation (JSON) Patch", RFC 6902, DOI 10.17487/RFC6902,
+              April 2013, <http://www.rfc-editor.org/info/rfc6902>.
+
+   [RFC7396]  Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396,
+              DOI 10.17487/RFC7396, October 2014,
+              <http://www.rfc-editor.org/info/rfc7396>.
 
    [I-D.vanderstok-core-comi]
               Stok, P. and A. Bierman, "CoAP Management Interface",
@@ -893,9 +893,9 @@ Internet-Draft              CoAP Fetch Patch                   June 2016
 
 
 
-van der Stok, et al.    Expires December 31, 2016              [Page 16]
+van der Stok, et al.    Expires February 10, 2017              [Page 16]
 
-Internet-Draft              CoAP Fetch Patch                   June 2016
+Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
    [I-D.snell-search-method]
@@ -949,4 +949,4 @@ Authors' Addresses
 
 
 
-van der Stok, et al.    Expires December 31, 2016              [Page 17]
+van der Stok, et al.    Expires February 10, 2017              [Page 17]
