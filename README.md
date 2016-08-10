@@ -3,8 +3,8 @@
 This is the working area for the Individual internet-draft, "Patch and Fetch Methods for Constrained Application Protocol (CoAP)".
 
 * [Editor's copy](https://core-wg.github.io/etch/)  [![Build Status](https://travis-ci.org/core-wg/etch.svg?branch=master)](https://travis-ci.org/core-wg/etch)
-* [Individual Draft] (https://tools.ietf.org/html/draft-vanderstok-core-etch-latest)
-
+* [most recent Internet-Draft] (https://tools.ietf.org/html/draft-ietf-core-etch)
+* [Diff from most recent Internet-Draft](https://tools.ietf.org/rfcdiff?url1=draft-ietf-core-etch&url2=https://raw.githubusercontent.com/core-wg/etch/gh-pages/draft-ietf-core-etch-latest.txt)
 
 ## Building the Draft
 
