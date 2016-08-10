@@ -312,7 +312,7 @@ single map key `foo` within this target:
 ~~~
 {
   "x-coord": 256,
-  "y-coord": 45",
+  "y-coord": 45,
   "foo": ["bar","baz"]
 }
 ~~~
