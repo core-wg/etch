@@ -449,7 +449,7 @@ JSON document.
 JSON document original state:
     {
       "x-coord": 256,
-      "y-coord": 45",
+      "y-coord": 45,
       "foo": ["bar","baz"]
     }
 
@@ -482,7 +482,7 @@ The same example using the Content-Format application/merge-patch+json from {{RF
 JSON document original state:
     {
       "x-coord": 256,
-      "y-coord": 45",
+      "y-coord": 45,
       "foo": ["bar","baz"]
     }
 
@@ -511,7 +511,7 @@ while PATCH executes the action.
 JSON document original state:
     {
       "x-coord": 256,
-      "y-coord": 45",
+      "y-coord": 45,
       "foo": ["bar","baz"]
     }
 
