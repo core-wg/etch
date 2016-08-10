@@ -509,7 +509,7 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
    JSON document original state:
        {
          "x-coord": 256,
-         "y-coord": 45",
+         "y-coord": 45,
          "foo": ["bar","baz"]
        }
 
@@ -538,7 +538,7 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
    JSON document original state:
        {
          "x-coord": 256,
-         "y-coord": 45",
+         "y-coord": 45,
          "foo": ["bar","baz"]
        }
 
@@ -570,7 +570,7 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
    JSON document original state:
        {
          "x-coord": 256,
-         "y-coord": 45",
+         "y-coord": 45,
          "foo": ["bar","baz"]
        }
 
