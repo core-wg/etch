@@ -366,7 +366,7 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
    {
      "x-coord": 256,
-     "y-coord": 45",
+     "y-coord": 45,
      "foo": ["bar","baz"]
    }
 
