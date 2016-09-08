@@ -42,6 +42,7 @@ author:
 normative:
   RFC2119:
   RFC5789: http-patch
+  RFC7231: http-semantics
   RFC7252: coap
   RFC7641: observe
   RFC7959: block
@@ -182,7 +183,11 @@ described in {{RFC2119}}.
 
 This document uses terminology defined in {{-http-patch}} and {{-coap}}.
 
-
+Specifically, it uses the term "idempotent" as defined in Section 5.1 of {{-coap}}.
+(Further discussion of idempotent methods can now be found in Section
+4.2.2 of {{-http-semantics}}; the implications of idempotency of
+methods on server implementations are also discussed in Section 4.5 of
+{{-coap}}.)
 
 # FETCH Method {#fetch}
 
