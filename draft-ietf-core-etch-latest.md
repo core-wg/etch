@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-08-09
+date: 2016-09-08
 cat: std
 pi:
   toc: yes
@@ -41,11 +41,10 @@ author:
   email: anuj@iurs.org
 normative:
   RFC2119:
-  RFC2616:
   RFC5789: http-patch
   RFC7252: coap
   RFC7641: observe
-  I-D.ietf-core-block: block
+  RFC7959: block
 informative:
   RFC5323:
   RFC6902:
@@ -685,9 +684,8 @@ described in this document.
 The FETCH method is subject to the same general security
 considerations as all CoAP methods as described in {{-coap}}.
 
-The security consideration of section 11 of {{-coap}} (and thus those
-of section 15 of {{RFC2616}}), as well as section 5 of {{-http-patch}},
-also apply.
+The security consideration of Section 11 of {{-coap}} as well as those
+of Section 5 of {{-http-patch}} also apply.
 
 The security considerations for PATCH or iPATCH are nearly identical to
 the security considerations for PUT ({{-coap}}).  The mechanisms used for PUT can be used
