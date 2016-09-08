@@ -5,10 +5,10 @@
 core                                                     P. van der Stok
 Internet-Draft                                                Consultant
 Intended status: Standards Track                              C. Bormann
-Expires: February 10, 2017                       Universitaet Bremen TZI
+Expires: March 12, 2017                          Universitaet Bremen TZI
                                                                A. Sehgal
                                                               Consultant
-                                                         August 09, 2016
+                                                      September 08, 2016
 
 
   Patch and Fetch Methods for Constrained Application Protocol (CoAP)
@@ -53,15 +53,15 @@ Status of This Memo
 
 
 
-van der Stok, et al.    Expires February 10, 2017               [Page 1]
+van der Stok, et al.     Expires March 12, 2017                 [Page 1]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on February 10, 2017.
+   This Internet-Draft will expire on March 12, 2017.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-van der Stok, et al.    Expires February 10, 2017               [Page 2]
+van der Stok, et al.     Expires March 12, 2017                 [Page 2]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  17
@@ -165,9 +165,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017               [Page 3]
+van der Stok, et al.     Expires March 12, 2017                 [Page 3]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    As an alternative to using GET, many implementations make use of the
@@ -214,17 +214,20 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
    This document uses terminology defined in [RFC5789] and [RFC7252].
 
+   Specifically, it uses the term "idempotent" as defined in Section 5.1
+   of [RFC7252].  (Further discussion of idempotent methods can now be
+   found in Section 4.2.2 of [RFC7231]; the implications of idempotency
 
 
 
 
-
-
-
-van der Stok, et al.    Expires February 10, 2017               [Page 4]
+van der Stok, et al.     Expires March 12, 2017                 [Page 4]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
+
+   of methods on server implementations are also discussed in
+   Section 4.5 of [RFC7252].)
 
 2.  FETCH Method
 
@@ -243,12 +246,11 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
    Together with the request options, the body of the request (which may
    be constructed from multiple payloads using the block protocol
-   [I-D.ietf-core-block]) defines the request parameters.
-   Implementations MAY use a request body of any content type with the
-   FETCH method; it is outside the scope of this document how
-   information about admissible content types is obtained by the client
-   (although we can hint that form relations ([I-D.hartke-core-apps])
-   might be a preferred way).
+   [RFC7959]) defines the request parameters.  Implementations MAY use a
+   request body of any content type with the FETCH method; it is outside
+   the scope of this document how information about admissible content
+   types is obtained by the client (although we can hint that form
+   relations ([I-D.hartke-core-apps]) might be a preferred way).
 
    FETCH requests are both safe and idempotent with regards to the
    resource identified by the request URI.  That is, the performance of
@@ -275,11 +277,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-
-
-van der Stok, et al.    Expires February 10, 2017               [Page 5]
+van der Stok, et al.     Expires March 12, 2017                 [Page 5]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    The semantics of the FETCH method change to a "conditional FETCH" if
@@ -326,16 +326,16 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 2.4.  Working with Block
 
-   The Block1 option [I-D.ietf-core-block] can be used with a FETCH
-   request as it would be used with a POST request; the Block2 option
-   can then be used as with GET or POST.
+   The Block1 option [RFC7959] can be used with a FETCH request as it
+   would be used with a POST request; the Block2 option can then be used
+   as with GET or POST.
 
 
 
 
-van der Stok, et al.    Expires February 10, 2017               [Page 6]
+van der Stok, et al.     Expires March 12, 2017                 [Page 6]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
 2.5.  FETCH discussion
@@ -389,9 +389,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017               [Page 7]
+van der Stok, et al.     Expires March 12, 2017                 [Page 7]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    2.05 Content
@@ -445,9 +445,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017               [Page 8]
+van der Stok, et al.     Expires March 12, 2017                 [Page 8]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    representation to a concurrently executed GET request.  Given the
@@ -501,9 +501,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017               [Page 9]
+van der Stok, et al.     Expires March 12, 2017                 [Page 9]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    JSON document original state:
@@ -557,9 +557,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 10]
+van der Stok, et al.     Expires March 12, 2017                [Page 10]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    The examples show the use of the iPATCH method, but the use of the
@@ -613,9 +613,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 11]
+van der Stok, et al.     Expires March 12, 2017                [Page 11]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
 3.4.  Error Handling
@@ -669,9 +669,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 12]
+van der Stok, et al.     Expires March 12, 2017                [Page 12]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    Conflicting state:  If the modification specified by a PATCH or
@@ -725,9 +725,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 13]
+van der Stok, et al.     Expires March 12, 2017                [Page 13]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
            +------+--------+------+--------+------+------------+
@@ -749,9 +749,8 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
    The FETCH method is subject to the same general security
    considerations as all CoAP methods as described in [RFC7252].
 
-   The security consideration of section 11 of [RFC7252] (and thus those
-   of section 15 of [RFC2616]), as well as section 5 of [RFC5789], also
-   apply.
+   The security consideration of Section 11 of [RFC7252] as well as
+   those of Section 5 of [RFC5789] also apply.
 
    The security considerations for PATCH or iPATCH are nearly identical
    to the security considerations for PUT ([RFC7252]).  The mechanisms
@@ -781,9 +780,10 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 14]
+
+van der Stok, et al.     Expires March 12, 2017                [Page 14]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    The PATCH method is neither idempotent nor safe.  It returns the same
@@ -837,20 +837,19 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 15]
+van der Stok, et al.     Expires March 12, 2017                [Page 15]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
-
-   [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
-              Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
-              Transfer Protocol -- HTTP/1.1", RFC 2616,
-              DOI 10.17487/RFC2616, June 1999,
-              <http://www.rfc-editor.org/info/rfc2616>.
 
    [RFC5789]  Dusseault, L. and J. Snell, "PATCH Method for HTTP",
               RFC 5789, DOI 10.17487/RFC5789, March 2010,
               <http://www.rfc-editor.org/info/rfc5789>.
+
+   [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
+              DOI 10.17487/RFC7231, June 2014,
+              <http://www.rfc-editor.org/info/rfc7231>.
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
@@ -862,9 +861,10 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
               DOI 10.17487/RFC7641, September 2015,
               <http://www.rfc-editor.org/info/rfc7641>.
 
-   [I-D.ietf-core-block]
-              Bormann, C. and Z. Shelby, "Block-wise transfers in CoAP",
-              draft-ietf-core-block-21 (work in progress), July 2016.
+   [RFC7959]  Bormann, C. and Z. Shelby, Ed., "Block-Wise Transfers in
+              the Constrained Application Protocol (CoAP)", RFC 7959,
+              DOI 10.17487/RFC7959, August 2016,
+              <http://www.rfc-editor.org/info/rfc7959>.
 
 8.2.  Informative References
 
@@ -893,9 +893,9 @@ Internet-Draft              CoAP Fetch Patch                 August 2016
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 16]
+van der Stok, et al.     Expires March 12, 2017                [Page 16]
 
-Internet-Draft              CoAP Fetch Patch                 August 2016
+Internet-Draft              CoAP Fetch Patch              September 2016
 
 
    [I-D.snell-search-method]
@@ -949,4 +949,4 @@ Authors' Addresses
 
 
 
-van der Stok, et al.    Expires February 10, 2017              [Page 17]
+van der Stok, et al.     Expires March 12, 2017                [Page 17]

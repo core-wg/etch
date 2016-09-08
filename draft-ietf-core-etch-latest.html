@@ -303,7 +303,7 @@ li, p {
 
   <meta name="dct.creator" content="van der Stok, P., Bormann, C., and A. Sehgal" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-core-etch-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-8-09" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-9-08" />
   <meta name="dct.abstract" content="The existing Constrained Application Protocol (CoAP) methods only allow access to a complete resource, not to parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is undesirable. Several applications using CoAP will need to perform partial resource accesses." />
   <meta name="description" content="The existing Constrained Application Protocol (CoAP) methods only allow access to a complete resource, not to parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is undesirable. Several applications using CoAP will need to perform partial resource accesses." />
 
@@ -327,7 +327,7 @@ li, p {
   <td class="right">C. Bormann</td>
 </tr>
 <tr>
-  <td class="left">Expires: February 10, 2017</td>
+  <td class="left">Expires: March 12, 2017</td>
   <td class="right">Universitaet Bremen TZI</td>
 </tr>
 <tr>
@@ -340,7 +340,7 @@ li, p {
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">August 09, 2016</td>
+  <td class="right">September 08, 2016</td>
 </tr>
 
     	
@@ -363,7 +363,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on February 10, 2017.</p>
+<p>This Internet-Draft will expire on March 12, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -429,9 +429,10 @@ li, p {
 <p id="rfc.section.1.3.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;NOT RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <h1 id="rfc.section.1.4"><a href="#rfc.section.1.4">1.4.</a> <a href="#terminology-and-acronyms" id="terminology-and-acronyms">Terminology and Acronyms</a></h1>
 <p id="rfc.section.1.4.p.1">This document uses terminology defined in <a href="#RFC5789">[RFC5789]</a> and <a href="#RFC7252">[RFC7252]</a>.</p>
+<p id="rfc.section.1.4.p.2">Specifically, it uses the term &#8220;idempotent&#8221; as defined in Section 5.1 of <a href="#RFC7252">[RFC7252]</a>.  (Further discussion of idempotent methods can now be found in Section 4.2.2 of <a href="#RFC7231">[RFC7231]</a>; the implications of idempotency of methods on server implementations are also discussed in Section 4.5 of <a href="#RFC7252">[RFC7252]</a>.)</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#fetch" id="fetch">FETCH Method</a></h1>
 <p id="rfc.section.2.p.1">The CoAP FETCH method is used to obtain a representation of a resource, giving a number of request parameters.  Unlike the CoAP GET method, which requests that a server return a representation of the resource identified by the effective request URI (as defined by <a href="#RFC7252">[RFC7252]</a>), the FETCH method is used by a client to ask the server to produce a representation as described by the request parameters (including the request options and the payload) based on the resource specified by the effective request URI.  The payload returned in response to a FETCH cannot be assumed to be a complete representation of the resource identified by the effective request URI, i.e., it cannot be used by a cache as a payload to be returned by a GET request.</p>
-<p id="rfc.section.2.p.2">Together with the request options, the body of the request (which may be constructed from multiple payloads using the block protocol <a href="#I-D.ietf-core-block">[I-D.ietf-core-block]</a>) defines the request parameters.  Implementations MAY use a request body of any content type with the FETCH method; it is outside the scope of this document how information about admissible content types is obtained by the client (although we can hint that form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) might be a preferred way).</p>
+<p id="rfc.section.2.p.2">Together with the request options, the body of the request (which may be constructed from multiple payloads using the block protocol <a href="#RFC7959">[RFC7959]</a>) defines the request parameters.  Implementations MAY use a request body of any content type with the FETCH method; it is outside the scope of this document how information about admissible content types is obtained by the client (although we can hint that form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) might be a preferred way).</p>
 <p id="rfc.section.2.p.3">FETCH requests are both safe and idempotent with regards to the resource identified by the request URI.  That is, the performance of a fetch is not intended to alter the state of the targeted resource.  (However, while processing a search request, a server can be expected to allocate computing and memory resources or even create additional server resources through which the response to the search can be retrieved.)</p>
 <p id="rfc.section.2.p.4">A successful response to a FETCH request is expected to provide some indication as to the final disposition of the requested operation.  If a successful response includes a body payload, the payload is expected to describe the results of the FETCH operation.</p>
 <p id="rfc.section.2.p.5">Depending on the response code as defined by <a href="#RFC7252">[RFC7252]</a>, the response to a FETCH request is cacheable; the request body is part of the cache key.  Specifically, 2.05 &#8220;Content&#8221; response codes, the responses for which are cacheable, are a usual way to respond to a FETCH request.  (Note that this aspect differs markedly from <a href="#I-D.snell-search-method">[I-D.snell-search-method]</a>.)  (Note also that caches that cannot use the request payload as part of the cache key will not be able to cache responses to FETCH requests at all.)  The Max-Age option in the response has equivalent semantics to its use in a GET.</p>
@@ -448,7 +449,7 @@ li, p {
 <h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#fetch-observe" id="fetch-observe">Working with Observe</a></h1>
 <p id="rfc.section.2.3.p.1">The Observe option <a href="#RFC7641">[RFC7641]</a> can be used with a FETCH request as it can be used with a GET request.</p>
 <h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#fetch-block" id="fetch-block">Working with Block</a></h1>
-<p id="rfc.section.2.4.p.1">The Block1 option <a href="#I-D.ietf-core-block">[I-D.ietf-core-block]</a> can be used with a FETCH request as it would be used with a POST request; the Block2 option can then be used as with GET or POST.</p>
+<p id="rfc.section.2.4.p.1">The Block1 option <a href="#RFC7959">[RFC7959]</a> can be used with a FETCH request as it would be used with a POST request; the Block2 option can then be used as with GET or POST.</p>
 <h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> <a href="#fetch-discuss" id="fetch-discuss">FETCH discussion</a></h1>
 <p id="rfc.section.2.5.p.1">One property of FETCH that may be non-obvious is that a FETCH request cannot be generated from a link alone, but also needs a way to generate the request payload.  Again, form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) may be able to fill parts of this gap.</p>
 <h1 id="rfc.section.2.6"><a href="#rfc.section.2.6">2.6.</a> <a href="#fetch-example" id="fetch-example">A Simple Example for FETCH</a></h1>
@@ -662,7 +663,7 @@ JSON document final state:
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.5.p.1">This section analyses the possible threats to the CoAP FETCH and PATCH or iPATCH methods.  It is meant to inform protocol and application developers about the security limitations of CoAP FETCH and PATCH or iPATCH as described in this document.</p>
 <p id="rfc.section.5.p.2">The FETCH method is subject to the same general security considerations as all CoAP methods as described in <a href="#RFC7252">[RFC7252]</a>.</p>
-<p id="rfc.section.5.p.3">The security consideration of section 11 of <a href="#RFC7252">[RFC7252]</a> (and thus those of section 15 of <a href="#RFC2616">[RFC2616]</a>), as well as section 5 of <a href="#RFC5789">[RFC5789]</a>, also apply.</p>
+<p id="rfc.section.5.p.3">The security consideration of Section 11 of <a href="#RFC7252">[RFC7252]</a> as well as those of Section 5 of <a href="#RFC5789">[RFC5789]</a> also apply.</p>
 <p id="rfc.section.5.p.4">The security considerations for PATCH or iPATCH are nearly identical to the security considerations for PUT (<a href="#RFC7252">[RFC7252]</a>).  The mechanisms used for PUT can be used for PATCH or iPATCH as well.</p>
 <p id="rfc.section.5.p.5">PATCH or iPATCH are secured following the CoAP recommendations as specified in section 9 of <a href="#RFC7252">[RFC7252]</a>. When additional security techniques are standardized for CoAP, PATCH or iPATCH can also be (and need to be) secured by those new techniques.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
@@ -764,15 +765,15 @@ JSON document final state:
     </tr>
     <tr>
       <td class="reference">
-        <b id="RFC2616">[RFC2616]</b>
-      </td>
-      <td class="top"><a>Fielding, R.</a>, <a>Gettys, J.</a>, <a>Mogul, J.</a>, <a>Frystyk, H.</a>, <a>Masinter, L.</a>, <a>Leach, P.</a> and <a>T. Berners-Lee</a>, "<a href="http://tools.ietf.org/html/rfc2616">Hypertext Transfer Protocol -- HTTP/1.1</a>", RFC 2616, DOI 10.17487/RFC2616, June 1999.</td>
-    </tr>
-    <tr>
-      <td class="reference">
         <b id="RFC5789">[RFC5789]</b>
       </td>
       <td class="top"><a>Dusseault, L.</a> and <a>J. Snell</a>, "<a href="http://tools.ietf.org/html/rfc5789">PATCH Method for HTTP</a>", RFC 5789, DOI 10.17487/RFC5789, March 2010.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC7231">[RFC7231]</b>
+      </td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a>", RFC 7231, DOI 10.17487/RFC7231, June 2014.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -788,9 +789,9 @@ JSON document final state:
     </tr>
     <tr>
       <td class="reference">
-        <b id="I-D.ietf-core-block">[I-D.ietf-core-block]</b>
+        <b id="RFC7959">[RFC7959]</b>
       </td>
-      <td class="top"><a>Bormann, C.</a> and <a>Z. Shelby</a>, "<a href="http://tools.ietf.org/html/draft-ietf-core-block-21">Block-wise transfers in CoAP</a>", Internet-Draft draft-ietf-core-block-21, July 2016.</td>
+      <td class="top"><a>Bormann, C.</a> and <a>Z. Shelby</a>, "<a href="http://tools.ietf.org/html/rfc7959">Block-Wise Transfers in the Constrained Application Protocol (CoAP)</a>", RFC 7959, DOI 10.17487/RFC7959, August 2016.</td>
     </tr>
   </tbody>
 </table>
