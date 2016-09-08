@@ -9,4 +9,4 @@ install:
  - gem install kramdown-rfc2629
  - pip install xml2rfc
 
-script: make ghpages
+script: make ghpages XML_RESOURCE_ORG_PREFIX=https://xml2rfc.tools.ietf.org/public/rfc
