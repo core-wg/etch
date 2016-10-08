@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-09-08
+date: 2016-10-08
 cat: std
 pi:
   toc: yes
@@ -49,6 +49,7 @@ normative:
 informative:
   RFC5323:
   RFC6902:
+  RFC7159: json
   RFC7396:
   I-D.vanderstok-core-comi:
   I-D.hartke-core-apps:
@@ -57,39 +58,35 @@ informative:
 --- abstract
 
 
-The existing Constrained Application Protocol (CoAP)
-methods only allow access to a complete resource, not to parts of a resource. In case of resources
+The methods defined in RFC 7252 for the Constrained Application Protocol (CoAP)
+only allow access to a complete resource, not to parts of a resource. In case of resources
 with larger or complex
 data, or in situations where a resource continuity is
 required, replacing or requesting the whole resource is undesirable. Several
 applications using CoAP will need to perform partial resource accesses.
 
-
-Similar to HTTP, the existing Constrained Application Protocol (CoAP)
-GET method only allows the specification of a URI and request
-parameters in CoAP options, not the transfer of a request payload
-detailing the request.  This leads to some applications to using POST
-where actually a cacheable, idempotent, safe request is desired.
-
-Again similar to HTTP,
-the existing Constrained Application Protocol (CoAP)
-PUT method only allows to replace a complete resource. This also leads
-applications to use POST where actually a cacheable, possibly idempotent
-request is desired.
-
-
-This specification adds new CoAP methods, FETCH, to perform the
-equivalent of a GET with a request body; and the twin methods PATCH and iPATCH, to
-modify parts of a CoAP resource.
-
+This specification defines the new CoAP methods, FETCH, PATCH and
+iPATCH, which are used to access and update parts of a resource.
 
 --- middle
 
 # Introduction {#intro}
 
-This specification defines the new Constrained Application
-Protocol (CoAP) {{-coap}} methods, FETCH, PATCH and iPATCH, which
-are used to access and update parts of a resource.
+Similar to HTTP, the GET method defined in
+{{-coap}} for the Constrained Application Protocol (CoAP) only allows
+the specification of a URI and request
+parameters in CoAP options, not the transfer of a request payload
+detailing the request.  This leads to some applications to using POST
+where actually a cacheable, idempotent, safe request is desired.
+
+Again similar to the original specification of HTTP,
+the PUT method defined in {{-coap}} only allows to replace a complete resource. This also leads
+applications to use POST where actually a cacheable, possibly idempotent
+request is desired.
+
+The present specification adds new CoAP methods: FETCH, to perform the
+equivalent of a GET with a request body; and the twin methods PATCH and iPATCH, to
+modify parts of a CoAP resource.
 
 ## FETCH {#intro-fetch}
 
@@ -183,9 +180,9 @@ described in {{RFC2119}}.
 
 This document uses terminology defined in {{-http-patch}} and {{-coap}}.
 
-Specifically, it uses the term "idempotent" as defined in Section 5.1 of {{-coap}}.
-(Further discussion of idempotent methods can now be found in Section
-4.2.2 of {{-http-semantics}}; the implications of idempotency of
+Specifically, it uses the terms "safe" and "idempotent" as defined in Section 5.1 of {{-coap}}.
+(Further discussion of safe and idempotent methods can now be found in Section
+4.2.1 and 4.2.2 of {{-http-semantics}}, respectively; the implications of idempotency of
 methods on server implementations are also discussed in Section 4.5 of
 {{-coap}}.)
 
@@ -205,9 +202,9 @@ used by a cache as a payload to be returned by a GET request.
 Together with the request options, the body of the request (which may
 be constructed from multiple payloads using the block protocol
 {{-block}}) defines the request parameters.
-Implementations MAY use a request body of any content type with the
+Implementations may submit a request body of any media type with the
 FETCH method; it is outside the scope of this document how
-information about admissible content types is obtained by the client
+information about admissible media types is obtained by the client
 (although we can hint that form relations ({{I-D.hartke-core-apps}})
 might be a preferred way).
 
@@ -258,8 +255,11 @@ Two specific cases are called out in the rest of this section.
 
 ### The Content-Format Option {#fetch-format}
 
-A FETCH request MUST include a Content-Format option to specify the
+A FETCH request MUST include a Content-Format option (see Section
+5.10.3 of {{-coap}}) to specify the
 media type and content encoding of the request body.
+(Typically, the media type will specifically have been designed to
+specify details for a selection or a search on a resource.)
 
 ### The ETag Option {#fetch-etag}
 
@@ -302,7 +302,7 @@ example in {{example}}. ({{I-D.snell-search-method}} invents a
 `text/query` format based on some hypothetical SQL dialect for its
 examples.)
 
-The example below illustrates retrieval of a subset of a JSON object
+The example below illustrates retrieval of a subset of a JSON {{-json}} object
 (the same object as used in {{example}}).  Using a hypothetical media type
 `application/example-map-keys+json` (with a Content-Format ID of
 NNN -- not defined as this is just an example), the client specifies
@@ -320,7 +320,7 @@ single map key `foo` within this target:
   "foo": ["bar","baz"]
 }
 ~~~
-{: title="FETCH example: JSON document that might be returned by GET"}
+{: title="FETCH example: JSON document returned by GET"}
 
 The example FETCH request specifies a single top-level member desired
 by giving its map key as the sole element of the `example-map-keys`
@@ -658,7 +658,7 @@ here, are encountered by a CoAP server while processing the
 PATCH request. In these situations other appropriate CoAP
 status codes can also be returned.
 
-# Discussion
+# The New Set of CoAP Methods
 
 Adding three new methods to CoAP's existing four may seem like a major
 change.  However, both FETCH and the two PATCH variants fit well into
