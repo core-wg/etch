@@ -869,7 +869,9 @@ Internet-Draft              CoAP Fetch Patch                October 2016
    Version 01 added an example for FETCH and is more explicit about some
    response codes and options.
 
-   Upcoming version 02 addresses the WGLC comments.
+   Version 02 addresses the WGLC comments.
+
+   Version 03 addresses the IETF last-call comments.
 
 8.  References
 
@@ -888,8 +890,6 @@ Internet-Draft              CoAP Fetch Patch                October 2016
               Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               DOI 10.17487/RFC7231, June 2014,
               <http://www.rfc-editor.org/info/rfc7231>.
-
-
 
 
 
@@ -962,7 +962,8 @@ Acknowledgements
    Christian Amsuss, Andy Bierman, Timothy Carey, Paul Duffy, Matthias
    Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne, and
    Gengyu Wei.  Christian Groves provided detailed comments during the
-   Working-Group Last Call.
+   Working-Group Last Call, and Christer Holmberg's Gen-ART review
+   provided some further editorial improvement.
 
 Authors' Addresses
 
@@ -986,7 +987,6 @@ Authors' Addresses
    Consultant
 
    Email: anuj@iurs.org
-
 
 
 
