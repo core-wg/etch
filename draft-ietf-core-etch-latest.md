@@ -753,7 +753,9 @@ draft-bormann-core-coap-fetch-00 and replaces these two drafts.
 Version 01 added an example for FETCH and is more explicit about
 some response codes and options.
 
-Upcoming version 02 addresses the WGLC comments.
+Version 02 addresses the WGLC comments.
+
+Version 03 addresses the IETF last-call comments.
 
 --- back
 
@@ -766,7 +768,8 @@ of {{fetch}}. We are grateful for discussions with Christian Amsuss,
 Andy Bierman, Timothy Carey, Paul
 Duffy, Matthias Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne,
 and Gengyu Wei.  Christian Groves provided detailed
-comments during the Working-Group Last Call.
+comments during the Working-Group Last Call, and Christer Holmberg's
+Gen-ART review provided some further editorial improvement.
 
 <!--  LocalWords:  atomicity iPATCH idempotence
  -->
