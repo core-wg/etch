@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-10-08
+date: 2016-10-09
 cat: std
 pi:
   toc: yes
