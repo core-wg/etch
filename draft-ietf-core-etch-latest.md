@@ -745,7 +745,7 @@ Content-Formats", within the "CoRE Parameters" registry:
 
 # Change log
 
-When published as a RFC, this section needs to be removed.
+When published as an RFC, this section needs to be removed.
 
 Version 00 is a composition from draft-vanderstok-core-patch-03 and
 draft-bormann-core-coap-fetch-00 and replaces these two drafts.
@@ -770,6 +770,9 @@ Duffy, Matthias Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne,
 and Gengyu Wei.  Christian Groves provided detailed
 comments during the Working-Group Last Call, and Christer Holmberg's
 Gen-ART review provided some further editorial improvement.
+Further last-call reviews were provided by Sheng Jiang and Phillip Hallam-Baker.
 
-<!--  LocalWords:  atomicity iPATCH idempotence
+<!--  LocalWords:  atomicity iPATCH idempotence cacheable varyingly
+ -->
+<!--  LocalWords:  idempotency Unprocessable
  -->
