@@ -275,13 +275,14 @@ li, p {
 <link href="#rfc.section.1.4" rel="Chapter" title="1.4 Terminology and Acronyms"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 FETCH Method"/>
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 Response Codes"/>
-<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Option Numbers"/>
-<link href="#rfc.section.2.2.1" rel="Chapter" title="2.2.1 The Content-Format Option"/>
-<link href="#rfc.section.2.2.2" rel="Chapter" title="2.2.2 The ETag Option"/>
-<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Working with Observe"/>
-<link href="#rfc.section.2.4" rel="Chapter" title="2.4 Working with Block"/>
-<link href="#rfc.section.2.5" rel="Chapter" title="2.5 FETCH discussion"/>
-<link href="#rfc.section.2.6" rel="Chapter" title="2.6 A Simple Example for FETCH"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Error Handling"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Option Numbers"/>
+<link href="#rfc.section.2.3.1" rel="Chapter" title="2.3.1 The Content-Format Option"/>
+<link href="#rfc.section.2.3.2" rel="Chapter" title="2.3.2 The ETag Option"/>
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 Working with Observe"/>
+<link href="#rfc.section.2.5" rel="Chapter" title="2.5 Working with Block"/>
+<link href="#rfc.section.2.6" rel="Chapter" title="2.6 FETCH discussion"/>
+<link href="#rfc.section.2.7" rel="Chapter" title="2.7 A Simple Example for FETCH"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 PATCH and iPATCH Methods"/>
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Simple Examples for PATCH and iPATCH"/>
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Response Codes"/>
@@ -380,13 +381,14 @@ li, p {
 <li>1.4.   <a href="#rfc.section.1.4">Terminology and Acronyms</a></li>
 </ul><li>2.   <a href="#rfc.section.2">FETCH Method</a></li>
 <ul><li>2.1.   <a href="#rfc.section.2.1">Response Codes</a></li>
-<li>2.2.   <a href="#rfc.section.2.2">Option Numbers</a></li>
-<ul><li>2.2.1.   <a href="#rfc.section.2.2.1">The Content-Format Option</a></li>
-<li>2.2.2.   <a href="#rfc.section.2.2.2">The ETag Option</a></li>
-</ul><li>2.3.   <a href="#rfc.section.2.3">Working with Observe</a></li>
-<li>2.4.   <a href="#rfc.section.2.4">Working with Block</a></li>
-<li>2.5.   <a href="#rfc.section.2.5">FETCH discussion</a></li>
-<li>2.6.   <a href="#rfc.section.2.6">A Simple Example for FETCH</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Error Handling</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">Option Numbers</a></li>
+<ul><li>2.3.1.   <a href="#rfc.section.2.3.1">The Content-Format Option</a></li>
+<li>2.3.2.   <a href="#rfc.section.2.3.2">The ETag Option</a></li>
+</ul><li>2.4.   <a href="#rfc.section.2.4">Working with Observe</a></li>
+<li>2.5.   <a href="#rfc.section.2.5">Working with Block</a></li>
+<li>2.6.   <a href="#rfc.section.2.6">FETCH discussion</a></li>
+<li>2.7.   <a href="#rfc.section.2.7">A Simple Example for FETCH</a></li>
 </ul><li>3.   <a href="#rfc.section.3">PATCH and iPATCH Methods</a></li>
 <ul><li>3.1.   <a href="#rfc.section.3.1">Simple Examples for PATCH and iPATCH</a></li>
 <li>3.2.   <a href="#rfc.section.3.2">Response Codes</a></li>
@@ -438,23 +440,38 @@ li, p {
 <p id="rfc.section.2.p.5">Depending on the response code as defined by <a href="#RFC7252">[RFC7252]</a>, the response to a FETCH request is cacheable; the request body is part of the cache key.  Specifically, 2.05 &#8220;Content&#8221; response codes, the responses for which are cacheable, are a usual way to respond to a FETCH request.  (Note that this aspect differs markedly from <a href="#I-D.snell-search-method">[I-D.snell-search-method]</a>.)  (Note also that caches that cannot use the request payload as part of the cache key will not be able to cache responses to FETCH requests at all.)  The Max-Age option in the response has equivalent semantics to its use in a GET.</p>
 <p id="rfc.section.2.p.6">The semantics of the FETCH method change to a &#8220;conditional FETCH&#8221; if the request message includes an If-Match, or If-None-Match option (<a href="#RFC7252">[RFC7252]</a>).  A conditional FETCH requests that the query be performed only under the circumstances described by the conditional option(s).  It is important to note, however, that such conditions are evaluated against the state of the target resource itself as opposed to the results of the FETCH operation.</p>
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#fetch-response" id="fetch-response">Response Codes</a></h1>
-<p id="rfc.section.2.1.p.1">FETCH for CoAP adopts the response codes as specified in sections 5.9 and 12.1.2 of <a href="#RFC7252">[RFC7252]</a>.</p>
-<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#fetch-option" id="fetch-option">Option Numbers</a></h1>
-<p id="rfc.section.2.2.p.1">FETCH for CoAP adopts the option numbers as specified in sections 5.10 and 12.2 of <a href="#RFC7252">[RFC7252]</a>.</p>
-<p id="rfc.section.2.2.p.2">Generally, options defined for GET act in an analogous way for FETCH.  Two specific cases are called out in the rest of this section.</p>
-<h1 id="rfc.section.2.2.1"><a href="#rfc.section.2.2.1">2.2.1.</a> <a href="#fetch-format" id="fetch-format">The Content-Format Option</a></h1>
-<p id="rfc.section.2.2.1.p.1">A FETCH request MUST include a Content-Format option (see Section 5.10.3 of <a href="#RFC7252">[RFC7252]</a>) to specify the media type and content encoding of the request body.  (Typically, the media type will specifically have been designed to specify details for a selection or a search on a resource.)</p>
-<h1 id="rfc.section.2.2.2"><a href="#rfc.section.2.2.2">2.2.2.</a> <a href="#fetch-etag" id="fetch-etag">The ETag Option</a></h1>
-<p id="rfc.section.2.2.2.p.1">The ETag Option on a FETCH result has the same semantics as defined in Section 5.10.6 of <a href="#RFC7252">[RFC7252]</a>.  In particular, its use as a response option describes the &#8220;tagged representation&#8221;, which for FETCH is the same as the &#8220;selected representation&#8221;.  The FETCH payload is input to that selection process and therefore needs to be part of the cache key.  Similarly, the use of ETag as a request option can elicit a 2.03 Valid response if the representation associated with the ETag would still be selected by the FETCH request (including its payload).</p>
-<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#fetch-observe" id="fetch-observe">Working with Observe</a></h1>
-<p id="rfc.section.2.3.p.1">The Observe option <a href="#RFC7641">[RFC7641]</a> can be used with a FETCH request as it can be used with a GET request.</p>
-<h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#fetch-block" id="fetch-block">Working with Block</a></h1>
-<p id="rfc.section.2.4.p.1">The Block1 option <a href="#RFC7959">[RFC7959]</a> can be used with a FETCH request as it would be used with a POST request; the Block2 option can then be used as with GET or POST.</p>
-<h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> <a href="#fetch-discuss" id="fetch-discuss">FETCH discussion</a></h1>
-<p id="rfc.section.2.5.p.1">One property of FETCH that may be non-obvious is that a FETCH request cannot be generated from a link alone, but also needs a way to generate the request payload.  Again, form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) may be able to fill parts of this gap.</p>
-<h1 id="rfc.section.2.6"><a href="#rfc.section.2.6">2.6.</a> <a href="#fetch-example" id="fetch-example">A Simple Example for FETCH</a></h1>
-<p id="rfc.section.2.6.p.1">The FETCH method needs a media type for its payload (as expressed by the Content-Format request option) that specifies the search query in a similar detail as is shown for the patch payload in the PATCH example in <a href="#example">Section 3.1</a>. (<a href="#I-D.snell-search-method">[I-D.snell-search-method]</a> invents a <samp>text/query</samp> format based on some hypothetical SQL dialect for its examples.)</p>
-<p id="rfc.section.2.6.p.2">The example below illustrates retrieval of a subset of a JSON <a href="#RFC7159">[RFC7159]</a> object (the same object as used in <a href="#example">Section 3.1</a>).  Using a hypothetical media type <samp>application/example-map-keys+json</samp> (with a Content-Format ID of NNN &#8211; not defined as this is just an example), the client specifies the items in the object that it wants: it supplies a JSON array giving the map keys for these items.  A resource located at <samp>coap://www.example.com/object</samp> can be represented by a JSON document that we will consider as the target of the FETCH. The client wants to learn the contents of the single map key <samp>foo</samp> within this target:</p>
+<p id="rfc.section.2.1.p.1">FETCH for CoAP adopts the response codes as specified in sections 5.9 and 12.1.2 of <a href="#RFC7252">[RFC7252]</a> as well as additional response codes mentioned in <a href="#fetch-errors">Section 2.2</a>.</p>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#fetch-errors" id="fetch-errors">Error Handling</a></h1>
+<p id="rfc.section.2.2.p.1">A FETCH request may fail under certain known conditions.  Beyond the conditions already defined in <a href="#RFC7252">[RFC7252]</a> for GET, noteworthy ones are:</p>
+<p/>
+
+<dl>
+  <dt>Malformed FETCH payload:</dt>
+  <dd style="margin-left: 8">If a server determines that the payload provided with a FETCH request is not properly formatted, it can return a 4.00 (Bad Request) CoAP error. The definition of a malformed payload depends upon the CoAP Content-Format specified with the request.</dd>
+  <dt>Unsupported FETCH payload:</dt>
+  <dd style="margin-left: 8">In case a client sends payload that is inappropriate for the resource identified by the Request-URI, the server can return a 4.15 (Unsupported Content-Format) CoAP error. The server can determine if the payload is supported by checking the CoAP Content-Format specified with the request.</dd>
+  <dt>Unprocessable request:</dt>
+  <dd style="margin-left: 8">This situation occurs when the payload of a FETCH request is determined as valid, i.e. well-formed and supported, however, the server is unable to or incapable of processing the request. The server can return a 4.22 (Unprocessable Entity) CoAP error. In situations when the server has insufficient computing resources to complete the request successfully, it can return a 4.13 (Request Entity Too Large) CoAP error (see also below).  In case there are more specific errors that provide more insight into the problem, then those should be used.</dd>
+  <dt>Request too large:</dt>
+  <dd style="margin-left: 8">If the payload of the FETCH request is larger than a CoAP server can process, then it can return the 4.13 (Request Entity Too Large) CoAP error.</dd>
+</dl>
+<p id="rfc.section.2.2.p.3">It is possible that other error situations, not mentioned here, are encountered by a CoAP server while processing the FETCH request. In these situations other appropriate CoAP status codes can also be returned.</p>
+<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#fetch-option" id="fetch-option">Option Numbers</a></h1>
+<p id="rfc.section.2.3.p.1">FETCH for CoAP adopts the option numbers as specified in sections 5.10 and 12.2 of <a href="#RFC7252">[RFC7252]</a>.</p>
+<p id="rfc.section.2.3.p.2">Generally, options defined for GET act in an analogous way for FETCH.  Two specific cases are called out in the rest of this section.</p>
+<h1 id="rfc.section.2.3.1"><a href="#rfc.section.2.3.1">2.3.1.</a> <a href="#fetch-format" id="fetch-format">The Content-Format Option</a></h1>
+<p id="rfc.section.2.3.1.p.1">A FETCH request MUST include a Content-Format option (see Section 5.10.3 of <a href="#RFC7252">[RFC7252]</a>) to specify the media type and content encoding of the request body.  (Typically, the media type will specifically have been designed to specify details for a selection or a search on a resource.)</p>
+<h1 id="rfc.section.2.3.2"><a href="#rfc.section.2.3.2">2.3.2.</a> <a href="#fetch-etag" id="fetch-etag">The ETag Option</a></h1>
+<p id="rfc.section.2.3.2.p.1">The ETag Option on a FETCH result has the same semantics as defined in Section 5.10.6 of <a href="#RFC7252">[RFC7252]</a>.  In particular, its use as a response option describes the &#8220;tagged representation&#8221;, which for FETCH is the same as the &#8220;selected representation&#8221;.  The FETCH payload is input to that selection process and therefore needs to be part of the cache key.  Similarly, the use of ETag as a request option can elicit a 2.03 Valid response if the representation associated with the ETag would still be selected by the FETCH request (including its payload).</p>
+<h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#fetch-observe" id="fetch-observe">Working with Observe</a></h1>
+<p id="rfc.section.2.4.p.1">The Observe option <a href="#RFC7641">[RFC7641]</a> can be used with a FETCH request as it can be used with a GET request.</p>
+<h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> <a href="#fetch-block" id="fetch-block">Working with Block</a></h1>
+<p id="rfc.section.2.5.p.1">The Block1 option <a href="#RFC7959">[RFC7959]</a> can be used with a FETCH request as it would be used with a POST request; the Block2 option can then be used as with GET or POST.</p>
+<h1 id="rfc.section.2.6"><a href="#rfc.section.2.6">2.6.</a> <a href="#fetch-discuss" id="fetch-discuss">FETCH discussion</a></h1>
+<p id="rfc.section.2.6.p.1">One property of FETCH that may be non-obvious is that a FETCH request cannot be generated from a link alone, but also needs a way to generate the request payload.  Again, form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) may be able to fill parts of this gap.</p>
+<h1 id="rfc.section.2.7"><a href="#rfc.section.2.7">2.7.</a> <a href="#fetch-example" id="fetch-example">A Simple Example for FETCH</a></h1>
+<p id="rfc.section.2.7.p.1">The FETCH method needs a media type for its payload (as expressed by the Content-Format request option) that specifies the search query in a similar detail as is shown for the patch payload in the PATCH example in <a href="#example">Section 3.1</a>. (<a href="#I-D.snell-search-method">[I-D.snell-search-method]</a> invents a <samp>text/query</samp> format based on some hypothetical SQL dialect for its examples.)</p>
+<p id="rfc.section.2.7.p.2">The example below illustrates retrieval of a subset of a JSON <a href="#RFC7159">[RFC7159]</a> object (the same object as used in <a href="#example">Section 3.1</a>).  Using a hypothetical media type <samp>application/example-map-keys+json</samp> (with a Content-Format ID of NNN &#8211; not defined as this is just an example), the client specifies the items in the object that it wants: it supplies a JSON array giving the map keys for these items.  A resource located at <samp>coap://www.example.com/object</samp> can be represented by a JSON document that we will consider as the target of the FETCH. The client wants to learn the contents of the single map key <samp>foo</samp> within this target:</p>
 <pre>
 {
   "x-coord": 256,
@@ -463,7 +480,7 @@ li, p {
 }
 </pre>
 <p class="figure">FETCH example: JSON document returned by GET</p>
-<p id="rfc.section.2.6.p.3">The example FETCH request specifies a single top-level member desired by giving its map key as the sole element of the <samp>example-map-keys</samp> payload:</p>
+<p id="rfc.section.2.7.p.3">The example FETCH request specifies a single top-level member desired by giving its map key as the sole element of the <samp>example-map-keys</samp> payload:</p>
 <pre>
 FETCH CoAP://www.example.com/object
 Content-Format: NNN (application/example-map-keys+json)
@@ -473,7 +490,7 @@ Accept: application/json
 ]
 </pre>
 <p class="figure">FETCH example: Request</p>
-<p id="rfc.section.2.6.p.4">The server returns a subset document with just the selected member:</p>
+<p id="rfc.section.2.7.p.4">The server returns a subset document with just the selected member:</p>
 <pre>
 2.05 Content
 Content-Format: 50 (application/json)
@@ -482,7 +499,7 @@ Content-Format: 50 (application/json)
 }
 </pre>
 <p class="figure">FETCH example: Response with subset JSON document</p>
-<p id="rfc.section.2.6.p.5">By the logic of this example, the requester could have entered more than one map key into the request payload array and would have received a more complete subset of the top-level JSON object that is representing the resource.</p>
+<p id="rfc.section.2.7.p.5">By the logic of this example, the requester could have entered more than one map key into the request payload array and would have received a more complete subset of the top-level JSON object that is representing the resource.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#patch" id="patch">PATCH and iPATCH Methods</a></h1>
 <p id="rfc.section.3.p.1">The PATCH and iPATCH methods request that a set of changes described in the request payload is applied to the target resource of the request.  The set of changes is represented in a format identified by a media type.  If the Request-URI does not point to an existing resource, the server MAY create a new resource with that URI, depending on the patch document type (whether it can logically modify a null resource) and permissions, etc.  Creation of a new resource would result in a 2.01 (Created) Response Code dependent on the patch document type.</p>
 <p id="rfc.section.3.p.2">Restrictions to a PATCH or iPATCH request can be made by including the If-Match or If-None-Match options in the request (see Section 5.10.8.1 and 5.10.8.2 of <a href="#RFC7252">[RFC7252]</a>).  If the resource could not be created or modified, then an appropriate Error Response Code SHOULD be sent.</p>
@@ -694,8 +711,8 @@ JSON document final state:
     </tr>
   </tbody>
 </table>
-<p id="rfc.section.6.p.2">The FETCH method is idempotent and safe, and it returns the same response codes that GET can return, plus 4.15 &#8220;Unsupported Content-Format&#8221; with the same semantics as with POST.</p>
-<p id="rfc.section.6.p.3">The PATCH method is neither idempotent nor safe.  It returns the same response codes that POST can return, plus 4.09 &#8220;Conflict&#8221; and 4.22 &#8220;Unprocessable Entity&#8221; with the semantics specified in <a href="#errors">Section 3.4</a>.</p>
+<p id="rfc.section.6.p.2">The FETCH method is idempotent and safe, and it returns the same response codes that GET can return, plus 4.13 (Request Entity Too Large), 4.15 (Unsupported Content-Format), and 4.22 (Unprocessable Entity) with the semantics specified in <a href="#fetch-errors">Section 2.2</a>.</p>
+<p id="rfc.section.6.p.3">The PATCH method is neither idempotent nor safe.  It returns the same response codes that POST can return, plus 4.09 (Conflict) and 4.22 (Unprocessable Entity) with the semantics specified in <a href="#errors">Section 3.4</a>.</p>
 <p id="rfc.section.6.p.4">The iPATCH method is identical to the PATCH method, except that it is idempotent.</p>
 <p id="rfc.section.6.p.5">IANA is requested to add the following code to the sub-registry &#8220;CoAP response codes&#8221;:</p>
 <table cellpadding="3" cellspacing="0" class="tt full center">
