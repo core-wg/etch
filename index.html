@@ -274,13 +274,6 @@ li, p {
 <link href="#rfc.section.1.3" rel="Chapter" title="1.3 Requirements Language"/>
 <link href="#rfc.section.1.4" rel="Chapter" title="1.4 Terminology and Acronyms"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 FETCH Method"/>
-<<<<<<< HEAD
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 The Content-Format Option"/>
-<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Working with Observe"/>
-<link href="#rfc.section.2.3" rel="Chapter" title="2.3 Working with Block"/>
-<link href="#rfc.section.2.4" rel="Chapter" title="2.4 FETCH discussion"/>
-<link href="#rfc.section.2.5" rel="Chapter" title="2.5 A Simple Example for FETCH"/>
-=======
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 Response Codes"/>
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 Option Numbers"/>
 <link href="#rfc.section.2.2.1" rel="Chapter" title="2.2.1 The Content-Format Option"/>
@@ -289,7 +282,6 @@ li, p {
 <link href="#rfc.section.2.4" rel="Chapter" title="2.4 Working with Block"/>
 <link href="#rfc.section.2.5" rel="Chapter" title="2.5 FETCH discussion"/>
 <link href="#rfc.section.2.6" rel="Chapter" title="2.6 A Simple Example for FETCH"/>
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
 <link href="#rfc.section.3" rel="Chapter" title="3 PATCH and iPATCH Methods"/>
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Simple Examples for PATCH and iPATCH"/>
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Response Codes"/>
@@ -306,7 +298,7 @@ li, p {
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.5.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="van der Stok, P., Bormann, C., and A. Sehgal" />
@@ -445,32 +437,6 @@ li, p {
 <p id="rfc.section.2.p.4">A successful response to a FETCH request is expected to provide some indication as to the final disposition of the requested operation.  If a successful response includes a body payload, the payload is expected to describe the results of the FETCH operation.</p>
 <p id="rfc.section.2.p.5">Depending on the response code as defined by <a href="#RFC7252">[RFC7252]</a>, the response to a FETCH request is cacheable; the request body is part of the cache key.  Specifically, 2.05 &#8220;Content&#8221; response codes, the responses for which are cacheable, are a usual way to respond to a FETCH request.  (Note that this aspect differs markedly from <a href="#I-D.snell-search-method">[I-D.snell-search-method]</a>.)  (Note also that caches that cannot use the request payload as part of the cache key will not be able to cache responses to FETCH requests at all.)  The Max-Age option in the response has equivalent semantics to its use in a GET.</p>
 <p id="rfc.section.2.p.6">The semantics of the FETCH method change to a &#8220;conditional FETCH&#8221; if the request message includes an If-Match, or If-None-Match option (<a href="#RFC7252">[RFC7252]</a>).  A conditional FETCH requests that the query be performed only under the circumstances described by the conditional option(s).  It is important to note, however, that such conditions are evaluated against the state of the target resource itself as opposed to the results of the FETCH operation.</p>
-<<<<<<< HEAD
-<p id="rfc.section.2.p.7">TODO This needs some additional text on what an ETag on a FETCH result means.</p>
-<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#fetch-format" id="fetch-format">The Content-Format Option</a></h1>
-<p id="rfc.section.2.1.p.1">A FETCH request MUST include a Content-Format option to specify the media type and content encoding of the request body.</p>
-<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#fetch-observe" id="fetch-observe">Working with Observe</a></h1>
-<p id="rfc.section.2.2.p.1">The Observe option <a href="#RFC7641">[RFC7641]</a> can be used with a FETCH request as it can be used with a GET request.</p>
-<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#fetch-block" id="fetch-block">Working with Block</a></h1>
-<p id="rfc.section.2.3.p.1">The Block1 option <a href="#I-D.ietf-core-block">[I-D.ietf-core-block]</a> can be used with a FETCH request as it would be used with a POST request; the Block2 option can then be used as with GET or POST.</p>
-<h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> <a href="#fetch-discuss" id="fetch-discuss">FETCH discussion</a></h1>
-<p id="rfc.section.2.4.p.1">One property of FETCH that may be non-obvious is that a FETCH request cannot be generated from a link alone, but also needs a way to generate the request payload.  Again, form relations (<a href="#I-D.hartke-core-apps">[I-D.hartke-core-apps]</a>) may be able to fill parts of this gap.</p>
-<h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> <a href="#fetch-example" id="fetch-example">A Simple Example for FETCH</a></h1>
-<p id="rfc.section.2.5.p.1">The FETCH method needs a media type for its payload (as expressed by the Content-Format request option) that specifies the search query in a similar detail as is shown for the patch payload in the PATCH example in <a href="#example">Section 3.1</a>. (<a href="#I-D.snell-search-method">[I-D.snell-search-method]</a> invents a <samp>text/query</samp> format based on some hypothetical SQL dialect for its examples.)</p>
-<p id="rfc.section.2.5.p.2">The example below illustrates retrieval of a subset of a JSON object (the same object as used in <a href="#example">Section 3.1</a>).  Using a hypothetical media type <samp>application/example-map-keys+json</samp>, the client specifies the items in the object that it wants: it supplies a JSON array giving the map keys for these items.  A resource located at <samp>coap://www.example.com/object</samp> can be represented by a JSON document that we will consider as the target of the FETCH. The client wants to learn the contents of the single map key <samp>foo</samp> within this target:</p>
-<pre>
-{
-  "x-coord": 256,
-  "y-coord": 45",
-  "foo": ["bar","baz"]
-}
-</pre>
-<p class="figure">FETCH example: JSON document that might be returned by GET</p>
-<p id="rfc.section.2.5.p.3">The example FETCH request specifies a single top-level member desired by giving its map key as the sole element of the <samp>example-map-keys</samp> payload:</p>
-<pre>
-FETCH CoAP://www.example.com/object
-Content-Format: application/example-map-keys+json
-=======
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#fetch-response" id="fetch-response">Response Codes</a></h1>
 <p id="rfc.section.2.1.p.1">FETCH for CoAP adopts the response codes as specified in sections 5.9 and 12.1.2 of <a href="#RFC7252">[RFC7252]</a>.</p>
 <h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#fetch-option" id="fetch-option">Option Numbers</a></h1>
@@ -501,34 +467,22 @@ Content-Format: application/example-map-keys+json
 <pre>
 FETCH CoAP://www.example.com/object
 Content-Format: NNN (application/example-map-keys+json)
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
 Accept: application/json
 [
   "foo"
 ]
 </pre>
 <p class="figure">FETCH example: Request</p>
-<<<<<<< HEAD
-<p id="rfc.section.2.5.p.4">The server returns a subset document with just the selected member:</p>
-<pre>
-2.05 Content
-Content-Format: application/json
-=======
 <p id="rfc.section.2.6.p.4">The server returns a subset document with just the selected member:</p>
 <pre>
 2.05 Content
 Content-Format: 50 (application/json)
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
 {
   "foo": ["bar","baz"]
 }
 </pre>
 <p class="figure">FETCH example: Response with subset JSON document</p>
-<<<<<<< HEAD
-<p id="rfc.section.2.5.p.5">By the logic of this example, the requester could have entered more than one map key into the request payload array and would have received a more complete subset of the top-level JSON object that is representing the resource.</p>
-=======
 <p id="rfc.section.2.6.p.5">By the logic of this example, the requester could have entered more than one map key into the request payload array and would have received a more complete subset of the top-level JSON object that is representing the resource.</p>
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#patch" id="patch">PATCH and iPATCH Methods</a></h1>
 <p id="rfc.section.3.p.1">The PATCH and iPATCH methods request that a set of changes described in the request payload is applied to the target resource of the request.  The set of changes is represented in a format identified by a media type.  If the Request-URI does not point to an existing resource, the server MAY create a new resource with that URI, depending on the patch document type (whether it can logically modify a null resource) and permissions, etc.  Creation of a new resource would result in a 2.01 (Created) Response Code dependent on the patch document type.</p>
 <p id="rfc.section.3.p.2">Restrictions to a PATCH or iPATCH request can be made by including the If-Match or If-None-Match options in the request (see Section 5.10.8.1 and 5.10.8.2 of <a href="#RFC7252">[RFC7252]</a>).  If the resource could not be created or modified, then an appropriate Error Response Code SHOULD be sent.</p>
@@ -795,7 +749,7 @@ JSON document final state:
   </tbody>
 </table>
 <h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#change-log" id="change-log">Change log</a></h1>
-<p id="rfc.section.7.p.1">When published as a RFC, this section needs to be removed.</p>
+<p id="rfc.section.7.p.1">When published as an RFC, this section needs to be removed.</p>
 <p id="rfc.section.7.p.2">Version 00 is a composition from draft-vanderstok-core-patch-03 and draft-bormann-core-coap-fetch-00 and replaces these two drafts.</p>
 <p id="rfc.section.7.p.3">Version 01 added an example for FETCH and is more explicit about some response codes and options.</p>
 <p id="rfc.section.7.p.4">Version 02 addresses the WGLC comments.</p>
@@ -892,7 +846,7 @@ JSON document final state:
 <h1 id="rfc.acknowledgements">
   <a href="#rfc.acknowledgements">Acknowledgements</a>
 </h1>
-<p id="rfc.section.A.p.1">Klaus Hartke has pointed out some essential differences between CoAP and HTTP concerning PATCH, and found a number of problems in an earlier version of <a href="#fetch">Section 2</a>. We are grateful for discussions with Christian Amsuss, Andy Bierman, Timothy Carey, Paul Duffy, Matthias Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne, and Gengyu Wei.  Christian Groves provided detailed comments during the Working-Group Last Call, and Christer Holmberg&#8217;s Gen-ART review provided some further editorial improvement.</p>
+<p id="rfc.section.A.p.1">Klaus Hartke has pointed out some essential differences between CoAP and HTTP concerning PATCH, and found a number of problems in an earlier version of <a href="#fetch">Section 2</a>. We are grateful for discussions with Christian Amsuss, Andy Bierman, Timothy Carey, Paul Duffy, Matthias Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne, and Gengyu Wei.  Christian Groves provided detailed comments during the Working-Group Last Call, and Christer Holmberg&#8217;s Gen-ART review provided some further editorial improvement.  Further last-call reviews were provided by Sheng Jiang and Phillip Hallam-Baker.</p>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
 </h1>

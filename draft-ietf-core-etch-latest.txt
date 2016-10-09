@@ -162,10 +162,6 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
    o  The request parameters are not limited by the maximum size of the
       URI.  In HTTP, that is a problem as the practical limit for this
-      size varies.  In CoAP, another problem is that the block-wise
-      transfer is not available for transferring large URI options in
-      multiple rounds.
-
 
 
 
@@ -438,14 +434,6 @@ Internet-Draft              CoAP Fetch Patch                October 2016
    would result in a 2.01 (Created) Response Code dependent on the patch
    document type.
 
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 7]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
-
    Restrictions to a PATCH or iPATCH request can be made by including
    the If-Match or If-None-Match options in the request (see
    Section 5.10.8.1 and 5.10.8.2 of [RFC7252]).  If the resource could
@@ -500,14 +488,6 @@ Internet-Draft              CoAP Fetch Patch                October 2016
    o  A 2.04 (Changed) response invalidates any cache entry for the
       target resource; the payload is a representation of the action
       result.
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016                [Page 8]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-
 
    There is no guarantee that a resource can be modified with PATCH or
    iPATCH.  Servers MUST ensure that a received PATCH body is
@@ -799,13 +779,9 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-<<<<<<< HEAD
-van der Stok, et al.    Expires November 9, 2016               [Page 13]
-=======
 
 
 van der Stok, et al.     Expires April 11, 2017                [Page 14]
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -866,18 +842,12 @@ van der Stok, et al.     Expires April 11, 2017                [Page 15]
 Internet-Draft              CoAP Fetch Patch                October 2016
 
 
-<<<<<<< HEAD
-van der Stok, et al.    Expires November 9, 2016               [Page 14]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-=======
                 +------+----------------------+-----------+
                 | Code | Name                 | Reference |
                 +------+----------------------+-----------+
                 | 4.09 | Conflict             | [RFCthis] |
                 | 4.22 | Unprocessable Entity | [RFCthis] |
                 +------+----------------------+-----------+
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
 
    IANA is requested to add entries to the sub-registry "CoAP Content-
    Formats", within the "CoRE Parameters" registry:
@@ -891,7 +861,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 7.  Change log
 
-   When published as a RFC, this section needs to be removed.
+   When published as an RFC, this section needs to be removed.
 
    Version 00 is a composition from draft-vanderstok-core-patch-03 and
    draft-bormann-core-coap-fetch-00 and replaces these two drafts.
@@ -923,13 +893,7 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
 
 
 
-<<<<<<< HEAD
-
-
-van der Stok, et al.    Expires November 9, 2016               [Page 15]
-=======
 van der Stok, et al.     Expires April 11, 2017                [Page 16]
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -992,11 +956,6 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 Acknowledgements
 
-<<<<<<< HEAD
-van der Stok, et al.    Expires November 9, 2016               [Page 16]
-
-Internet-Draft              CoAP Fetch Patch                    May 2016
-=======
    Klaus Hartke has pointed out some essential differences between CoAP
    and HTTP concerning PATCH, and found a number of problems in an
    earlier version of Section 2.  We are grateful for discussions with
@@ -1004,8 +963,8 @@ Internet-Draft              CoAP Fetch Patch                    May 2016
    Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne, and
    Gengyu Wei.  Christian Groves provided detailed comments during the
    Working-Group Last Call, and Christer Holmberg's Gen-ART review
-   provided some further editorial improvement.
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
+   provided some further editorial improvement.  Further last-call
+   reviews were provided by Sheng Jiang and Phillip Hallam-Baker.
 
 Authors' Addresses
 
@@ -1046,22 +1005,4 @@ Authors' Addresses
 
 
 
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-van der Stok, et al.    Expires November 9, 2016               [Page 17]
-=======
 van der Stok, et al.     Expires April 11, 2017                [Page 18]
->>>>>>> f29f1bbdc9bf0aae81af5f2a25a04a65075f18f7
