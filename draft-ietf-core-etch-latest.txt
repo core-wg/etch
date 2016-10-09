@@ -5,10 +5,10 @@
 core                                                     P. van der Stok
 Internet-Draft                                                Consultant
 Intended status: Standards Track                              C. Bormann
-Expires: April 11, 2017                          Universitaet Bremen TZI
+Expires: April 12, 2017                          Universitaet Bremen TZI
                                                                A. Sehgal
                                                               Consultant
-                                                        October 08, 2016
+                                                        October 09, 2016
 
 
   Patch and Fetch Methods for Constrained Application Protocol (CoAP)
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 11, 2017.
+   This Internet-Draft will expire on April 12, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 1]
+van der Stok, et al.     Expires April 12, 2017                 [Page 1]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 2]
+van der Stok, et al.     Expires April 12, 2017                 [Page 2]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -165,7 +165,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 3]
+van der Stok, et al.     Expires April 12, 2017                 [Page 3]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -221,7 +221,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 4]
+van der Stok, et al.     Expires April 12, 2017                 [Page 4]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -277,7 +277,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 5]
+van der Stok, et al.     Expires April 12, 2017                 [Page 5]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -333,7 +333,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 6]
+van der Stok, et al.     Expires April 12, 2017                 [Page 6]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -389,7 +389,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 7]
+van der Stok, et al.     Expires April 12, 2017                 [Page 7]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -445,7 +445,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 8]
+van der Stok, et al.     Expires April 12, 2017                 [Page 8]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -501,7 +501,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                 [Page 9]
+van der Stok, et al.     Expires April 12, 2017                 [Page 9]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -557,7 +557,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 10]
+van der Stok, et al.     Expires April 12, 2017                [Page 10]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -613,7 +613,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 11]
+van der Stok, et al.     Expires April 12, 2017                [Page 11]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -669,7 +669,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 12]
+van der Stok, et al.     Expires April 12, 2017                [Page 12]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -725,7 +725,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 13]
+van der Stok, et al.     Expires April 12, 2017                [Page 13]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -781,7 +781,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 14]
+van der Stok, et al.     Expires April 12, 2017                [Page 14]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -837,7 +837,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 15]
+van der Stok, et al.     Expires April 12, 2017                [Page 15]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -893,7 +893,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 16]
+van der Stok, et al.     Expires April 12, 2017                [Page 16]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -949,7 +949,7 @@ Internet-Draft              CoAP Fetch Patch                October 2016
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 17]
+van der Stok, et al.     Expires April 12, 2017                [Page 17]
 
 Internet-Draft              CoAP Fetch Patch                October 2016
 
@@ -1005,4 +1005,4 @@ Authors' Addresses
 
 
 
-van der Stok, et al.     Expires April 11, 2017                [Page 18]
+van der Stok, et al.     Expires April 12, 2017                [Page 18]
