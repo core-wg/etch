@@ -243,7 +243,53 @@ opposed to the results of the FETCH operation.
 ## Response Codes {#fetch-response}
 
 FETCH for CoAP adopts the response codes as specified in
-sections 5.9 and 12.1.2 of {{-coap}}.
+sections 5.9 and 12.1.2 of {{-coap}} as well as additional
+response codes mentioned in {{fetch-errors}}.
+
+## Error Handling {#fetch-errors}
+
+A FETCH request may fail under certain known conditions.
+Beyond the conditions already defined in {{-coap}} for GET, noteworthy ones are:
+
+Malformed FETCH payload:
+: If a server
+  determines that the payload provided with a FETCH request is
+  not properly formatted, it can return a 4.00 (Bad Request)
+  CoAP error. The definition of a malformed payload depends
+  upon the CoAP Content-Format specified with the request.
+
+Unsupported FETCH payload:
+: In case a client
+  sends payload that is inappropriate for the resource
+  identified by the Request-URI, the server can return a 4.15
+  (Unsupported Content-Format) CoAP error. The server can
+  determine if the payload is supported by checking the CoAP
+  Content-Format specified with the request.
+
+Unprocessable request:
+: This situation occurs
+  when the payload of a FETCH request is determined as valid,
+  i.e. well-formed and supported, however, the server is
+  unable to or incapable of processing the request. The server
+  can return a 4.22 (Unprocessable Entity) CoAP error. In
+  situations when the server has
+  insufficient computing resources to
+  complete the request successfully, it can return a 4.13 (Request Entity
+  Too Large) CoAP error (see also below).
+
+  In case there are more specific errors that provide more
+  insight into the problem, then those should be used.
+
+Request too large:
+: If the payload of the FETCH
+  request is larger than a CoAP server can process, then it
+  can return the 4.13 (Request Entity Too Large) CoAP
+  error.
+
+It is possible that other error situations, not mentioned
+here, are encountered by a CoAP server while processing the
+FETCH request. In these situations other appropriate CoAP
+status codes can also be returned.
 
 ## Option Numbers {#fetch-option}
 
@@ -715,12 +761,13 @@ Codes":
 | 0.07 | iPATCH | [RFCthis] |
 
 The FETCH method is idempotent and safe, and it returns the same
-response codes that GET can return, plus 4.15 "Unsupported
-Content-Format" with the same semantics as with POST.
+response codes that GET can return, plus 4.13 (Request Entity Too
+Large), 4.15 (Unsupported Content-Format), and 4.22 (Unprocessable
+Entity) with the semantics specified in {{fetch-errors}}.
 
 The PATCH method is neither idempotent nor safe.  It returns the same
-response codes that POST can return, plus 4.09 "Conflict" and 4.22
-"Unprocessable Entity" with the semantics specified in {{errors}}.
+response codes that POST can return, plus 4.09 (Conflict) and 4.22
+(Unprocessable Entity) with the semantics specified in {{errors}}.
 
 The iPATCH method is identical to the PATCH method, except that it is
 idempotent.
