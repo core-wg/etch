@@ -202,16 +202,18 @@ used by a cache as a payload to be returned by a GET request.
 Together with the request options, the body of the request (which may
 be constructed from multiple payloads using the block protocol
 {{-block}}) defines the request parameters.
-Implementations may submit a request body of any media type with the
-FETCH method; it is outside the scope of this document how
-information about admissible media types is obtained by the client
+With the
+FETCH method, implementations may submit a request body of any media type that is
+defined with the semantics of selecting information from
+a resource in such a FETCH request; it is outside the scope of this document how
+information about media types admissible for the specific resource is obtained by the client
 (although we can hint that form relations ({{I-D.hartke-core-apps}})
 might be a preferred way).
 
 FETCH requests are both safe and idempotent with regards to the
 resource identified by the request URI.  That is, the performance of
 a fetch is not intended to alter the state of the targeted resource.
-(However, while processing a search request, a server can be expected
+(However, while processing a fetch request, a server can be expected
 to allocate computing and memory resources or even create additional
 server resources through which the response to the search can be
 retrieved.)
@@ -260,7 +262,7 @@ Malformed FETCH payload:
 
 Unsupported FETCH payload:
 : In case a client
-  sends payload that is inappropriate for the resource
+  sends a payload that is inappropriate for the resource
   identified by the Request-URI, the server can return a 4.15
   (Unsupported Content-Format) CoAP error. The server can
   determine if the payload is supported by checking the CoAP
@@ -407,7 +409,8 @@ request.  The set of changes is represented in a format
 identified by a media type.  If the Request-URI does not point
 to an existing resource, the server MAY create a new resource
 with that URI, depending on the patch document type (whether
-it can logically modify a null resource) and permissions, etc.
+it can logically modify a null resource) and permissions, as well as other
+conditions (see also {{errors}}).
 Creation of a new resource would result in a 2.01 (Created)
 Response Code dependent on the patch document type.
 
@@ -622,7 +625,7 @@ Malformed PATCH or iPATCH payload:
 
 Unsupported PATCH or iPATCH payload:
 : In case a client
-  sends payload that is inappropriate for the resource
+  sends a payload that is inappropriate for the resource
   identified by the Request-URI, the server can return a 4.15
   (Unsupported Content-Format) CoAP error. The server can
   determine if the payload is supported by checking the CoAP
@@ -734,6 +737,11 @@ described in this document.
 
 The FETCH method is subject to the same general security
 considerations as all CoAP methods as described in {{-coap}}.
+The payload of a FETCH request may reveal more detailed information
+about the specific portions of a resource of interest to the
+requester than a GET request for the entire resource would; this may
+mean that confidentiality protection of the request by DTLS or other
+means is needed for FETCH where it wouldn't be needed for GET.
 
 The security consideration of Section 11 of {{-coap}} as well as those
 of Section 5 of {{-http-patch}} also apply.
@@ -817,7 +825,11 @@ Duffy, Matthias Kovatsch, Michel Veillette, Michael Verschoor, Thomas Watteyne,
 and Gengyu Wei.  Christian Groves provided detailed
 comments during the Working-Group Last Call, and Christer Holmberg's
 Gen-ART review provided some further editorial improvement.
-Further last-call reviews were provided by Sheng Jiang and Phillip Hallam-Baker.
+Further last-call reviews were provided by Sheng Jiang and Phillip
+Hallam-Baker.
+As usual, the IESG had some very good reviews, we would like to
+specifically call out those by Alexey Melnikov (responsible AD) and
+Alissa Cooper.
 
 <!--  LocalWords:  atomicity iPATCH idempotence cacheable varyingly
  -->
