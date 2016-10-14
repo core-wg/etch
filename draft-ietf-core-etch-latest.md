@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-10-09
+date: 2016-10-11
 cat: std
 pi:
   toc: yes
@@ -737,6 +737,9 @@ described in this document.
 
 The FETCH method is subject to the same general security
 considerations as all CoAP methods as described in {{-coap}}.
+Specifically, the security considerations for FETCH are closest to
+those of GET, except that the FETCH request carries a payload that may
+need additional protection.
 The payload of a FETCH request may reveal more detailed information
 about the specific portions of a resource of interest to the
 requester than a GET request for the entire resource would; this may
@@ -747,7 +750,12 @@ The security consideration of Section 11 of {{-coap}} as well as those
 of Section 5 of {{-http-patch}} also apply.
 
 The security considerations for PATCH or iPATCH are nearly identical to
-the security considerations for PUT ({{-coap}}).  The mechanisms used for PUT can be used
+the security considerations for PUT ({{-coap}}).
+Specifically, there is likely to be a need for authorizing requests
+(possibly through access control and/or
+authentication) and for ensuring that data is not corrupted through
+transport errors or through accidental overwrites.
+The mechanisms used for PUT can be used
 for PATCH or iPATCH as well.
 
 PATCH or iPATCH are secured following the CoAP recommendations as
