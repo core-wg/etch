@@ -304,7 +304,7 @@ li, p {
 
   <meta name="dct.creator" content="van der Stok, P., Bormann, C., and A. Sehgal" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-core-etch-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-10-09" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-10-11" />
   <meta name="dct.abstract" content="The methods defined in RFC 7252 for the Constrained Application Protocol (CoAP) only allow access to a complete resource, not to parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is undesirable. Several applications using CoAP will need to perform partial resource accesses." />
   <meta name="description" content="The methods defined in RFC 7252 for the Constrained Application Protocol (CoAP) only allow access to a complete resource, not to parts of a resource. In case of resources with larger or complex data, or in situations where a resource continuity is required, replacing or requesting the whole resource is undesirable. Several applications using CoAP will need to perform partial resource accesses." />
 
@@ -328,7 +328,7 @@ li, p {
   <td class="right">C. Bormann</td>
 </tr>
 <tr>
-  <td class="left">Expires: April 12, 2017</td>
+  <td class="left">Expires: April 14, 2017</td>
   <td class="right">Universitaet Bremen TZI</td>
 </tr>
 <tr>
@@ -341,7 +341,7 @@ li, p {
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">October 09, 2016</td>
+  <td class="right">October 11, 2016</td>
 </tr>
 
     	
@@ -362,7 +362,7 @@ li, p {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on April 12, 2017.</p>
+<p>This Internet-Draft will expire on April 14, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -679,9 +679,9 @@ JSON document final state:
 </table>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.5.p.1">This section analyses the possible threats to the CoAP FETCH and PATCH or iPATCH methods.  It is meant to inform protocol and application developers about the security limitations of CoAP FETCH and PATCH or iPATCH as described in this document.</p>
-<p id="rfc.section.5.p.2">The FETCH method is subject to the same general security considerations as all CoAP methods as described in <a href="#RFC7252">[RFC7252]</a>.  The payload of a FETCH request may reveal more detailed information about the specific portions of a resource of interest to the requester than a GET request for the entire resource would; this may mean that confidentiality protection of the request by DTLS or other means is needed for FETCH where it wouldn&#8217;t be needed for GET.</p>
+<p id="rfc.section.5.p.2">The FETCH method is subject to the same general security considerations as all CoAP methods as described in <a href="#RFC7252">[RFC7252]</a>.  Specifically, the security considerations for FETCH are closest to those of GET, except that the FETCH request carries a payload that may need additional protection.  The payload of a FETCH request may reveal more detailed information about the specific portions of a resource of interest to the requester than a GET request for the entire resource would; this may mean that confidentiality protection of the request by DTLS or other means is needed for FETCH where it wouldn&#8217;t be needed for GET.</p>
 <p id="rfc.section.5.p.3">The security consideration of Section 11 of <a href="#RFC7252">[RFC7252]</a> as well as those of Section 5 of <a href="#RFC5789">[RFC5789]</a> also apply.</p>
-<p id="rfc.section.5.p.4">The security considerations for PATCH or iPATCH are nearly identical to the security considerations for PUT (<a href="#RFC7252">[RFC7252]</a>).  The mechanisms used for PUT can be used for PATCH or iPATCH as well.</p>
+<p id="rfc.section.5.p.4">The security considerations for PATCH or iPATCH are nearly identical to the security considerations for PUT (<a href="#RFC7252">[RFC7252]</a>).  Specifically, there is likely to be a need for authorizing requests (possibly through access control and/or authentication) and for ensuring that data is not corrupted through transport errors or through accidental overwrites.  The mechanisms used for PUT can be used for PATCH or iPATCH as well.</p>
 <p id="rfc.section.5.p.5">PATCH or iPATCH are secured following the CoAP recommendations as specified in section 9 of <a href="#RFC7252">[RFC7252]</a>. When additional security techniques are standardized for CoAP, PATCH or iPATCH can also be (and need to be) secured by those new techniques.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.6.p.1">IANA is requested to add the following entries to the sub-registry &#8220;CoAP Method Codes&#8221;:</p>
