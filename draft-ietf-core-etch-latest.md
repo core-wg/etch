@@ -2,7 +2,7 @@
 stand_alone: true
 ipr: trust200902
 docname: draft-ietf-core-etch-latest
-date: 2016-10-11
+date: 2016-11-14
 cat: std
 pi:
   toc: yes
@@ -209,6 +209,9 @@ a resource in such a FETCH request; it is outside the scope of this document how
 information about media types admissible for the specific resource is obtained by the client
 (although we can hint that form relations ({{I-D.hartke-core-apps}})
 might be a preferred way).
+It is RECOMMENDED that any discovery method that allows a client to
+find out that the server supports FETCH also
+provides information what FETCH payload media types are applicable.
 
 FETCH requests are both safe and idempotent with regards to the
 resource identified by the request URI.  That is, the performance of
@@ -333,7 +336,7 @@ request as it would be used with a POST request; the Block2 option
 can then be used as with GET or POST.
 
 
-## FETCH discussion {#fetch-discuss}
+## Building FETCH Requests {#fetch-discuss}
 
 One property of FETCH that may be non-obvious is that a FETCH request
 cannot be generated from a link alone, but also needs a way to
@@ -410,7 +413,8 @@ identified by a media type.  If the Request-URI does not point
 to an existing resource, the server MAY create a new resource
 with that URI, depending on the patch document type (whether
 it can logically modify a null resource) and permissions, as well as other
-conditions (see also {{errors}}).
+conditions such as the degree of control the server gives clients in
+creating new entries in its URI space (see also {{errors}}).
 Creation of a new resource would result in a 2.01 (Created)
 Response Code dependent on the patch document type.
 
@@ -421,6 +425,8 @@ could not be created or modified, then an appropriate Error
 Response Code SHOULD be sent.
 
 The difference between the PUT and PATCH requests is documented in {{-http-patch}}.
+When a request is intended to effect a partial update of a given resource, clients
+cannot use PUT while supplying just the update, but might be able to use PATCH or iPATCH.
 
 The PATCH method is not safe and not idempotent, as with the HTTP
 PATCH method
@@ -435,12 +441,6 @@ two.  The indication of idempotence may enable the server to keep less
 state about the interaction; some constrained servers may only
 implement the iPATCH variant for this reason.
 
-<!-- An iPATCH request is idempotent to prevent bad outcomes from -->
-<!-- collisions between two iPATCH requests on the same resource in -->
-<!-- a similar time frame. These collisions can be detected with -->
-<!-- the MessageId and the source end-point provided by the CoAP -->
-<!-- protocol (see section 4.5 of {{-coap}}. -->
-
 PATCH and iPATCH are both atomic.
 The server MUST apply the entire set of changes atomically and
 never provide a partially modified representation to a
@@ -451,10 +451,6 @@ overlapping of request modifications. Resuming,
 modifications MUST NOT be applied to the server state when an
 error occurs or only a partial execution is possible on the resources present
 in the server.
-<!-- When the PATCH request is over-specified (i.e. Request specifies -->
-<!-- modifications to attributes which do not exist in the server), the server -->
-<!-- MAY execute all modifications to existing attributes and return a response -->
-<!-- code 2.02 Accepted. -->
 
 The atomicity applies to a single server. When a PATCH or iPATCH request is
 multicast to a set of servers, each server can either execute all required
@@ -476,19 +472,23 @@ response codes for PATCH or iPATCH are:
 
 There is no guarantee that a resource can be modified with
 PATCH or iPATCH.
-<!-- Servers are required to support a subset of the content -->
-<!-- formats as specified in sections 12.3 and 5.10.3 of {{-coap}}. -->
 Servers MUST ensure that a received PATCH
 body is appropriate for the type of resource identified by
 the target resource of the request.
 
-<!-- a bit redundant -->
-When a request is intended to effect a partial update of a given resource, clients
-cannot use PUT while supplying just the update, but are free to use PATCH or iPATCH.
+It is RECOMMENDED that any discovery method that allows a client to
+find out that the server supports one of PATCH and iPATCH also
+provides information what patch payload media types are applicable and
+which of the two methods are implemented by the server for each of
+these media types.
 
-<!-- PATCH or iPATCH MUST not be used to restore default values to resource attributes -->
-<!-- which are not specified in the payload. PATCH or iPATCH specifically guarantees -->
-<!-- that unspecified resource attributes are not changed. -->
+Servers that do not rely on the idempotency of iPATCH can easily
+support both PATCH and iPATCH, and it is RECOMMENDED they do so.
+This is inexpensive to do, as, for iPATCH, there is no requirement on
+the server to check that the client's intention that the request be
+idempotent is fulfilled (although there is diagnostic value in that
+check, so a less-constrained implementation may want to perform it).
+
 
 ## Simple Examples for PATCH and iPATCH {#example}
 
@@ -736,7 +736,7 @@ as
 described in this document.
 
 The FETCH method is subject to the same general security
-considerations as all CoAP methods as described in {{-coap}}.
+considerations as all CoAP methods as described in Section 11 of {{-coap}}.
 Specifically, the security considerations for FETCH are closest to
 those of GET, except that the FETCH request carries a payload that may
 need additional protection.
@@ -746,23 +746,23 @@ requester than a GET request for the entire resource would; this may
 mean that confidentiality protection of the request by DTLS or other
 means is needed for FETCH where it wouldn't be needed for GET.
 
-The security consideration of Section 11 of {{-coap}} as well as those
-of Section 5 of {{-http-patch}} also apply.
-
-The security considerations for PATCH or iPATCH are nearly identical to
-the security considerations for PUT ({{-coap}}).
+The PATCH and iPATCH methods are subject to the same general security
+considerations as all CoAP methods as described in Section 11 of {{-coap}}.
+The specific security considerations for PATCH or iPATCH are nearly
+identical to the security considerations for PUT ({{-coap}}); the
+security considerations of Section 5 of {{-http-patch}} also apply to
+PATCH and iPATCH.
 Specifically, there is likely to be a need for authorizing requests
 (possibly through access control and/or
 authentication) and for ensuring that data is not corrupted through
 transport errors or through accidental overwrites.
-The mechanisms used for PUT can be used
-for PATCH or iPATCH as well.
+The mechanisms used for PUT can be used for PATCH or iPATCH as well.
 
-PATCH or iPATCH are secured following the CoAP recommendations as
-specified in section 9 of {{-coap}}. When additional security
-techniques are standardized for CoAP,
-PATCH or iPATCH can also be (and need to be) secured by those new techniques.
-
+The new methods defined in the present specification are secured
+following the CoAP recommendations for the existing methods as
+specified in section 9 of {{-coap}}.  When additional security
+techniques are standardized for CoAP (e.g., Object Security), these
+are then also available for securing the new methods.
 
 # IANA Considerations
 
@@ -805,6 +805,13 @@ Content-Formats", within the "CoRE Parameters" registry:
 | application/json-patch+json  |          | 51 | {{RFC6902}} |
 | application/merge-patch+json |          | 52 | {{RFC7396}} |
 
+
+Editors' note (to be removed by RFC editor):
+RFC 6902 and RFC 7396 are not necessary to implement the present
+specification, not even an option for it.
+It was just convenient to use the present document to register
+content-format identifiers for them (and they are used in examples).
+Therefore, these references are correctly classified as *informative*.
 
 # Change log
 
