@@ -965,42 +965,42 @@ Internet-Draft              CoAP Fetch Patch               November 2016
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
-              <http://www.rfc-editor.org/info/rfc2119>.
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC5789]  Dusseault, L. and J. Snell, "PATCH Method for HTTP",
               RFC 5789, DOI 10.17487/RFC5789, March 2010,
-              <http://www.rfc-editor.org/info/rfc5789>.
+              <https://www.rfc-editor.org/info/rfc5789>.
 
    [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               DOI 10.17487/RFC7231, June 2014,
-              <http://www.rfc-editor.org/info/rfc7231>.
+              <https://www.rfc-editor.org/info/rfc7231>.
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
               DOI 10.17487/RFC7252, June 2014,
-              <http://www.rfc-editor.org/info/rfc7252>.
+              <https://www.rfc-editor.org/info/rfc7252>.
 
    [RFC7641]  Hartke, K., "Observing Resources in the Constrained
               Application Protocol (CoAP)", RFC 7641,
               DOI 10.17487/RFC7641, September 2015,
-              <http://www.rfc-editor.org/info/rfc7641>.
+              <https://www.rfc-editor.org/info/rfc7641>.
 
    [RFC7959]  Bormann, C. and Z. Shelby, Ed., "Block-Wise Transfers in
               the Constrained Application Protocol (CoAP)", RFC 7959,
               DOI 10.17487/RFC7959, August 2016,
-              <http://www.rfc-editor.org/info/rfc7959>.
+              <https://www.rfc-editor.org/info/rfc7959>.
 
 8.2.  Informative References
 
    [RFC5323]  Reschke, J., Ed., Reddy, S., Davis, J., and A. Babich,
               "Web Distributed Authoring and Versioning (WebDAV)
               SEARCH", RFC 5323, DOI 10.17487/RFC5323, November 2008,
-              <http://www.rfc-editor.org/info/rfc5323>.
+              <https://www.rfc-editor.org/info/rfc5323>.
 
    [RFC6902]  Bryan, P., Ed. and M. Nottingham, Ed., "JavaScript Object
               Notation (JSON) Patch", RFC 6902, DOI 10.17487/RFC6902,
-              April 2013, <http://www.rfc-editor.org/info/rfc6902>.
+              April 2013, <https://www.rfc-editor.org/info/rfc6902>.
 
 
 
@@ -1012,20 +1012,20 @@ Internet-Draft              CoAP Fetch Patch               November 2016
 
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
-              2014, <http://www.rfc-editor.org/info/rfc7159>.
+              2014, <https://www.rfc-editor.org/info/rfc7159>.
 
    [RFC7396]  Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396,
               DOI 10.17487/RFC7396, October 2014,
-              <http://www.rfc-editor.org/info/rfc7396>.
+              <https://www.rfc-editor.org/info/rfc7396>.
 
    [I-D.vanderstok-core-comi]
               Stok, P., Bierman, A., Veillette, M., and A. Pelov, "CoAP
-              Management Interface", draft-vanderstok-core-comi-10 (work
-              in progress), October 2016.
+              Management Interface", draft-vanderstok-core-comi-11 (work
+              in progress), January 2017.
 
    [I-D.hartke-core-apps]
               Hartke, K., "CoRE Application Descriptions", draft-hartke-
-              core-apps-05 (work in progress), October 2016.
+              core-apps-07 (work in progress), February 2017.
 
    [I-D.snell-search-method]
               Reschke, J., Malhotra, A., and J. Snell, "HTTP SEARCH
